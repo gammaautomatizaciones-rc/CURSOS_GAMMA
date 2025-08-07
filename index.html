@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <!--NAVBAR-->
+  <!-- NAVBAR -->
   <header>
     <nav class="navbar">
       <div class="logo-container">
@@ -45,7 +45,7 @@
     © 2025 Camila Shop | Todos los derechos reservados.
   </footer>
 
-  <!-- SCRIPT OPTIMIZADO -->
+  <!-- SCRIPT -->
   <script>
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNGCPSH5C80N8aS9rAbIqlTsrKHF5lGxy5yvGa9ek0WVL7Rjit6EQiZEk2736TV1gbPJKaSvlrxu-z/pub?gid=0&single=true&output=csv';
     const IMG_PATH = 'img/';
@@ -59,17 +59,21 @@
       const csv = await res.text();
       productos = csv.trim().split('\n').slice(1).map(row => {
         const [codigo, nombre, precio, stock, rubro] = row.split(',');
-        return {
-          codigo: codigo.trim(),
-          nombre: nombre.trim(),
-          precio: precio.trim(),
+        return { 
+          codigo: codigo.trim(), 
+          nombre: nombre.trim(), 
+          precio: precio.trim(), 
           stock: stock.trim(),
           rubro: (rubro || '').trim()
         };
       });
 
-      // Poblar el select de rubros sin duplicados
-      const rubrosUnicos = [...new Set(productos.map(p => p.rubro).filter(r => r))].sort();
+      // Poblar el select con rubros únicos y ordenados
+      const rubrosUnicos = [...new Set(productos
+        .map(p => p.rubro)
+        .filter(r => r && r.length > 0)
+      )].sort();
+
       const selectRubro = document.getElementById('filtroRubro');
       rubrosUnicos.forEach(r => {
         const opt = document.createElement('option');
@@ -143,10 +147,12 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('buscador').addEventListener('input', aplicarFiltros);
-      document.getElementById('filtroRubro').addEventListener('change', aplicarFiltros);
+      document.getElementById('filtroRubro').addEventListener('change', function() {
+        document.getElementById('buscador').value = '';
+        aplicarFiltros();
+      });
       cargarProductos();
     });
   </script>
 </body>
 </html>
-
