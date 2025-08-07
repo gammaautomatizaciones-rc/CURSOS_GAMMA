@@ -69,10 +69,10 @@
       });
 
       // Poblar el select con rubros únicos y ordenados
-      const rubrosUnicos = [...new Set(productos
-        .map(p => p.rubro)
-        .filter(r => r && r.length > 0)
-      )].sort();
+ const rubrosUnicos = [...new Set(productos
+  .map(p => p.rubro)
+  .filter(r => r && /[a-zA-ZáéíóúÁÉÍÓÚ]/.test(r)) // solo rubros con letras
+)].sort();
 
       const selectRubro = document.getElementById('filtroRubro');
       rubrosUnicos.forEach(r => {
@@ -156,3 +156,4 @@
   </script>
 </body>
 </html>
+
