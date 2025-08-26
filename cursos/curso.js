@@ -51,7 +51,7 @@ async function obtenerProgreso(curso, grupo) {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        action: "getProgreso",
+        action: "getProgresoGrupo",
         curso,
         grupo
       })
@@ -168,6 +168,7 @@ function actualizarProgreso(total) {
 document.addEventListener("DOMContentLoaded", () => {
   renderModulos();
 });
+
 
 
 
