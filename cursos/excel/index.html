@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Excel - Gamma</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <img src="../../assets/logo.png" alt="Logo Gamma" class="logo">
+    <nav>
+      <ul>
+        <li><a href="../../index.html">🏠 Mis Cursos</a></li>
+        <li><a href="../../subida/subida.html">📤 Subir Actividad</a></li>
+        <li><button class="logout" onclick="logout()">Salir</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-curso">
+    <div class="hero-text">
+      <h1>Curso Intensivo de Excel</h1>
+      <p>12 módulos prácticos para dominar Excel desde cero hasta nivel avanzado.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESO -->
+  <section class="progreso">
+    <h2>Tu progreso</h2>
+    <div class="barra-container">
+      <div id="barra-progreso" class="barra"></div>
+    </div>
+    <p id="texto-progreso">0 de 12 módulos completados</p>
+  </section>
+
+  <!-- MÓDULOS -->
+  <section class="modulos">
+    <h2>Plan de Estudio</h2>
+    <div class="lista-modulos" id="lista-modulos">
+      <!-- JS inserta los módulos -->
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Gamma Automatizaciones - Optimización Empresarial</p>
+  </footer>
+
+  <script>
+    const totalModulos = 12;
+    let completados = 0;
+
+    // Render dinámico de módulos
+    const lista = document.getElementById("lista-modulos");
+    for (let i = 1; i <= totalModulos; i++) {
+      const completado = localStorage.getItem(`excel-modulo-${i}-completado`) === "true";
+
+      if (completado) completados++;
+
+      const div = document.createElement("div");
+      div.classList.add("modulo", "active");
+      div.innerHTML = `
+        <div class="modulo-header">
+          <h3>Módulo ${i}</h3>
+          <span class="status">${completado ? "✔ Completado" : "👉 Disponible"}</span>
+        </div>
+        <div class="modulo-content active">
+          <a href="modulo${i}.html" class="btn">Ir al módulo</a>
+          <button class="btn completar-btn ${completado ? "completado" : ""}" data-modulo="${i}">
+            ${completado ? "✔ Completado" : "Marcar como completado"}
+          </button>
+        </div>
+      `;
+      lista.appendChild(div);
+    }
+
+    // Botones completar
+    document.querySelectorAll(".completar-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const mod = e.target.dataset.modulo;
+        localStorage.setItem(`excel-modulo-${mod}-completado`, "true");
+        location.reload();
+      });
+    });
+
+    // Barra de progreso
+    const porcentaje = Math.round((completados / totalModulos) * 100);
+    document.getElementById("barra-progreso").style.width = `${porcentaje}%`;
+    document.getElementById("texto-progreso").innerText = `${completados} de ${totalModulos} módulos completados`;
+
+    // Logout
+    function logout() {
+      localStorage.removeItem("usuario");
+      window.location.href = "../../auth/login.html";
+    }
+  </script>
+</body>
+</html>
