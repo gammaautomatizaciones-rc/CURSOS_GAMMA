@@ -1,5 +1,5 @@
 // URL de tu Apps Script (el que valida registro/login contra Google Sheets)
-const API_URL = "https://script.google.com/macros/s/AKfycbwhyVWmI6Q4tImVoXfaKNYmsV87g_2RDJq6uUQoJTd5dT11nyhe3TJzQmtAmJMVGyXCdQ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwdGWBBBt9YpPfGgO6uv08Dq0SOWRNAfptqKkpLyRaNYRjYLdr4AbNhcsJW8-gCfZRbPw/exec";
 
 // -----------------------------
 // Registro
@@ -78,3 +78,4 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+
