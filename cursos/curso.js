@@ -21,7 +21,7 @@ document.getElementById("btn-logout")?.addEventListener("click", () => {
 // =============================
 // Configuración
 // =============================
-const PROGRESO_API_URL = "TU_URL_DE_APPS_SCRIPT"; // la misma que usás en admin
+const PROGRESO_API_URL = "TU_URL_DE_APPS_SCRIPT"; // tu endpoint de progreso
 
 const cursos = {
   excel: {
@@ -40,7 +40,7 @@ const cursos = {
       url: `cursos/make/modulos/modulo${i + 1}.html`
     }))
   }
-  // Podés seguir agregando cursos sin tocar nada más
+  // 👉 podés seguir agregando cursos sin tocar nada más
 };
 
 // =============================
@@ -56,7 +56,7 @@ async function postBackend(data) {
     return await resp.json();
   } catch (err) {
     console.error("Error conexión backend:", err);
-    return { success: false };
+    return { success: false, progreso: [] };
   }
 }
 
@@ -90,11 +90,11 @@ async function renderModulos() {
 
   curso.modulos.forEach((mod, i) => {
     const estado = modulosData.find(m => m.modulo == i + 1);
-    const habilitado = estado ? (estado.habilitado === true || estado.habilitado === "TRUE") : false;
-    const completado = estado ? (estado.completado === true || estado.completado === "TRUE") : false;
 
-    // Si no está habilitado → no se muestra
-    if (!habilitado) return;
+    // si no está en la tabla o está deshabilitado → no mostrar
+    if (!estado || estado.habilitado !== "TRUE") return;
+
+    const completado = estado.completado === "TRUE";
 
     const moduloDiv = document.createElement("div");
     moduloDiv.classList.add("modulo-card");
@@ -102,9 +102,9 @@ async function renderModulos() {
 
     moduloDiv.innerHTML = `
       <h3>${mod.titulo}</h3>
-      <p class="status">${completado ? "✔ Completado" : "✅ Disponible"}</p>
+      <p class="status">${completado ? "✔ Completado" : "👉 Disponible"}</p>
       <div class="acciones">
-        <a href="${mod.url}" class="btn">👉 Ir al módulo</a>
+        <a href="${mod.url}" class="btn">Ir al módulo</a>
       </div>
     `;
 
@@ -120,7 +120,7 @@ async function renderModulos() {
 // Barra de progreso
 // =============================
 function actualizarProgreso(total) {
-  const porcentaje = Math.round((completados / total) * 100);
+  const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0;
   document.getElementById("barra-progreso").style.width = `${porcentaje}%`;
   document.getElementById("texto-progreso").innerText =
     `${completados} de ${total} módulos completados`;
