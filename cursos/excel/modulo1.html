@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 1 - Curso Excel</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <img src="../../assets/logo.png" alt="Logo Gamma" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">⬅ Volver al curso</a></li>
+        <li><a href="../../subida/subida.html">📤 Subir Actividad</a></li>
+        <li><button class="logout" onclick="logout()">Salir</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-curso">
+    <div class="hero-text">
+      <h1>Módulo 1: Fundamentos y primer libro</h1>
+      <p>Meta: construir una base prolija y preparada para crecer.</p>
+    </div>
+  </section>
+
+  <!-- CONTENIDO -->
+  <section class="contenido-modulo">
+    <h2>Manual 1 – “Mi primer libro profesional”</h2>
+    <ol>
+      <li>Crear libro <b>Ventas_Q1.xlsx</b>. Hojas: Resumen, Datos, Parámetros, Notas.</li>
+      <li>En Parámetros:  
+        <ul>
+          <li>A1: IVA% = 21%</li>
+          <li>A2: Descuento% inicial = 0%</li>
+          <li>A3: Versión = v1.0</li>
+          <li>A4: Última actualización = HOY()</li>
+        </ul>
+      </li>
+      <li>En Datos: columnas Fecha, Vendedor, Producto, SKU, Cantidad, Precio, Zona.  
+          Cargar 20 filas ficticias.</li>
+      <li>Dar formato: fecha corta, moneda, número entero. Encabezados en gris claro con filtros.</li>
+      <li>Convertir a Tabla (Ctrl+T), nombrarla <b>tVentas</b>. Congelar encabezados.</li>
+      <li>En Notas: propósito, origen ficticio, responsable, cambios de hoy.</li>
+      <li>En Resumen: título “Indicadores clave” y espacio reservado.</li>
+      <li>Guardar como “Ventas_Q1_v1.xlsx” y crear copia en “v1_Respaldos/2025-08-26/”.</li>
+    </ol>
+    <p><b>Comprobación rápida:</b> ¿La tabla se llama tVentas? ¿Filtros activos? ¿Formatos consistentes?</p>
+
+    <h2>Manual 2 – “Atajos y orden que ahorran tiempo”</h2>
+    <ul>
+      <li><b>Navegación:</b> Ctrl+Flechas, Ctrl+Inicio/Fin, Ctrl+Espacio (columna), Shift+Espacio (fila).</li>
+      <li><b>Edición:</b> Ctrl+D, Ctrl+R, Alt+E+S+V (valores).</li>
+      <li><b>Formato:</b> Ctrl+1, Ctrl+Mayús+$, Ctrl+Mayús+%.</li>
+      <li><b>Búsqueda/Reemplazo:</b> Ctrl+F, Ctrl+L. Ejercicio: reemplazar “stk-” por “SKU-”.</li>
+      <li><b>Eficiencia:</b> Ctrl+Z/Y, F4, Ctrl+N.</li>
+    </ul>
+    <p><b>Ejercicio:</b> anotar en Notas los 5 atajos que más te sirvieron.</p>
+
+    <h2>Actividad para entregar (PDF)</h2>
+    <p><b>Título:</b> Fundamentos de Excel y disciplina de archivo</p>
+    <ol>
+      <li>Crear archivo “Ventas_Q1_ApellidoNombre.xlsx” con hojas: Resumen, Datos, Parámetros, Notas.</li>
+      <li>En Parámetros: IVA 21%, Descuento 5%, Versión v1.1, HOY().</li>
+      <li>En Datos: mínimo 30 filas (5 vendedores, 8 productos, 3 zonas). Sin celdas vacías.</li>
+      <li>Convertir a Tabla “tVentas”, filtros activos, congelar encabezado, formatos correctos.</li>
+      <li>Notas: propósito (2 líneas), origen de datos, responsable, cambios, atajos usados (5).</li>
+    </ol>
+    <p><b>Preguntas a contestar en Notas:</b></p>
+    <ul>
+      <li>Diferencia entre Libro y Hoja.</li>
+      <li>¿Por qué usar Tablas en vez de rangos comunes?</li>
+      <li>¿Qué ventaja tiene documentar parámetros y fecha HOY()?</li>
+    </ul>
+    <p><b>Entregables:</b> archivo .xlsx final + captura de la hoja Datos con filtros.</p>
+    <p><b>Rúbrica (100 pts):</b>  
+      Estructura (20), Tabla+formatos (30), Calidad de datos (20), Documentación (20), Eficiencia (10).
+    </p>
+    <p><b>Errores frecuentes:</b> fechas como texto, moneda duplicada, encabezados mal escritos.</p>
+    <p><b>Buenas prácticas:</b> hoja Parámetros para valores fijos, Notas como bitácora, Tablas siempre.</p>
+  </section>
+
+  <!-- BOTÓN COMPLETAR -->
+  <section class="acciones">
+    <button class="btn completar-btn" id="btn-completar">✔ Marcar como completado</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Gamma Automatizaciones - Optimización Empresarial</p>
+  </footer>
+
+  <script>
+    const modKey = "excel-modulo-1-completado";
+
+    document.getElementById("btn-completar").addEventListener("click", () => {
+      localStorage.setItem(modKey, "true");
+      alert("✅ Módulo 1 marcado como completado");
+      window.location.href = "index.html"; // vuelve al curso
+    });
+
+    function logout() {
+      localStorage.removeItem("usuario");
+      window.location.href = "../../auth/login.html";
+    }
+  </script>
+</body>
+</html>
