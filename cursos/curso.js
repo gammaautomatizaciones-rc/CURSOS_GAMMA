@@ -22,7 +22,7 @@ document.getElementById("btn-logout")?.addEventListener("click", () => {
 // =============================
 // Configuración
 // =============================
-const PROGRESO_API_URL = "https://script.google.com/macros/s/AKfycbzymX3hUsIA9oF7gK_hA5IOHXYqdxe_t2rh1UKXHzOIJpeVH1Wp6U8kZ9-lD9ijzEGjZQ/exec";
+const PROGRESO_API_URL = "https://script.google.com/macros/s/AKfycbySClOPbGe21lGMcyVkBXruYw87FuSSwRhlsdympIh0VR13JJ8pmQLq7OfzeLqwQ4ALKQ/exec";
 
 const cursos = {
   excel: {
@@ -153,3 +153,4 @@ function actualizarProgreso(total) {
 // Inicializar
 // =============================
 document.addEventListener("DOMContentLoaded", renderModulos);
+
