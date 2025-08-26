@@ -1,12 +1,41 @@
-// URL de tu Apps Script (el que valida registro/login contra Google Sheets)
-const API_URL = "https://script.google.com/macros/s/AKfycbwdGWBBBt9YpPfGgO6uv08Dq0SOWRNAfptqKkpLyRaNYRjYLdr4AbNhcsJW8-gCfZRbPw/exec";
+// =============================
+// Configuración
+// =============================
+const API_URL = "https://script.google.com/macros/s/AKfycbwdGWBBBt9YpPfGgO6uv08Dq0SOWRNAfptqKkpLyRaNYRjYLdr4AbNhcsJW8-gCfZRbPw/exec"; // tu URL de Apps Script
 
-// -----------------------------
+// Helper para mostrar mensajes
+function setEstado(msg, ok = null) {
+  const estado = document.getElementById("estado");
+  if (!estado) return;
+
+  estado.innerText = msg;
+  estado.style.color = ok === true ? "green" : ok === false ? "red" : "black";
+}
+
+// Helper para enviar datos al servidor
+async function enviarDatos(data) {
+  try {
+    const resp = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(data)
+    });
+
+    if (!resp.ok) throw new Error("Error en la red");
+
+    const result = await resp.json();
+    return result;
+  } catch (err) {
+    console.error("Error conexión:", err);
+    return { success: false, msg: "⚠️ No se pudo conectar al servidor." };
+  }
+}
+
+// =============================
 // Registro
-// -----------------------------
+// =============================
 document.getElementById("registro-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const estado = document.getElementById("estado");
 
   const form = new FormData(e.target);
   const data = {
@@ -16,34 +45,21 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
     pass: form.get("pass")
   };
 
-  try {
-    const resp = await fetch(API_URL, {
-  method: "POST",
-  body: JSON.stringify(data),
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
+  setEstado("⏳ Procesando...");
+
+  const result = await enviarDatos(data);
+  setEstado(result.msg, result.success);
+
+  if (result.success) {
+    setTimeout(() => window.location.href = "login.html", 1500);
   }
 });
 
-    const result = await resp.json();
-    estado.innerText = result.msg;
-
-    if (result.success) {
-      setTimeout(() => window.location.href = "login.html", 1500);
-    }
-  } catch (err) {
-    estado.innerText = "⚠️ Error en la conexión.";
-    console.error(err);
-  }
-});
-
-// -----------------------------
+// =============================
 // Login
-// -----------------------------
+// =============================
 document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const estado = document.getElementById("estado");
 
   const form = new FormData(e.target);
   const data = {
@@ -52,35 +68,29 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
     pass: form.get("pass")
   };
 
-  try {
-    const resp = await fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
-    });
-    const result = await resp.json();
-    estado.innerText = result.msg;
+  setEstado("⏳ Verificando...");
 
-    if (result.success) {
-      localStorage.setItem("usuario", JSON.stringify(result.usuario));
-      setTimeout(() => window.location.href = "../index.html", 1000);
-    }
-  } catch (err) {
-    estado.innerText = "⚠️ Error en la conexión.";
-    console.error(err);
+  const result = await enviarDatos(data);
+  setEstado(result.msg, result.success);
+
+  if (result.success && result.usuario) {
+    localStorage.setItem("usuario", JSON.stringify(result.usuario));
+    setTimeout(() => window.location.href = "../index.html", 1000);
   }
 });
 
-// -----------------------------
-// Chequear sesión
-// -----------------------------
+// =============================
+// Manejo de sesión
+// =============================
 function getUsuario() {
-  return JSON.parse(localStorage.getItem("usuario"));
+  try {
+    return JSON.parse(localStorage.getItem("usuario"));
+  } catch {
+    return null;
+  }
 }
 
 function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
-
-
