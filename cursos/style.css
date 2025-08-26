@@ -125,7 +125,7 @@
 }
 
 /* =============================
-   Módulos
+   Módulos como cards
 ============================= */
 .modulos {
   padding: 50px 20px;
@@ -138,57 +138,54 @@
   font-size: 1.8rem;
 }
 .lista-modulos {
-  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
   margin: 0 auto;
+  max-width: 1000px;
 }
 .modulo {
   background: var(--negro);
   color: var(--blanco);
-  margin: 15px 0;
   border: 1px solid #222;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  transition: 0.3s;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
 }
-.modulo.locked {
-  opacity: 0.6;
+.modulo:hover {
+  transform: translateY(-4px);
 }
 .modulo-header {
-  padding: 15px 20px;
-  background: var(--gris-oscuro);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
+  margin-bottom: 15px;
 }
 .modulo-header h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: var(--dorado);
 }
 .modulo-header .status {
+  display: block;
   font-size: 0.9rem;
+  margin-top: 5px;
 }
 .modulo-content {
-  padding: 20px;
-  display: none;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.modulo.active .modulo-content {
-  display: block;
-}
-.modulo-content a {
-  display: inline-block;
-  margin-bottom: 10px;
+.modulo-content a, .completar-btn, .habilitar-btn {
+  text-align: center;
 }
 
 /* Botón completar */
 .completar-btn {
   background: var(--dorado);
   color: var(--negro);
-  padding: 8px 16px;
+  padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
@@ -206,11 +203,10 @@
 .habilitar-btn {
   background: #444;
   color: var(--blanco);
-  padding: 8px 16px;
+  padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
   transition: 0.3s;
 }
 .habilitar-btn:hover {
