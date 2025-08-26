@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Gamma Cursos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <img src="../assets/logo.png" alt="Logo Gamma" class="logo">
+    <nav>
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="registro.html">Registro</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="auth-form">
+    <h1>Login</h1>
+    <form id="login-form">
+      <label>Email:</label>
+      <input type="email" name="email" required>
+
+      <label>Contraseña:</label>
+      <input type="password" name="pass" required>
+
+      <button type="submit" class="btn">Iniciar Sesión</button>
+    </form>
+    <p id="estado"></p>
+    <p>¿No tenés cuenta? <a href="registro.html">Registrate</a></p>
+  </section>
+
+  <script src="auth.js"></script>
+</body>
+</html>

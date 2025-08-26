@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Gamma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <img src="../assets/logo.png" alt="Logo Gamma" class="logo">
+    <nav>
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../subida/subida.html">Subir Actividades</a></li>
+        <li><button id="btn-logout" class="logout">Salir</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO DEL CURSO -->
+  <section class="hero-curso">
+    <div class="hero-text">
+      <h1 id="titulo-curso">Curso</h1>
+      <p id="descripcion-curso">Descripción del curso...</p>
+      <p id="bienvenida"></p>
+    </div>
+  </section>
+
+  <!-- PROGRESO -->
+  <section class="progreso">
+    <div class="barra-container">
+      <div id="barra-progreso" class="barra"></div>
+    </div>
+    <p id="texto-progreso">0 de 12 módulos completados</p>
+  </section>
+
+  <!-- MÓDULOS -->
+  <section class="modulos">
+    <h2>Plan de Estudio</h2>
+    <div id="lista-modulos" class="lista-modulos"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Gamma Automatizaciones - Optimización Empresarial</p>
+  </footer>
+
+  <script src="curso.js"></script>
+</body>
+</html>
