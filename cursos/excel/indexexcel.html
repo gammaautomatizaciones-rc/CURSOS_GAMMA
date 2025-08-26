@@ -43,7 +43,7 @@
   <section class="modulos">
     <h2>Plan de Estudio</h2>
     <div class="lista-modulos" id="lista-modulos">
-      <!-- Los módulos se cargan con JS -->
+      <!-- Los módulos se cargan con excel.js -->
     </div>
   </section>
 
@@ -53,56 +53,6 @@
   </footer>
 
   <!-- JS -->
-  <script>
-    const totalModulos = 12;
-    let completados = 0;
-
-    const lista = document.getElementById("lista-modulos");
-
-    // Render dinámico de módulos
-    for (let i = 1; i <= totalModulos; i++) {
-      const completado = localStorage.getItem(`excel-modulo-${i}-completado`) === "true";
-      if (completado) completados++;
-
-      const div = document.createElement("div");
-      div.classList.add("modulo-card");
-      if (completado) div.classList.add("done");
-
-      div.innerHTML = `
-        <h3>Módulo ${i}</h3>
-        <p class="status">${completado ? "✔ Completado" : "👉 Disponible"}</p>
-        <div class="acciones">
-          <a href="modulos/modulo${i}.html" class="btn">Ir al módulo</a>
-          <button 
-            class="btn completar-btn ${completado ? "completado" : ""}" 
-            data-modulo="${i}">
-            ${completado ? "✔ Completado" : "Marcar como completado"}
-          </button>
-        </div>
-      `;
-      lista.appendChild(div);
-    }
-
-    // Botones completar
-    document.querySelectorAll(".completar-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        const mod = e.target.dataset.modulo;
-        localStorage.setItem(`excel-modulo-${mod}-completado`, "true");
-        location.reload();
-      });
-    });
-
-    // Barra de progreso
-    const porcentaje = Math.round((completados / totalModulos) * 100);
-    document.getElementById("barra-progreso").style.width = `${porcentaje}%`;
-    document.getElementById("texto-progreso").innerText = 
-      `${completados} de ${totalModulos} módulos completados`;
-
-    // Logout
-    function logout() {
-      localStorage.removeItem("usuario");
-      window.location.href = "../../auth/login.html";
-    }
-  </script>
+  <script src="excel.js"></script>
 </body>
 </html>
