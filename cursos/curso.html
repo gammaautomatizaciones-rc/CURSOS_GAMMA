@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curso de Excel - Gamma</title>
-  <link rel="stylesheet" href="/cursos/excel/style.css">
+  <title>Curso - Gamma</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <!-- NAVBAR -->
@@ -22,8 +22,8 @@
   <!-- HERO -->
   <section class="hero-curso">
     <div class="hero-text">
-      <h1 id="titulo-curso">Curso Intensivo de Excel</h1>
-      <p id="descripcion-curso">Domina Excel en 3 meses con clases prácticas.</p>
+      <h1 id="titulo-curso">Curso</h1>
+      <p id="descripcion-curso">Descripción del curso.</p>
       <p id="bienvenida"></p>
     </div>
   </section>
@@ -34,7 +34,7 @@
     <div class="barra-container">
       <div id="barra-progreso" class="barra"></div>
     </div>
-    <p id="texto-progreso">0 de 12 módulos completados</p>
+    <p id="texto-progreso">0 de 0 módulos completados</p>
   </section>
 
   <!-- MÓDULOS -->
@@ -50,10 +50,11 @@
     <p>© 2025 Gamma Automatizaciones - Optimización Empresarial</p>
   </footer>
 
-  <!-- Script con curso fijo -->
+  <!-- Script con ID del curso dinámico -->
   <script>
-    const idCurso = "excel"; // Curso fijo
+    const urlParams = new URLSearchParams(window.location.search);
+    const idCurso = urlParams.get("id"); // ejemplo: ?id=excel
   </script>
-  <script src="/cursos/excel/curso.js"></script>
+  <script src="/cursos/curso.js"></script>
 </body>
 </html>
