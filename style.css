@@ -167,22 +167,24 @@ footer {
 .curso-card p {
   font-size: 0.95em;
   color: #ccc;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .curso-card .btn {
   display: inline-block;
   background: #ffa733;
   color: #111;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 8px;
   font-weight: bold;
   text-decoration: none;
   transition: background 0.3s ease;
+  margin-top: 10px; /* espacio extra arriba del botón */
 }
 
 .curso-card .btn:hover {
   background: #ff8c00;
 }
+
 
 
