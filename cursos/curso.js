@@ -10,7 +10,8 @@ const esAdmin = usuario.rol === "admin";
 let completados = 0;
 
 // Mostrar saludo
-document.getElementById("bienvenida")?.innerText = `Bienvenido/a, ${usuario.nombre} (Grupo ${usuario.grupo})`;
+document.getElementById("bienvenida")?.innerText =
+  `Bienvenido/a, ${usuario.nombre} (Grupo ${usuario.grupo})`;
 
 // Botón logout
 document.getElementById("btn-logout")?.addEventListener("click", () => {
@@ -21,7 +22,7 @@ document.getElementById("btn-logout")?.addEventListener("click", () => {
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbwoqGLKkuqTHZFRTyGkperkcVdLy_wAk4inmRouMOw7irgZrJRKc2q3UUKnQb5OJ_yqXw/exec";
+const PROGRESO_API_URL = "https://script.google.com/macros/s/AKfycbzymX3hUsIA9oF7gK_hA5IOHXYqdxe_t2rh1UKXHzOIJpeVH1Wp6U8kZ9-lD9ijzEGjZQ/exec";
 
 const cursos = {
   excel: {
@@ -45,41 +46,26 @@ const cursos = {
 // =============================
 // Helpers backend
 // =============================
-async function obtenerProgreso(curso, grupo) {
+async function postBackend(data) {
   try {
-    const resp = await fetch(API_URL, {
+    const resp = await fetch(PROGRESO_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        action: "getProgresoGrupo",
-        curso,
-        grupo
-      })
+      body: new URLSearchParams(data)
     });
     return await resp.json();
   } catch (err) {
-    console.error("Error al obtener progreso:", err);
-    return { success: false, modulos: [] };
+    console.error("Error de conexión con backend:", err);
+    return { success: false };
   }
 }
 
+async function obtenerProgreso(curso, grupo) {
+  return await postBackend({ action: "getProgresoGrupo", curso, grupo });
+}
+
 async function habilitarModulo(curso, grupo, modulo) {
-  try {
-    const resp = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        action: "habilitarModulo",
-        curso,
-        grupo,
-        modulo
-      })
-    });
-    return await resp.json();
-  } catch (err) {
-    console.error("Error al habilitar módulo:", err);
-    return { success: false, msg: "⚠️ Error de conexión" };
-  }
+  return await postBackend({ action: "habilitarModulo", curso, grupo, modulo });
 }
 
 // =============================
@@ -102,10 +88,11 @@ async function renderModulos() {
 
   // Traer info de backend según curso y grupo del usuario
   const backendData = await obtenerProgreso(idCurso, usuario.grupo);
-  const habilitados = backendData.success ? backendData.modulos : [];
+  const habilitados = backendData.success ? backendData.progreso || [] : [];
 
   curso.modulos.forEach((mod, i) => {
-    const habilitado = habilitados.find(m => m.modulo == i + 1)?.habilitado || false;
+    const estado = habilitados.find(m => m.modulo == i + 1);
+    const habilitado = estado ? estado.habilitado === true || estado.habilitado === "TRUE" : false;
     const completado = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
 
     const moduloDiv = document.createElement("div");
@@ -165,11 +152,4 @@ function actualizarProgreso(total) {
 // =============================
 // Inicializar
 // =============================
-document.addEventListener("DOMContentLoaded", () => {
-  renderModulos();
-});
-
-
-
-
-
+document.addEventListener("DOMContentLoaded", renderModulos);
