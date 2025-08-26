@@ -7,7 +7,7 @@
   <!-- Estilos globales -->
   <link rel="stylesheet" href="/style.css">
   <!-- Estilos específicos del curso -->
-  <link rel="stylesheet" href="cursos/excel/styleindexexcel.css">
+  <link rel="stylesheet" href="styleindexexcel.css">
 </head>
 <body>
   <!-- NAVBAR -->
@@ -72,7 +72,7 @@
         <h3>Módulo ${i}</h3>
         <p class="status">${completado ? "✔ Completado" : "👉 Disponible"}</p>
         <div class="acciones">
-          <a href="modulo${i}.html" class="btn">Ir al módulo</a>
+          <a href="modulos/modulo${i}.html" class="btn">Ir al módulo</a>
           <button 
             class="btn completar-btn ${completado ? "completado" : ""}" 
             data-modulo="${i}">
@@ -101,10 +101,8 @@
     // Logout
     function logout() {
       localStorage.removeItem("usuario");
-      window.location.href = "../../auth/login.html";
+      window.location.href = "/auth/login.html";
     }
   </script>
 </body>
 </html>
-
-
