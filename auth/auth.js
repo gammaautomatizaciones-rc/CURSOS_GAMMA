@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbwXblsqmrexkJLR19rl5SHsGWQKzUPapKrDZF8g6T8-25G4lU_oZdj4B6HjFP8HPVuBJA/exec"; // URL del deploy de auth.gs
+const API_URL = "https://script.google.com/macros/s/AKfycbyKHIUJlW7LwFXBJghKpWM-EZGn9eYwFD-gHpDDt0IeqHfRrtSIHFwB8fYPF-5Ku4sN/exec"; // URL del deploy de auth.gs
 
 // =============================
 // Helper para mostrar mensajes
@@ -98,5 +98,6 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+
 
 
