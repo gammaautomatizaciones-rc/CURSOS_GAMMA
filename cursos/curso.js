@@ -22,7 +22,6 @@ document.getElementById("btn-logout")?.addEventListener("click", () => {
 // =============================
 // Configuración
 // =============================
-// URL del deploy de tu progreso.gs
 const PROGRESO_API_URL = "https://script.google.com/macros/s/AKfycbzymX3hUsIA9oF7gK_hA5IOHXYqdxe_t2rh1UKXHzOIJpeVH1Wp6U8kZ9-lD9ijzEGjZQ/exec";
 
 // Curso fijo: Excel
@@ -85,52 +84,40 @@ async function renderModulos() {
   const backendData = await obtenerProgreso(idCurso, usuario.grupo);
   const habilitados = backendData.success ? backendData.progreso || [] : [];
 
-  curso.modulos.forEach((mod, i) => {
-    const estado = habilitados.find(m => m.modulo == i + 1);
-    const habilitado = estado ? (estado.habilitado === true || estado.habilitado === "TRUE") : false;
+  // Mostrar solo módulos habilitados
+  habilitados.forEach(registro => {
+    const i = registro.modulo - 1;
+    const mod = curso.modulos[i];
+    const habilitado = registro.habilitado === true || registro.habilitado === "TRUE";
+
+    if (!habilitado) return; // si no está habilitado, no lo mostramos
+
+    const completadoLocal = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
+    if (habilitado && completadoLocal) completados++;
 
     const moduloDiv = document.createElement("div");
-    moduloDiv.classList.add("modulo");
-    if (!habilitado) moduloDiv.classList.add("locked");
+    moduloDiv.classList.add("modulo", "card");
 
     moduloDiv.innerHTML = `
       <div class="modulo-header">
         <h3>${mod.titulo}</h3>
-        <span class="status">${habilitado ? "✅ Disponible" : "🔒 Bloqueado"}</span>
+        <span class="status">${completadoLocal ? "✔ Completado" : "👉 Disponible"}</span>
       </div>
       <div class="modulo-content">
-        ${habilitado ? `<a href="${mod.url}" class="btn">👉 Ir al módulo</a>` : ""}
-        ${habilitado ? `<button class="completar-btn">✔ Marcar como completado</button>` : ""}
-        ${!habilitado && esAdmin ? `<button class="habilitar-btn">🔑 Habilitar módulo</button>` : ""}
+        <a href="${mod.url}" class="btn">Ir al módulo</a>
+        <button class="completar-btn ${completadoLocal ? "completado" : ""}">
+          ${completadoLocal ? "✔ Completado" : "Marcar como completado"}
+        </button>
       </div>
     `;
 
-    // Toggle abrir/cerrar
-    moduloDiv.querySelector(".modulo-header").addEventListener("click", () => {
-      if (habilitado) moduloDiv.classList.toggle("active");
-    });
-
-    // Botón habilitar (solo admin)
-    if (!habilitado && esAdmin) {
-      moduloDiv.querySelector(".habilitar-btn").addEventListener("click", async () => {
-        await habilitarModulo(idCurso, usuario.grupo, i + 1);
-        renderModulos();
-      });
-    }
-
     // Botón completar
-    if (habilitado) {
-      const btn = moduloDiv.querySelector(".completar-btn");
-      btn.addEventListener("click", async () => {
-        await completarModulo(idCurso, usuario.grupo, i + 1, usuario.email);
-        localStorage.setItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`, "true");
-        renderModulos();
-      });
-    }
-
-    // Contar completados
-    const completadoLocal = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
-    if (habilitado && completadoLocal) completados++;
+    const btn = moduloDiv.querySelector(".completar-btn");
+    btn.addEventListener("click", async () => {
+      await completarModulo(idCurso, usuario.grupo, i + 1, usuario.email);
+      localStorage.setItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`, "true");
+      renderModulos();
+    });
 
     lista.appendChild(moduloDiv);
   });
