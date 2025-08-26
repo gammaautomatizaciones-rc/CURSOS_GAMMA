@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/1trFGbw3bSYS-lop01E4R7b6rHiN5hjfE7Gb2CgjtwIo/exec"; // tu URL de Apps Script
+const API_URL = "https://script.google.com/macros/s/AKfycbwZcn7J_nECd3G5ftT-jNT-y8uuCh-33GTkqYTLV7S6gNMAH_L_oAsSBXwibO1F4---gg/exec"; // tu URL de Apps Script
 
 // Helper para mostrar mensajes
 function setEstado(msg, ok = null) {
@@ -95,6 +95,7 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+
 
 
 
