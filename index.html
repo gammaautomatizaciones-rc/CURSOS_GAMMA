@@ -38,6 +38,7 @@
     <p>© 2025 Gamma Automatizaciones - Todos los derechos reservados</p>
   </footer>
 
+  <!-- SCRIPT -->
   <script>
     // =============================
     // Manejo de sesión
@@ -55,11 +56,17 @@
     });
 
     // =============================
+    // DEBUG: ver qué curso devuelve
+    // =============================
+    console.log("DEBUG usuario:", usuario);
+    alert("Curso detectado: " + usuario?.curso);
+
+    // =============================
     // Mostrar cursos habilitados
     // =============================
     const container = document.getElementById("cursos-habilitados");
 
-    if (usuario?.curso === "excel") {
+    if (usuario?.curso?.trim().toLowerCase() === "excel") {
       container.innerHTML = `
         <div class="curso-card">
           <h3>Curso de Excel</h3>
