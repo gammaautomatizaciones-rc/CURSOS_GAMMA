@@ -11,14 +11,15 @@
   <header class="navbar">
     <img src="assets/logo.png" alt="Logo Gamma" class="logo">
     <nav>
-      <ul id="menu-auth">
-        <!-- Dinámico: se rellena con JS -->
+      <ul>
+        <li><a href="index.html">🏠 Inicio</a></li>
+        <li><button id="btn-logout" class="logout">Salir</button></li>
       </ul>
     </nav>
   </header>
 
   <!-- HERO -->
-  <section class="hero-curso">
+  <section class="hero">
     <div class="hero-text">
       <h1>Gamma Cursos</h1>
       <p>Formación práctica en automatización y productividad</p>
@@ -26,10 +27,10 @@
     </div>
   </section>
 
-  <!-- CURSOS DISPONIBLES -->
-  <section class="modulos">
+  <!-- CURSOS HABILITADOS -->
+  <section class="cursos">
     <h2>Mis cursos habilitados</h2>
-    <div id="lista-cursos" class="lista-modulos"></div>
+    <div id="cursos-habilitados"></div>
   </section>
 
   <!-- FOOTER -->
@@ -39,54 +40,37 @@
 
   <script>
     // =============================
-    // Cargar usuario
+    // Manejo de sesión
     // =============================
     const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-    const menuAuth = document.getElementById("menu-auth");
-    const bienvenida = document.getElementById("bienvenida");
-    const listaCursos = document.getElementById("lista-cursos");
-
     if (!usuario) {
-      // Usuario no logueado → mostrar login/registro
-      menuAuth.innerHTML = `
-        <li><a href="auth/login.html">Login</a></li>
-        <li><a href="auth/registro.html">Registro</a></li>
-      `;
-      bienvenida.innerText = "Iniciá sesión para acceder a tus cursos.";
-    } else {
-      // Usuario logueado
-      menuAuth.innerHTML = `
-        <li><button class="logout" onclick="logout()">Salir</button></li>
-      `;
-      bienvenida.innerText = `Bienvenido/a, ${usuario.nombre}`;
-
-      // Cursos habilitados
-      const cursos = usuario.cursos || [];
-
-      if (cursos.length === 0) {
-        listaCursos.innerHTML = `<p>⚠️ Aún no tenés cursos habilitados. Contactá con el administrador.</p>`;
-      } else {
-        cursos.forEach(curso => {
-          const div = document.createElement("div");
-          div.classList.add("modulo", "active");
-          div.innerHTML = `
-            <div class="modulo-header">
-              <h3>${curso === "excel" ? "Curso de Excel" : "Curso de Make"}</h3>
-              <span class="status">${curso === "excel" ? "📊" : "⚙️"}</span>
-            </div>
-            <div class="modulo-content active">
-              <a href="cursos/${curso}/index.html" class="btn">👉 Entrar al curso</a>
-            </div>
-          `;
-          listaCursos.appendChild(div);
-        });
-      }
+      window.location.href = "auth/login.html";
     }
 
-    function logout() {
+    document.getElementById("bienvenida").innerText = `Bienvenido/a, ${usuario.nombre}`;
+
+    document.getElementById("btn-logout")?.addEventListener("click", () => {
       localStorage.removeItem("usuario");
       window.location.href = "auth/login.html";
+    });
+
+    // =============================
+    // Mostrar cursos habilitados
+    // =============================
+    const container = document.getElementById("cursos-habilitados");
+
+    if (usuario?.curso === "excel") {
+      container.innerHTML = `
+        <div class="curso-card">
+          <h3>Curso de Excel</h3>
+          <p>Accedé al curso intensivo de Excel con 12 módulos prácticos.</p>
+          <a href="cursos/excel/index.html" class="btn">👉 Ir al curso</a>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <p>⚠️ Aún no tenés cursos habilitados. Contactá con el administrador.</p>
+      `;
     }
   </script>
 </body>
