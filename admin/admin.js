@@ -1,6 +1,6 @@
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbxwgrNEjqyIU6fZe19ntGuMtXPr9ZMvLkZscX5yB17QCJZYyhN6prUnQtxvIUkXW6_3lA/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbxgdAQWh4tSi93ykTAKo_Rs3k8EpBr3L67npGgzBBO7JAjUrKRxn4yy0gWhzmMf-31O0A/exec";
 
-// 1. Habilitar módulo
+// 1. Habilitar módulo (por grupo)
 document.getElementById("form-habilitar").addEventListener("submit", async (e) => {
   e.preventDefault();
   const estado = document.getElementById("estado-habilitar");
@@ -25,13 +25,13 @@ document.getElementById("form-habilitar").addEventListener("submit", async (e) =
   }
 });
 
-// 2. Poner nota al alumno
+// 2. Poner nota al alumno (individual, PROGRESOEXCEL)
 document.getElementById("form-nota").addEventListener("submit", async (e) => {
   e.preventDefault();
   const estado = document.getElementById("estado-nota");
   estado.innerText = "⏳ Guardando...";
 
-  const email = document.getElementById("email-nota").value;
+  const email = document.getElementById("email-nota").value.trim().toLowerCase();
   const curso = document.getElementById("curso-nota").value;
   const grupo = document.getElementById("grupo-nota").value;
   const modulo = document.getElementById("modulo-nota").value;
@@ -41,7 +41,14 @@ document.getElementById("form-nota").addEventListener("submit", async (e) => {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "ponerNota", email, curso, grupo, modulo, nota })
+      body: new URLSearchParams({
+        action: "ponerNota",
+        email,
+        curso,
+        grupo,
+        modulo,
+        nota
+      })
     });
     const result = await resp.json();
     estado.innerText = result.msg;
@@ -58,7 +65,7 @@ document.getElementById("form-grupo").addEventListener("submit", async (e) => {
   const estado = document.getElementById("estado-grupo");
   estado.innerText = "⏳ Procesando...";
 
-  const email = document.getElementById("email-alumno").value;
+  const email = document.getElementById("email-alumno").value.trim().toLowerCase();
   const curso = document.getElementById("curso-alumno").value;
   const grupo = document.getElementById("grupo-alumno").value;
 
@@ -77,7 +84,7 @@ document.getElementById("form-grupo").addEventListener("submit", async (e) => {
   }
 });
 
-// 4. Ver progreso
+// 4. Ver progreso (por grupo)
 document.getElementById("form-ver").addEventListener("submit", async (e) => {
   e.preventDefault();
   const resBox = document.getElementById("resultado-ver");
