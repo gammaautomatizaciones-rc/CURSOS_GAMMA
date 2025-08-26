@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curso - Gamma</title>
+  <title>Curso de Excel - Gamma</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- NAVBAR -->
   <header class="navbar">
-    <img src="../assets/logo.png" alt="Logo Gamma" class="logo">
+    <img src="../../assets/logo.png" alt="Logo Gamma" class="logo">
     <nav>
       <ul>
-        <li><a href="../index.html">🏠 Mis Cursos</a></li>
-        <li><a href="../subida/subida.html">📤 Subir Actividad</a></li>
+        <li><a href="../../index.html">🏠 Mis Cursos</a></li>
+        <li><a href="../../subida/subida.html">📤 Subir Actividad</a></li>
         <li><button id="btn-logout" class="logout">Salir</button></li>
       </ul>
     </nav>
@@ -22,8 +22,8 @@
   <!-- HERO -->
   <section class="hero-curso">
     <div class="hero-text">
-      <h1 id="titulo-curso">Curso</h1>
-      <p id="descripcion-curso">Descripción del curso...</p>
+      <h1 id="titulo-curso">Curso Intensivo de Excel</h1>
+      <p id="descripcion-curso">Domina Excel en 3 meses con clases prácticas.</p>
       <p id="bienvenida"></p>
     </div>
   </section>
@@ -41,7 +41,7 @@
   <section class="modulos">
     <h2>Plan de Estudio</h2>
     <div id="lista-modulos" class="lista-modulos">
-      <!-- Se genera con curso.js -->
+      <!-- Se genera dinámicamente con curso.js -->
     </div>
   </section>
 
@@ -50,6 +50,10 @@
     <p>© 2025 Gamma Automatizaciones - Optimización Empresarial</p>
   </footer>
 
+  <!-- Script con curso fijo en Excel -->
+  <script>
+    const idCurso = "excel"; // Curso fijo
+  </script>
   <script src="curso.js"></script>
 </body>
 </html>
