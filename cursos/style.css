@@ -226,3 +226,29 @@ footer {
   font-size: 0.9rem;
   border-top: 1px solid #222;
 }
+.modulo-card {
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+.modulo-card:hover {
+  transform: translateY(-4px);
+}
+.modulo-card h3 {
+  color: var(--dorado);
+  margin-bottom: 10px;
+}
+.modulo-card .status {
+  margin-bottom: 15px;
+  display: block;
+}
+.modulo-card .acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
