@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbw879KqedPdAOnO8wipCswCGzVbDWnvfxTqPMhiDgVWJZmxPAebm31JFacFQqsVcYYdgA/exec"; // tu URL de Apps Script
+const API_URL = "https://script.google.com/macros/s/AKfycbxHV_K6_qWHUcQn79U1DQr5JteDj9VSBYq5LmJ97ATlXNNJ2L0jMSGbEGkOU5dlf4sNhQ/exec"; // tu URL de Apps Script
 
 // Helper para mostrar mensajes
 function setEstado(msg, ok = null) {
@@ -74,6 +74,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   setEstado(result.msg, result.success);
 
   if (result.success && result.usuario) {
+    // Guardamos todos los datos del usuario, incluyendo cursos (array)
     localStorage.setItem("usuario", JSON.stringify(result.usuario));
     setTimeout(() => window.location.href = "../index.html", 1000);
   }
@@ -94,12 +95,3 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
-
-
-
-
-
-
-
-
-
