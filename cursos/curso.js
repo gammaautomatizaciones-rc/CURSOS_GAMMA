@@ -6,7 +6,6 @@ if (!usuario) {
   window.location.href = "../../auth/login.html";
 }
 
-const esAdmin = usuario.rol === "admin";
 let completados = 0;
 
 // Mostrar saludo
@@ -22,18 +21,26 @@ document.getElementById("btn-logout")?.addEventListener("click", () => {
 // =============================
 // Configuración
 // =============================
-const PROGRESO_API_URL = "https://script.google.com/macros/s/AKfycbzymX3hUsIA9oF7gK_hA5IOHXYqdxe_t2rh1UKXHzOIJpeVH1Wp6U8kZ9-lD9ijzEGjZQ/exec";
+const PROGRESO_API_URL = "TU_URL_DE_APPS_SCRIPT"; // la misma que usás en admin
 
-// Curso fijo: Excel
 const cursos = {
   excel: {
     titulo: "Curso Intensivo de Excel",
     descripcion: "Un curso de 3 meses (12 clases) para dominar Excel desde cero hasta avanzado.",
     modulos: Array.from({ length: 12 }, (_, i) => ({
       titulo: `Módulo ${i + 1}`,
-      url: `modulo${i + 1}.html`
+      url: `cursos/excel/modulos/modulo${i + 1}.html`
+    }))
+  },
+  make: {
+    titulo: "Curso de Make",
+    descripcion: "Aprendé a automatizar con Make en 8 módulos prácticos.",
+    modulos: Array.from({ length: 8 }, (_, i) => ({
+      titulo: `Módulo ${i + 1}`,
+      url: `cursos/make/modulos/modulo${i + 1}.html`
     }))
   }
+  // Podés seguir agregando cursos sin tocar nada más
 };
 
 // =============================
@@ -57,20 +64,17 @@ async function obtenerProgreso(curso, grupo) {
   return await postBackend({ action: "getProgresoGrupo", curso, grupo });
 }
 
-async function habilitarModulo(curso, grupo, modulo) {
-  return await postBackend({ action: "habilitarModulo", curso, grupo, modulo });
-}
-
-async function completarModulo(curso, grupo, modulo, email) {
-  return await postBackend({ action: "completarModulo", curso, grupo, modulo, email });
-}
-
 // =============================
 // Render principal
 // =============================
 async function renderModulos() {
-  const idCurso = "excel"; // fijo
   const curso = cursos[idCurso];
+  if (!curso) {
+    document.getElementById("lista-modulos").innerHTML =
+      "<p>⚠️ Curso no encontrado.</p>";
+    return;
+  }
+
   completados = 0;
 
   // Títulos
@@ -82,42 +86,29 @@ async function renderModulos() {
 
   // Traer info de backend según curso y grupo
   const backendData = await obtenerProgreso(idCurso, usuario.grupo);
-  const habilitados = backendData.success ? backendData.progreso || [] : [];
+  const modulosData = backendData.success ? backendData.progreso || [] : [];
 
   curso.modulos.forEach((mod, i) => {
-    const estado = habilitados.find(m => m.modulo == i + 1);
+    const estado = modulosData.find(m => m.modulo == i + 1);
     const habilitado = estado ? (estado.habilitado === true || estado.habilitado === "TRUE") : false;
+    const completado = estado ? (estado.completado === true || estado.completado === "TRUE") : false;
 
-    // 🔒 si no está habilitado no lo mostramos
+    // Si no está habilitado → no se muestra
     if (!habilitado) return;
 
     const moduloDiv = document.createElement("div");
     moduloDiv.classList.add("modulo-card");
-    if (!habilitado) moduloDiv.classList.add("locked");
+    if (completado) moduloDiv.classList.add("done");
 
     moduloDiv.innerHTML = `
       <h3>${mod.titulo}</h3>
-      <p class="status">${habilitado ? "✅ Disponible" : "🔒 Bloqueado"}</p>
+      <p class="status">${completado ? "✔ Completado" : "✅ Disponible"}</p>
       <div class="acciones">
-        ${habilitado ? `<a href="${mod.url}" class="btn">👉 Ir al módulo</a>` : ""}
-        ${habilitado ? `<button class="completar-btn ${localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true" ? "completado" : ""}">${localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true" ? "✔ Completado" : "Marcar como completado"}</button>` : ""}
-        ${!habilitado && esAdmin ? `<button class="habilitar-btn">🔑 Habilitar módulo</button>` : ""}
+        <a href="${mod.url}" class="btn">👉 Ir al módulo</a>
       </div>
     `;
 
-    // Botón completar
-    const btn = moduloDiv.querySelector(".completar-btn");
-    if (btn) {
-      btn.addEventListener("click", async () => {
-        await completarModulo(idCurso, usuario.grupo, i + 1, usuario.email);
-        localStorage.setItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`, "true");
-        renderModulos();
-      });
-    }
-
-    // Contar completados
-    const completadoLocal = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
-    if (habilitado && completadoLocal) completados++;
+    if (completado) completados++;
 
     lista.appendChild(moduloDiv);
   });
@@ -131,7 +122,8 @@ async function renderModulos() {
 function actualizarProgreso(total) {
   const porcentaje = Math.round((completados / total) * 100);
   document.getElementById("barra-progreso").style.width = `${porcentaje}%`;
-  document.getElementById("texto-progreso").innerText = `${completados} de ${total} módulos completados`;
+  document.getElementById("texto-progreso").innerText =
+    `${completados} de ${total} módulos completados`;
 }
 
 // =============================
