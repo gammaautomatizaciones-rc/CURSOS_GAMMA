@@ -18,10 +18,14 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
 
   try {
     const resp = await fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
-    });
+  method: "POST",
+  body: JSON.stringify(data),
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  }
+});
+
     const result = await resp.json();
     estado.innerText = result.msg;
 
@@ -78,4 +82,5 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+
 
