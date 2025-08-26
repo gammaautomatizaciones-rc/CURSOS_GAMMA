@@ -11,9 +11,8 @@
   <header class="navbar">
     <img src="assets/logo.png" alt="Logo Gamma" class="logo">
     <nav>
-      <ul>
-        <li><a href="auth/login.html">Login</a></li>
-        <li><a href="auth/registro.html">Registro</a></li>
+      <ul id="menu-auth">
+        <!-- Dinámico: se rellena con JS -->
       </ul>
     </nav>
   </header>
@@ -23,38 +22,72 @@
     <div class="hero-text">
       <h1>Gamma Cursos</h1>
       <p>Formación práctica en automatización y productividad</p>
+      <p id="bienvenida"></p>
     </div>
   </section>
 
-  <!-- CURSOS -->
+  <!-- CURSOS DISPONIBLES -->
   <section class="modulos">
-    <h2>Elige tu curso</h2>
-    <div class="lista-modulos">
-      <div class="modulo">
-        <div class="modulo-header">
-          <h3>Curso de Excel</h3>
-          <span class="status">📊</span>
-        </div>
-        <div class="modulo-content active">
-          <a href="cursos/excel/index.html" class="btn">👉 Entrar al curso</a>
-        </div>
-      </div>
-
-      <div class="modulo">
-        <div class="modulo-header">
-          <h3>Curso de Make</h3>
-          <span class="status">⚙️</span>
-        </div>
-        <div class="modulo-content active">
-          <a href="cursos/make/index.html" class="btn">👉 Entrar al curso</a>
-        </div>
-      </div>
-    </div>
+    <h2>Mis cursos habilitados</h2>
+    <div id="lista-cursos" class="lista-modulos"></div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <p>© 2025 Gamma Automatizaciones - Todos los derechos reservados</p>
   </footer>
+
+  <script>
+    // =============================
+    // Cargar usuario
+    // =============================
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    const menuAuth = document.getElementById("menu-auth");
+    const bienvenida = document.getElementById("bienvenida");
+    const listaCursos = document.getElementById("lista-cursos");
+
+    if (!usuario) {
+      // Usuario no logueado → mostrar login/registro
+      menuAuth.innerHTML = `
+        <li><a href="auth/login.html">Login</a></li>
+        <li><a href="auth/registro.html">Registro</a></li>
+      `;
+      bienvenida.innerText = "Iniciá sesión para acceder a tus cursos.";
+    } else {
+      // Usuario logueado
+      menuAuth.innerHTML = `
+        <li><button class="logout" onclick="logout()">Salir</button></li>
+      `;
+      bienvenida.innerText = `Bienvenido/a, ${usuario.nombre}`;
+
+      // Cursos habilitados
+      const cursos = usuario.cursos || [];
+
+      if (cursos.length === 0) {
+        listaCursos.innerHTML = `<p>⚠️ Aún no tenés cursos habilitados. Contactá con el administrador.</p>`;
+      } else {
+        cursos.forEach(curso => {
+          const div = document.createElement("div");
+          div.classList.add("modulo", "active");
+          div.innerHTML = `
+            <div class="modulo-header">
+              <h3>${curso === "excel" ? "Curso de Excel" : "Curso de Make"}</h3>
+              <span class="status">${curso === "excel" ? "📊" : "⚙️"}</span>
+            </div>
+            <div class="modulo-content active">
+              <a href="cursos/${curso}/index.html" class="btn">👉 Entrar al curso</a>
+            </div>
+          `;
+          listaCursos.appendChild(div);
+        });
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("usuario");
+      window.location.href = "auth/login.html";
+    }
+  </script>
 </body>
 </html>
