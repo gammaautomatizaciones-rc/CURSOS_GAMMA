@@ -84,40 +84,40 @@ async function renderModulos() {
   const backendData = await obtenerProgreso(idCurso, usuario.grupo);
   const habilitados = backendData.success ? backendData.progreso || [] : [];
 
-  // Mostrar solo módulos habilitados
-  habilitados.forEach(registro => {
-    const i = registro.modulo - 1;
-    const mod = curso.modulos[i];
-    const habilitado = registro.habilitado === true || registro.habilitado === "TRUE";
+  curso.modulos.forEach((mod, i) => {
+    const estado = habilitados.find(m => m.modulo == i + 1);
+    const habilitado = estado ? (estado.habilitado === true || estado.habilitado === "TRUE") : false;
 
-    if (!habilitado) return; // si no está habilitado, no lo mostramos
-
-    const completadoLocal = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
-    if (habilitado && completadoLocal) completados++;
+    // 🔒 si no está habilitado no lo mostramos
+    if (!habilitado) return;
 
     const moduloDiv = document.createElement("div");
-    moduloDiv.classList.add("modulo", "card");
+    moduloDiv.classList.add("modulo-card");
+    if (!habilitado) moduloDiv.classList.add("locked");
 
     moduloDiv.innerHTML = `
-      <div class="modulo-header">
-        <h3>${mod.titulo}</h3>
-        <span class="status">${completadoLocal ? "✔ Completado" : "👉 Disponible"}</span>
-      </div>
-      <div class="modulo-content">
-        <a href="${mod.url}" class="btn">Ir al módulo</a>
-        <button class="completar-btn ${completadoLocal ? "completado" : ""}">
-          ${completadoLocal ? "✔ Completado" : "Marcar como completado"}
-        </button>
+      <h3>${mod.titulo}</h3>
+      <p class="status">${habilitado ? "✅ Disponible" : "🔒 Bloqueado"}</p>
+      <div class="acciones">
+        ${habilitado ? `<a href="${mod.url}" class="btn">👉 Ir al módulo</a>` : ""}
+        ${habilitado ? `<button class="completar-btn ${localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true" ? "completado" : ""}">${localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true" ? "✔ Completado" : "Marcar como completado"}</button>` : ""}
+        ${!habilitado && esAdmin ? `<button class="habilitar-btn">🔑 Habilitar módulo</button>` : ""}
       </div>
     `;
 
     // Botón completar
     const btn = moduloDiv.querySelector(".completar-btn");
-    btn.addEventListener("click", async () => {
-      await completarModulo(idCurso, usuario.grupo, i + 1, usuario.email);
-      localStorage.setItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`, "true");
-      renderModulos();
-    });
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        await completarModulo(idCurso, usuario.grupo, i + 1, usuario.email);
+        localStorage.setItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`, "true");
+        renderModulos();
+      });
+    }
+
+    // Contar completados
+    const completadoLocal = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
+    if (habilitado && completadoLocal) completados++;
 
     lista.appendChild(moduloDiv);
   });
