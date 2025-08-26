@@ -6,11 +6,11 @@ if (!usuario) {
   window.location.href = "../auth/login.html";
 }
 
-let esAdmin = usuario.rol === "admin";
+const esAdmin = usuario.rol === "admin";
 let completados = 0;
 
 // Mostrar saludo
-document.getElementById("bienvenida")?.innerText = `Bienvenido/a, ${usuario.nombre}`;
+document.getElementById("bienvenida")?.innerText = `Bienvenido/a, ${usuario.nombre} (Grupo ${usuario.grupo})`;
 
 // Botón logout
 document.getElementById("btn-logout")?.addEventListener("click", () => {
@@ -43,28 +43,37 @@ const cursos = {
 };
 
 // =============================
-// Helpers para backend
+// Helpers backend
 // =============================
-async function obtenerModulosBackend(cursoId) {
+async function obtenerProgreso(curso, grupo) {
   try {
     const resp = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "getModulos", curso: cursoId })
+      body: new URLSearchParams({
+        action: "getProgreso",
+        curso,
+        grupo
+      })
     });
     return await resp.json();
   } catch (err) {
-    console.error("Error al obtener módulos:", err);
+    console.error("Error al obtener progreso:", err);
     return { success: false, modulos: [] };
   }
 }
 
-async function habilitarModuloBackend(cursoId, modulo) {
+async function habilitarModulo(curso, grupo, modulo) {
   try {
     const resp = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "habilitarModulo", curso: cursoId, modulo })
+      body: new URLSearchParams({
+        action: "habilitarModulo",
+        curso,
+        grupo,
+        modulo
+      })
     });
     return await resp.json();
   } catch (err) {
@@ -91,12 +100,13 @@ async function renderModulos() {
   const lista = document.getElementById("lista-modulos");
   lista.innerHTML = "";
 
-  const backendData = await obtenerModulosBackend(idCurso);
+  // Traer info de backend según curso y grupo del usuario
+  const backendData = await obtenerProgreso(idCurso, usuario.grupo);
   const habilitados = backendData.success ? backendData.modulos : [];
 
   curso.modulos.forEach((mod, i) => {
     const habilitado = habilitados.find(m => m.modulo == i + 1)?.habilitado || false;
-    const completado = localStorage.getItem(`${idCurso}-modulo-${i}-completado`) === "true";
+    const completado = localStorage.getItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`) === "true";
 
     const moduloDiv = document.createElement("div");
     moduloDiv.classList.add("modulo");
@@ -109,7 +119,7 @@ async function renderModulos() {
       </div>
       <div class="modulo-content">
         ${habilitado ? `<a href="${mod.url}" class="btn">👉 Ir al módulo</a>` : ""}
-        ${habilitado ? `<button class="completar-btn">${completado ? "✔ Completado" : "Marcar como completado"}</button>` : ""}
+        ${habilitado ? `<button class="completar-btn ${completado ? "completado" : ""}">${completado ? "✔ Completado" : "Marcar como completado"}</button>` : ""}
         ${!habilitado && esAdmin ? `<button class="habilitar-btn">🔑 Habilitar módulo</button>` : ""}
       </div>
     `;
@@ -119,10 +129,10 @@ async function renderModulos() {
       if (habilitado) moduloDiv.classList.toggle("active");
     });
 
-    // Botón habilitar (admin)
+    // Botón habilitar (solo admin)
     if (!habilitado && esAdmin) {
       moduloDiv.querySelector(".habilitar-btn").addEventListener("click", async () => {
-        await habilitarModuloBackend(idCurso, i + 1);
+        await habilitarModulo(idCurso, usuario.grupo, i + 1);
         renderModulos();
       });
     }
@@ -130,9 +140,8 @@ async function renderModulos() {
     // Botón completar
     if (habilitado) {
       const btn = moduloDiv.querySelector(".completar-btn");
-      if (completado) btn.classList.add("completado");
       btn.addEventListener("click", () => {
-        localStorage.setItem(`${idCurso}-modulo-${i}-completado`, "true");
+        localStorage.setItem(`${idCurso}-grupo-${usuario.grupo}-modulo-${i + 1}`, "true");
         renderModulos();
       });
     }
