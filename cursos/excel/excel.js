@@ -51,7 +51,7 @@ async function renderModulos() {
   for (let i = 1; i <= totalModulos; i++) {
     const estado = modulosData.find(m => m.modulo == i);
 
-    if (!estado || estado.habilitado !== true && estado.habilitado !== "TRUE") {
+    if (!estado || (estado.habilitado !== true && estado.habilitado !== "TRUE")) {
       continue; // no mostrar módulos bloqueados
     }
 
