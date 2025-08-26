@@ -12,7 +12,7 @@ const totalModulos = 12;
 // =============================
 // Configuración
 // =============================
-const API_PROGRESO = "https://script.google.com/macros/s/AKfycbxgdAQWh4tSi93ykTAKo_Rs3k8EpBr3L67npGgzBBO7JAjUrKRxn4yy0gWhzmMf-31O0A/exec"; // mismo que admin.js
+const API_PROGRESO = "https://script.google.com/macros/s/AKfycbxgdAQWh4tSi93ykTAKo_Rs3k8EpBr3L67npGgzBBO7JAjUrKRxn4yy0gWhzmMf-31O0A/exec"; 
 
 // =============================
 // Helpers backend
@@ -31,8 +31,8 @@ async function postBackend(data) {
   }
 }
 
-async function obtenerProgreso(curso, grupo) {
-  return await postBackend({ action: "verGrupo", curso, grupo });
+async function obtenerProgresoAlumno(curso, email) {
+  return await postBackend({ action: "verAlumno", curso, email });
 }
 
 // =============================
@@ -42,7 +42,7 @@ async function renderModulos() {
   const lista = document.getElementById("lista-modulos");
   lista.innerHTML = "⏳ Cargando módulos...";
 
-  const backendData = await obtenerProgreso("excel", usuario.grupo);
+  const backendData = await obtenerProgresoAlumno("excel", usuario.email);
   const modulosData = backendData.success ? backendData.modulos || [] : [];
 
   lista.innerHTML = "";
