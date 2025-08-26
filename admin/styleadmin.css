@@ -1,0 +1,54 @@
+.admin-panel {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  background: var(--blanco);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.admin-panel h1 {
+  margin-bottom: 25px;
+  color: var(--negro);
+  text-align: center;
+}
+.admin-section {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+.admin-section:last-child {
+  border: none;
+}
+label {
+  display: block;
+  margin: 10px 0 5px;
+  text-align: left;
+}
+select, input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.btn {
+  background: var(--dorado);
+  color: var(--blanco);
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #8a6b34;
+}
+.result-box {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: left;
+}
