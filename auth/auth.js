@@ -19,7 +19,8 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
   try {
     const resp = await fetch(API_URL, {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" }
     });
     const result = await resp.json();
     estado.innerText = result.msg;
@@ -29,6 +30,7 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
     }
   } catch (err) {
     estado.innerText = "⚠️ Error en la conexión.";
+    console.error(err);
   }
 });
 
@@ -49,7 +51,8 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   try {
     const resp = await fetch(API_URL, {
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" }
     });
     const result = await resp.json();
     estado.innerText = result.msg;
@@ -60,6 +63,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
     }
   } catch (err) {
     estado.innerText = "⚠️ Error en la conexión.";
+    console.error(err);
   }
 });
 
