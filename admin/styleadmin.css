@@ -1,54 +1,109 @@
+/* =============================
+   Panel de Administración
+============================= */
 .admin-panel {
-  max-width: 700px;
+  max-width: 800px;
   margin: 50px auto;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--blanco);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
+
 .admin-panel h1 {
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   color: var(--negro);
   text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
+
+/* =============================
+   Secciones
+============================= */
 .admin-section {
   margin-bottom: 40px;
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
 }
+
 .admin-section:last-child {
   border: none;
 }
+
+.admin-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: var(--dorado);
+}
+
+/* =============================
+   Formularios
+============================= */
 label {
   display: block;
   margin: 10px 0 5px;
   text-align: left;
+  font-weight: bold;
+  color: var(--negro);
 }
-select, input {
+
+select, 
+input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-size: 0.95rem;
 }
+
+select:focus,
+input:focus {
+  border-color: var(--dorado);
+  outline: none;
+  background: #fff;
+}
+
+/* =============================
+   Botones
+============================= */
 .btn {
   background: var(--dorado);
   color: var(--blanco);
-  padding: 10px;
+  padding: 12px 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
+
 .btn:hover {
   background: #8a6b34;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
+/* =============================
+   Resultados / Estado
+============================= */
 .result-box {
   background: #f9f9f9;
   padding: 15px;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-top: 10px;
   font-size: 0.9rem;
   text-align: left;
+  color: var(--negro);
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.08);
+}
+
+#estado-habilitar,
+#estado-nota,
+#estado-grupo {
+  font-weight: bold;
+  margin-top: 10px;
 }
