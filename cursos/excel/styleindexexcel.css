@@ -1,0 +1,128 @@
+@import url("../../style.css");
+
+/* =============================
+   HERO
+============================= */
+.hero-curso {
+  background: var(--gris-oscuro);
+  color: var(--blanco);
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero-curso h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.hero-curso p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* =============================
+   PROGRESO
+============================= */
+.progreso {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.barra-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto 10px;
+  background: var(--gris);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 18px;
+}
+
+.barra {
+  height: 100%;
+  background: var(--dorado);
+  width: 0;
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+#texto-progreso {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* =============================
+   MÓDULOS
+============================= */
+.modulos {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.lista-modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.modulo-card {
+  background: var(--blanco);
+  border: 1px solid var(--gris);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modulo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.modulo-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: var(--negro);
+}
+
+.status {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: var(--dorado);
+}
+
+.modulo-card.done .status {
+  color: var(--verde);
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =============================
+   BOTONES
+============================= */
+.btn {
+  background: var(--dorado);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: var(--blanco);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #8a6b34;
+}
+
+.completar-btn.completado {
+  background: var(--verde);
+}
