@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin - Gamma Cursos</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .admin-panel {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+      background: var(--blanco);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .admin-panel h1 {
+      margin-bottom: 25px;
+      color: var(--negro);
+      text-align: center;
+    }
+    .admin-section {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .admin-section:last-child {
+      border: none;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: left;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    #estado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .result-box {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <img src="../assets/logo.png" alt="Logo Gamma" class="logo">
+    <nav>
+      <ul>
+        <li><a href="../index.html">🏠 Inicio</a></li>
+        <li><button id="btn-logout" class="logout">Salir</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- PANEL ADMIN -->
+  <section class="admin-panel">
+    <h1>Panel de Administración</h1>
+
+    <!-- 1. Habilitar módulo -->
+    <div class="admin-section">
+      <h2>🔑 Habilitar módulo</h2>
+      <form id="form-habilitar">
+        <label>Curso:</label>
+        <select id="curso" required>
+          <option value="excel">Excel</option>
+          <option value="make">Make</option>
+        </select>
+
+        <label>Grupo:</label>
+        <input type="number" id="grupo" min="1" required>
+
+        <label>Módulo a habilitar:</label>
+        <input type="number" id="modulo" min="1" max="12" required>
+
+        <button type="submit" class="btn">Habilitar</button>
+      </form>
+      <p id="estado-habilitar"></p>
+    </div>
+
+    <!-- 2. Asignar grupo a alumno -->
+    <div class="admin-section">
+      <h2>👥 Asignar grupo a alumno</h2>
+      <form id="form-grupo">
+        <label>Email del alumno:</label>
+        <input type="email" id="email-alumno" required>
+
+        <label>Curso:</label>
+        <select id="curso-alumno" required>
+          <option value="excel">Excel</option>
+          <option value="make">Make</option>
+        </select>
+
+        <label>Grupo:</label>
+        <input type="number" id="grupo-alumno" min="1" required>
+
+        <button type="submit" class="btn">Asignar grupo</button>
+      </form>
+      <p id="estado-grupo"></p>
+    </div>
+
+    <!-- 3. Ver progreso de grupo -->
+    <div class="admin-section">
+      <h2>📊 Ver progreso de grupo</h2>
+      <form id="form-ver">
+        <label>Curso:</label>
+        <select id="curso-ver" required>
+          <option value="excel">Excel</option>
+          <option value="make">Make</option>
+        </select>
+
+        <label>Grupo:</label>
+        <input type="number" id="grupo-ver" min="1" required>
+
+        <button type="submit" class="btn">Ver progreso</button>
+      </form>
+      <div id="resultado-ver" class="result-box"></div>
+    </div>
+  </section>
+
+  <script>
+    const API_ADMIN = "https://script.google.com/macros/s/AKfycbzqDFsPVeKJlpxI_GvZKUQ1ZkZ6Pwd86S8HOz1I9t20AHDmAj65mXC6Dpqu8vC0c2BPcw/exec"; // tu URL de admin.gs
+
+    // 1. Habilitar módulo
+    document.getElementById("form-habilitar").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const estado = document.getElementById("estado-habilitar");
+      estado.innerText = "⏳ Procesando...";
+
+      const curso = document.getElementById("curso").value;
+      const grupo = document.getElementById("grupo").value;
+      const modulo = document.getElementById("modulo").value;
+
+      try {
+        const resp = await fetch(API_ADMIN, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ action: "habilitarModulo", curso, grupo, modulo })
+        });
+        const result = await resp.json();
+        estado.innerText = result.msg;
+        estado.style.color = result.success ? "green" : "red";
+      } catch {
+        estado.innerText = "⚠️ Error de conexión.";
+        estado.style.color = "red";
+      }
+    });
+
+    // 2. Asignar grupo a alumno
+    document.getElementById("form-grupo").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const estado = document.getElementById("estado-grupo");
+      estado.innerText = "⏳ Procesando...";
+
+      const email = document.getElementById("email-alumno").value;
+      const curso = document.getElementById("curso-alumno").value;
+      const grupo = document.getElementById("grupo-alumno").value;
+
+      try {
+        const resp = await fetch(API_ADMIN, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ action: "asignarGrupo", emailTarget: email, curso, grupo })
+        });
+        const result = await resp.json();
+        estado.innerText = result.msg;
+        estado.style.color = result.success ? "green" : "red";
+      } catch {
+        estado.innerText = "⚠️ Error de conexión.";
+        estado.style.color = "red";
+      }
+    });
+
+    // 3. Ver progreso de grupo
+    document.getElementById("form-ver").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const resBox = document.getElementById("resultado-ver");
+      resBox.innerHTML = "⏳ Cargando...";
+
+      const curso = document.getElementById("curso-ver").value;
+      const grupo = document.getElementById("grupo-ver").value;
+
+      try {
+        const resp = await fetch(API_ADMIN, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ action: "verGrupo", curso, grupo })
+        });
+        const result = await resp.json();
+
+        if (result.success) {
+          resBox.innerHTML = result.modulos.map(m => 
+            `Módulo ${m.modulo}: ${m.habilitado ? "✅ Habilitado" : "🔒 Bloqueado"}`
+          ).join("<br>");
+        } else {
+          resBox.innerHTML = result.msg;
+        }
+      } catch {
+        resBox.innerHTML = "⚠️ Error de conexión.";
+      }
+    });
+
+    // Logout
+    document.getElementById("btn-logout").addEventListener("click", () => {
+      localStorage.removeItem("usuario");
+      window.location.href = "../auth/login.html";
+    });
+  </script>
+</body>
+</html>
