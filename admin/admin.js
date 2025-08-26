@@ -1,4 +1,4 @@
-const API_ADMIN = "TU_URL_DE_ADMIN_GS";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbxwgrNEjqyIU6fZe19ntGuMtXPr9ZMvLkZscX5yB17QCJZYyhN6prUnQtxvIUkXW6_3lA/exec";
 
 // 1. Habilitar módulo
 document.getElementById("form-habilitar").addEventListener("submit", async (e) => {
