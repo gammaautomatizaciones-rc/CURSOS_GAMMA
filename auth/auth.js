@@ -1,9 +1,11 @@
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbw8G3V7kw_YhqQy6Jgl1rg9TWWfhTXCw5401dDDudc4lOrh27yT42ohkhouI7ocaMjA9g/exec"; // tu URL de Apps Script
+const API_URL = "https://script.google.com/macros/s/AKfycbw8G3V7kw_YhqQy6Jgl1rg9TWWfhTXCw5401dDDudc4lOrh27yT42ohkhouI7ocaMjA9g/exec"; // URL del deploy de auth.gs
 
+// =============================
 // Helper para mostrar mensajes
+// =============================
 function setEstado(msg, ok = null) {
   const estado = document.getElementById("estado");
   if (!estado) return;
@@ -12,7 +14,9 @@ function setEstado(msg, ok = null) {
   estado.style.color = ok === true ? "green" : ok === false ? "red" : "black";
 }
 
+// =============================
 // Helper para enviar datos al servidor
+// =============================
 async function enviarDatos(data) {
   try {
     const resp = await fetch(API_URL, {
@@ -74,7 +78,6 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   setEstado(result.msg, result.success);
 
   if (result.success && result.usuario) {
-    // Guardamos todos los datos del usuario, incluyendo cursos (array)
     localStorage.setItem("usuario", JSON.stringify(result.usuario));
     setTimeout(() => window.location.href = "../index.html", 1000);
   }
@@ -95,8 +98,3 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
-
-
-
-
-
