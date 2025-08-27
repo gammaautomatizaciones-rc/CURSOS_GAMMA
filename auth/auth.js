@@ -98,6 +98,28 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+// =============================
+// Refrescar datos del usuario desde la BD
+// =============================
+async function refreshUsuario() {
+  const usuario = getUsuario();
+  if (!usuario || !usuario.email) return;
+
+  try {
+    const result = await enviarDatos({
+      action: "login",
+      email: usuario.email,
+      pass: usuario.pass || "" // si no querés revalidar password, podés hacer un endpoint "getUsuario"
+    });
+
+    if (result.success && result.usuario) {
+      localStorage.setItem("usuario", JSON.stringify(result.usuario));
+      console.log("DEBUG → Usuario refrescado:", result.usuario);
+    }
+  } catch (err) {
+    console.error("Error refrescando usuario:", err);
+  }
+}
 
 
 
