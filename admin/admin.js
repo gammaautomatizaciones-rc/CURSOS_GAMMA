@@ -86,7 +86,7 @@ document.querySelectorAll("#form-grupo button").forEach(btn => {
 // =============================
 // 4. Ver progreso por grupo
 // =============================
-document.getElementById("form-ver").addEventListener("submit", async (e) => {
+document.getElementById("form-ver")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const resBox = document.getElementById("resultado-ver");
   resBox.innerHTML = "⏳ Cargando...";
@@ -100,7 +100,7 @@ document.getElementById("form-ver").addEventListener("submit", async (e) => {
 // =============================
 // 5. Ver progreso individual
 // =============================
-document.getElementById("form-ver-alumno").addEventListener("submit", async (e) => {
+document.getElementById("form-ver-alumno")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const resBox = document.getElementById("resultado-alumno");
   resBox.innerHTML = "⏳ Cargando...";
@@ -116,7 +116,7 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
     });
     const result = await resp.json();
 
-    if (result.success) {
+    if (result.success && result.alumno && result.alumno.datosBD && result.alumno.datosBD.email) {
       let html = `<h3>📌 Datos alumno</h3>`;
       html += `<p><b>Email:</b> ${result.alumno.datosBD.email}<br>
                <b>Nombre:</b> ${result.alumno.datosBD.nombre}<br>
@@ -125,18 +125,18 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
                <b>Rol:</b> ${result.alumno.datosBD.rol}</p>`;
 
       html += `<h3>🔑 Módulos</h3>`;
-      html += result.alumno.modulos.map(m =>
+      html += (result.alumno.modulos || []).map(m =>
         `Módulo ${m.modulo}: ${m.habilitado ? "✅" : "🔒"} (${m.fecha})`
       ).join("<br>");
 
       html += `<h3>📝 Notas</h3>`;
-      html += result.alumno.notas.map(n =>
+      html += (result.alumno.notas || []).map(n =>
         `Módulo ${n.modulo}: Nota ${n.nota} | TP1: ${n.tp1} | TP2: ${n.tp2}`
       ).join("<br>");
 
       resBox.innerHTML = html;
     } else {
-      resBox.innerHTML = result.msg;
+      resBox.innerHTML = result.msg || "⚠️ Alumno no encontrado o sin datos.";
     }
   } catch {
     resBox.innerHTML = "⚠️ Error de conexión.";
