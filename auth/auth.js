@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbxTPDlbm8BzQz08LDvvHBPuZT-2J1jrJFLmTa_MjBCgvILSEXCS-Soy9kZuLZYXKQEE/exec"; // URL del deploy de auth.gs
+const API_URL = "https://script.google.com/macros/s/AKfycbyiWY4uIWCe2FkEwGXMOdQSeXuiUnHIY9GXrgCTVPwOJPKIC9VzfwWm7TthS7zyLEIl/exec"; // URL del deploy de auth.gs
 
 // =============================
 // Helper para mostrar mensajes
@@ -98,6 +98,7 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+
 // =============================
 // Refrescar datos del usuario desde la BD
 // =============================
@@ -107,9 +108,8 @@ async function refreshUsuario() {
 
   try {
     const result = await enviarDatos({
-      action: "login",
-      email: usuario.email,
-      pass: usuario.pass || "" // si no querés revalidar password, podés hacer un endpoint "getUsuario"
+      action: "getUsuario",
+      email: usuario.email
     });
 
     if (result.success && result.usuario) {
@@ -120,8 +120,3 @@ async function refreshUsuario() {
     console.error("Error refrescando usuario:", err);
   }
 }
-
-
-
-
-
