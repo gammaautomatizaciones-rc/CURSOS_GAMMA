@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -25,111 +25,136 @@
   <section class="admin-panel">
     <h1>Panel de Administración</h1>
 
-    <!-- Habilitar módulo -->
+    <!-- Habilitar / Modificar / Eliminar módulo -->
     <div class="admin-section">
-      <h2>🔑 Habilitar módulo</h2>
+      <h2>🔑 Gestionar módulo</h2>
       <form id="form-habilitar">
+        <label>Acción:</label>
+        <select id="accion-habilitar" required>
+          <option value="habilitar">Habilitar</option>
+          <option value="modificar">Modificar</option>
+          <option value="eliminar">Eliminar</option>
+        </select>
+
         <label>Curso:</label>
         <select id="curso-habilitar" required>
           <option value="excel">Excel</option>
           <option value="make">Make</option>
         </select>
+
         <label>Grupo:</label>
         <input type="number" id="grupo-habilitar" min="1" required>
+
         <label>Módulo:</label>
         <input type="number" id="modulo-habilitar" min="1" max="12" required>
-        <button type="submit" class="btn">Habilitar</button>
+
+        <button type="submit" class="btn">Procesar</button>
       </form>
       <p id="estado-habilitar"></p>
     </div>
 
-    <!-- Poner nota -->
+    <!-- Notas y prácticos -->
     <div class="admin-section">
-      <h2>📝 Asigar notas al alumno</h2>
+      <h2>📝 Gestionar notas</h2>
       <form id="form-nota">
-  <label>Email del alumno:</label>
-  <input type="email" id="email-nota" required>
+        <label>Acción:</label>
+        <select id="accion-nota" required>
+          <option value="guardar">Guardar</option>
+          <option value="modificar">Modificar</option>
+          <option value="eliminar">Eliminar</option>
+        </select>
 
-  <label>Curso:</label>
-  <select id="curso-nota">
-    <option value="Excel">Excel</option>
-    <!-- después podés sumar otros cursos -->
-  </select>
+        <label>Email del alumno:</label>
+        <input type="email" id="email-nota" required>
 
-  <label>Grupo:</label>
-  <input type="number" id="grupo-nota" min="1" required>
+        <label>Curso:</label>
+        <select id="curso-nota" required>
+          <option value="excel">Excel</option>
+          <option value="make">Make</option>
+        </select>
 
-  <label>Módulo:</label>
-  <select id="modulo-nota" required>
-    <option value="">-- Seleccionar --</option>
-    <option value="1">Módulo 1</option>
-    <option value="2">Módulo 2</option>
-    <option value="3">Módulo 3</option>
-    <option value="4">Módulo 4</option>
-    <option value="5">Módulo 5</option>
-    <option value="6">Módulo 6</option>
-    <option value="7">Módulo 7</option>
-    <option value="8">Módulo 8</option>
-    <option value="9">Módulo 9</option>
-    <option value="10">Módulo 10</option>
-    <option value="11">Módulo 11</option>
-    <option value="12">Módulo 12</option>
-  </select>
+        <label>Grupo:</label>
+        <input type="number" id="grupo-nota" min="1" required>
 
-  <label>Nota del parcial:</label>
-  <select id="nota">
-    <option value="">-- Seleccionar --</option>
-    <option value="10">10</option>
-    <option value="20">20</option>
-    <option value="30">30</option>
-    <option value="40">40</option>
-    <option value="50">50</option>
-    <option value="60">60</option>
-    <option value="70">70</option>
-    <option value="80">80</option>
-    <option value="90">90</option>
-    <option value="100">100</option>
-  </select>
+        <label>Módulo:</label>
+        <select id="modulo-nota" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="1">Módulo 1</option>
+          <option value="2">Módulo 2</option>
+          <option value="3">Módulo 3</option>
+          <option value="4">Módulo 4</option>
+          <option value="5">Módulo 5</option>
+          <option value="6">Módulo 6</option>
+          <option value="7">Módulo 7</option>
+          <option value="8">Módulo 8</option>
+          <option value="9">Módulo 9</option>
+          <option value="10">Módulo 10</option>
+          <option value="11">Módulo 11</option>
+          <option value="12">Módulo 12</option>
+        </select>
 
-  <label>Práctico 1:</label>
-  <select id="tp1">
-    <option value="">-- Seleccionar --</option>
-    <option value="true">Completo</option>
-    <option value="false">Incompleto</option>
-  </select>
+        <label>Nota del parcial:</label>
+        <select id="nota">
+          <option value="">-- Seleccionar --</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+          <option value="60">60</option>
+          <option value="70">70</option>
+          <option value="80">80</option>
+          <option value="90">90</option>
+          <option value="100">100</option>
+        </select>
 
-  <label>Práctico 2:</label>
-  <select id="tp2">
-    <option value="">-- Seleccionar --</option>
-    <option value="true">Completo</option>
-    <option value="false">Incompleto</option>
-  </select>
+        <label>Práctico 1:</label>
+        <select id="tp1">
+          <option value="">-- Seleccionar --</option>
+          <option value="true">Completo</option>
+          <option value="false">Incompleto</option>
+        </select>
 
-  <button type="submit">Guardar Nota</button>
-</form>
-<div id="estado-nota"></div>
+        <label>Práctico 2:</label>
+        <select id="tp2">
+          <option value="">-- Seleccionar --</option>
+          <option value="true">Completo</option>
+          <option value="false">Incompleto</option>
+        </select>
 
+        <button type="submit" class="btn">Procesar</button>
+      </form>
+      <div id="estado-nota"></div>
     </div>
 
-    <!-- Asignar grupo -->
+    <!-- Asignar / Eliminar grupo -->
     <div class="admin-section">
-      <h2>👥 Asignar grupo al alumno</h2>
+      <h2>👥 Gestionar grupo</h2>
       <form id="form-grupo">
+        <label>Acción:</label>
+        <select id="accion-grupo" required>
+          <option value="asignar">Asignar</option>
+          <option value="eliminar">Eliminar</option>
+        </select>
+
         <label>Email:</label>
         <input type="email" id="email-alumno" required>
+
         <label>Curso:</label>
         <select id="curso-alumno" required>
           <option value="excel">Excel</option>
           <option value="make">Make</option>
         </select>
+
         <label>Grupo:</label>
-        <input type="number" id="grupo-alumno" min="1" required>
-        <button type="submit" class="btn">Asignar</button>
+        <input type="number" id="grupo-alumno" min="1">
+
+        <button type="submit" class="btn">Procesar</button>
       </form>
       <p id="estado-grupo"></p>
     </div>
 
-    <!-- Ver progreso -->
+    <!-- Ver progreso grupo -->
     <div class="admin-section">
       <h2>📊 Ver progreso de grupo</h2>
       <form id="form-ver">
@@ -144,18 +169,26 @@
       </form>
       <div id="resultado-ver" class="result-box"></div>
     </div>
+
+    <!-- Ver progreso alumno -->
+    <div class="admin-section">
+      <h2>👤 Ver progreso de alumno</h2>
+      <form id="form-ver-alumno">
+        <label>Email:</label>
+        <input type="email" id="email-ver" required>
+        <label>Curso:</label>
+        <select id="curso-ver-alumno" required>
+          <option value="excel">Excel</option>
+          <option value="make">Make</option>
+        </select>
+        <button type="submit" class="btn">Ver</button>
+      </form>
+      <div id="resultado-alumno" class="result-box"></div>
+    </div>
   </section>
 
-  <!-- Lógica JS específica de Admin -->
+  <!-- Scripts -->
   <script src="../auth/auth.js" defer></script>
   <script src="admin.js" defer></script>
-  <script src="notas.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
