@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbyiWY4uIWCe2FkEwGXMOdQSeXuiUnHIY9GXrgCTVPwOJPKIC9VzfwWm7TthS7zyLEIl/exec"; // URL del deploy de auth.gs
+const API_URL = "https://script.google.com/macros/s/AKfycbyiWY4uIWCe2FkEwGXMOdQSeXuiUnHIY9GXrgCTVPwOJPKIC9VzfwWm7TthS7zyLEIl/exec";
 
 // =============================
 // Helper para mostrar mensajes
@@ -86,7 +86,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
 // =============================
 // Manejo de sesión
 // =============================
-function getUsuario() {
+function getUsuarioAuth() {
   try {
     return JSON.parse(localStorage.getItem("usuario"));
   } catch {
@@ -103,13 +103,13 @@ function logout() {
 // Refrescar datos del usuario desde la BD
 // =============================
 async function refreshUsuario() {
-  const usuario = getUsuario();
-  if (!usuario || !usuario.email) return;
+  const usuarioAuth = getUsuarioAuth();
+  if (!usuarioAuth || !usuarioAuth.email) return;
 
   try {
     const result = await enviarDatos({
       action: "getUsuario",
-      email: usuario.email
+      email: usuarioAuth.email
     });
 
     if (result.success && result.usuario) {
