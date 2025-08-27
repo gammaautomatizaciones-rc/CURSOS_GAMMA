@@ -1,7 +1,15 @@
 // =============================
 // Configuración
 // =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbwOuvp4ZacK4xlNJcwONE2Bk5vmEs3lCwckldEoTg7rlKG9AVz9jvTp_AZVrJFEFzUz9g/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbwZwivNBesKKTtklctBlpuNNx5jFTL_rbCTwYQbpyLuySlBLhi3EKyO8XUKG3POg5tduA/exec";
+
+// =============================
+// Validar sesión y rol
+// =============================
+const usuario = JSON.parse(localStorage.getItem("usuario"));
+if (!usuario) {
+  window.location.href = "../auth/login.html";
+}
 
 // =============================
 // Helper para enviar POST
@@ -35,7 +43,7 @@ document.querySelectorAll("#form-habilitar button").forEach(btn => {
     const modulo = document.getElementById("modulo-habilitar").value;
     const accion = btn.dataset.action; // habilitarModulo / modificarModulo / eliminarModulo
 
-    await enviarAccion(accion, { curso, grupo, modulo }, estado);
+    await enviarAccion(accion, { email: usuario.email, curso, grupo, modulo }, estado);
   });
 });
 
@@ -55,7 +63,7 @@ document.querySelectorAll("#form-nota button").forEach(btn => {
     const tp2 = document.getElementById("tp2").value;
     const accion = btn.dataset.action; // guardarNota / modificarNota / eliminarNota
 
-    await enviarAccion(accion, { email, curso, grupo, modulo, nota, tp1, tp2 }, estado);
+    await enviarAccion(accion, { email: usuario.email, alumnoEmail: email, curso, grupo, modulo, nota, tp1, tp2 }, estado);
   });
 });
 
@@ -66,12 +74,12 @@ document.querySelectorAll("#form-grupo button").forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
     const estado = document.getElementById("estado-grupo");
-    const email = document.getElementById("email-alumno").value.trim().toLowerCase();
+    const emailAlumno = document.getElementById("email-alumno").value.trim().toLowerCase();
     const curso = document.getElementById("curso-alumno").value;
     const grupo = document.getElementById("grupo-alumno").value;
     const accion = btn.dataset.action; // asignarGrupo / eliminarGrupo
 
-    await enviarAccion(accion, { email, curso, grupo }, estado);
+    await enviarAccion(accion, { email: usuario.email, alumnoEmail: emailAlumno, curso, grupo }, estado);
   });
 });
 
@@ -86,7 +94,7 @@ document.getElementById("form-ver").addEventListener("submit", async (e) => {
   const curso = document.getElementById("curso-ver").value;
   const grupo = document.getElementById("grupo-ver").value;
 
-  await enviarAccion("verGrupo", { curso, grupo }, resBox);
+  await enviarAccion("verGrupo", { email: usuario.email, curso, grupo }, resBox);
 });
 
 // =============================
@@ -97,14 +105,14 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
   const resBox = document.getElementById("resultado-alumno");
   resBox.innerHTML = "⏳ Cargando...";
 
-  const email = document.getElementById("email-ver").value.trim().toLowerCase();
+  const emailAlumno = document.getElementById("email-ver").value.trim().toLowerCase();
   const curso = document.getElementById("curso-ver-alumno").value;
 
   try {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "verAlumno", email, curso })
+      body: new URLSearchParams({ action: "verAlumno", email: usuario.email, alumnoEmail, curso })
     });
     const result = await resp.json();
 
