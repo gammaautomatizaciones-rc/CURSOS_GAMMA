@@ -3,26 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curso Intensivo de Excel - Gamma</title>
+  <title>Curso Intensivo de Excel | Gamma</title>
+  <meta name="description" content="Curso intensivo de Excel de 12 módulos prácticos. Aprende desde cero hasta nivel avanzado con Gamma Automatizaciones.">
+  
   <!-- Estilos globales -->
   <link rel="stylesheet" href="style.css">
-  <!-- Estilos específicos del curso -->
+  <!-- Estilos específicos -->
   <link rel="stylesheet" href="styleindexexcel.css">
 </head>
 <body>
   <!-- NAVBAR -->
   <header class="navbar">
-    <img src="logo.png" alt="Logo Gamma" class="logo">
+    <a href="index.html" aria-label="Inicio">
+      <img src="logo.png" alt="Logo de Gamma Automatizaciones" class="logo">
+    </a>
     <nav>
       <ul>
-        <li><a href="index.html"> Mis Cursos</a></li>
+        <li><a href="index.html">Mis Cursos</a></li>
         <li><button class="logout" onclick="logout()">Salir</button></li>
       </ul>
     </nav>
   </header>
 
   <!-- HERO -->
-  <section class="hero-curso">
+  <section class="hero-curso" role="banner">
     <div class="hero-text">
       <h1>Curso Intensivo de Excel</h1>
       <p>12 módulos prácticos para dominar Excel desde cero hasta nivel avanzado.</p>
@@ -30,45 +34,30 @@
   </section>
 
   <!-- PROGRESO -->
-  <section class="progreso">
-    <h2>Tu progreso</h2>
-    <div class="barra-container">
+  <section class="progreso" aria-labelledby="titulo-progreso">
+    <h2 id="titulo-progreso">Tu progreso</h2>
+    <div class="barra-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <div id="barra-progreso" class="barra"></div>
     </div>
     <p id="texto-progreso">0 de 12 módulos habilitados</p>
   </section>
 
   <!-- MÓDULOS -->
-  <section class="modulos">
-    <h2>Plan de Estudio</h2>
+  <section class="modulos" aria-labelledby="titulo-modulos">
+    <h2 id="titulo-modulos">Plan de Estudio</h2>
     <div class="lista-modulos" id="lista-modulos">
-      <!-- Los módulos se cargan con modulos.js -->
+      <!-- Render dinámico con modulos.js -->
     </div>
   </section>
 
-    <!-- FOOTER -->
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 Gamma Automatizaciones - Optimización Empresarial</p>
+    <p>© 2025 Gamma Automatizaciones — Optimización Empresarial</p>
   </footer>
 
-  <!-- JS: orden correcto -->
-  <script src="auth.js"></script>
-  <script src="modulos.js"></script>
-  <script src="excel.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      await refreshUsuario();
-      renderModulos();
-    });
-  </script>
+  <!-- JS en orden -->
+  <script src="auth.js" defer></script>
+  <script src="modulos.js" defer></script>
+  <script src="excel.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
