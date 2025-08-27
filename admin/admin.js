@@ -100,7 +100,7 @@ document.getElementById("form-ver")?.addEventListener("submit", async (e) => {
 // =============================
 // 5. Ver progreso individual
 // =============================
-document.getElementById("form-ver-alumno")?.addEventListener("submit", async (e) => {
+document.getElementById("form-ver-alumno").addEventListener("submit", async (e) => {
   e.preventDefault();
   const resBox = document.getElementById("resultado-alumno");
   resBox.innerHTML = "⏳ Cargando...";
