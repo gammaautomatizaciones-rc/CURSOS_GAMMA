@@ -1,58 +1,113 @@
 /* =============================
-   GRID DE MÓDULOS (3x3)
+   HERO CURSO
 ============================= */
+.hero-curso {
+  height: 50vh;
+  background: linear-gradient(to right, rgba(17,17,17,0.8), rgba(0,0,0,0.6)), 
+              url('../../assets/excel-bg.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--blanco);
+}
+.hero-curso h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+.hero-curso p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* =============================
+   PROGRESO
+============================= */
+.progreso {
+  padding: 50px 20px;
+  text-align: center;
+}
+.barra-container {
+  background: var(--gris);
+  border-radius: 50px;
+  overflow: hidden;
+  height: 22px;
+  max-width: 600px;
+  margin: 15px auto;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+}
+.barra {
+  background: linear-gradient(90deg, var(--verde), var(--acento));
+  height: 100%;
+  width: 0%;
+  border-radius: 50px;
+}
+#texto-progreso {
+  font-weight: 500;
+  color: var(--gris-oscuro);
+}
+
+/* =============================
+   MÓDULOS
+============================= */
+.modulos {
+  padding: 60px 20px;
+  text-align: center;
+}
+.modulos h2 {
+  font-size: 2rem;
+  margin-bottom: 35px;
+}
 .lista-modulos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
-  gap: 20px;
-  max-width: 1000px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
   margin: 0 auto;
 }
-
 .modulo-card {
   background: var(--blanco);
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 18px;
+  padding: 25px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
   min-width: 200px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-
 .modulo-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: var(--negro);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
-
 .modulo-card .status {
   font-size: 0.9rem;
   margin-bottom: 12px;
   color: var(--dorado);
 }
-
 .modulo-card .btn {
   display: inline-block;
   font-size: 0.9rem;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--acento);
+  color: var(--blanco);
+  font-weight: 600;
 }
-
-/* Hover */
+.modulo-card .btn:hover {
+  background: var(--dorado);
+  color: var(--negro);
+  transform: scale(1.05);
+}
 .modulo-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
 }
 
-/* Responsive: en móviles pasa a 1 o 2 columnas */
+/* =============================
+   RESPONSIVE
+============================= */
 @media (max-width: 900px) {
-  .lista-modulos {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .hero-curso h1 { font-size: 2rem; }
 }
-
 @media (max-width: 600px) {
-  .lista-modulos {
-    grid-template-columns: 1fr;
-  }
+  .hero-curso { height: 40vh; }
 }
