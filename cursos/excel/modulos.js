@@ -66,7 +66,7 @@ async function renderModulos() {
     card.innerHTML = `
       <h3>Módulo ${i}</h3>
       <p class="status">👉 Disponible</p>
-      <a href="modulo${i}.html" class="btn">Ir</a>
+      <a href="cursos/excel/modulos/modulo${i}.html" class="btn">Ir</a>
     `;
 
     lista.appendChild(card);
