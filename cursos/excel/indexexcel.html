@@ -52,21 +52,15 @@
   </footer>
 
   <!-- JS: orden correcto -->
-  <!-- 1. Auth primero (define refreshUsuario y logout) -->
   <script src="../../auth/auth.js"></script>
-  <!-- 2. Módulos (pinta cards) -->
   <script src="modulos.js"></script>
-  <!-- 3. Progreso (barra) -->
   <script src="excel.js"></script>
 
-  <!-- 4. Inicializar -->
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      await refreshUsuario();   // ⚡ ya existe porque auth.js se cargó primero
-      renderModulos();          // pinta los módulos habilitados
+      await refreshUsuario();
+      renderModulos();
     });
   </script>
 </body>
 </html>
-
-
