@@ -46,48 +46,69 @@
     <!-- Poner nota -->
     <div class="admin-section">
       <h2>📝 Asigar notas al alumno</h2>
-      <form id="form-notas">
-        <label>Email del alumno:</label>
-        <input type="email" id="email-nota" required>
+      <form id="form-nota">
+  <label>Email del alumno:</label>
+  <input type="email" id="email-nota" required>
 
-        <label>Módulo:</label>
-        <input type="number" id="modulo-nota" min="1" max="12" required>
+  <label>Curso:</label>
+  <select id="curso-nota">
+    <option value="Excel">Excel</option>
+    <!-- después podés sumar otros cursos -->
+  </select>
 
-        <label>Nota del parcial:</label>
-        <select id="parcial-nota">
-        <option value="">-- Seleccionar --</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
-        <option value="60">60</option>
-        <option value="70">70</option>
-        <option value="80">80</option>
-        <option value="90">90</option>
-        <option value="100">100</option>
-        </select>
+  <label>Grupo:</label>
+  <input type="number" id="grupo-nota" min="1" required>
 
-        <label>Práctico 1:</label>
-        <select id="tp1">
-          <option value="">-- Seleccionar --</option>
-          <option value="true">Completo</option>
-          <option value="false">Incompleto</option>
-        </select>
+  <label>Módulo:</label>
+  <select id="modulo-nota" required>
+    <option value="">-- Seleccionar --</option>
+    <option value="1">Módulo 1</option>
+    <option value="2">Módulo 2</option>
+    <option value="3">Módulo 3</option>
+    <option value="4">Módulo 4</option>
+    <option value="5">Módulo 5</option>
+    <option value="6">Módulo 6</option>
+    <option value="7">Módulo 7</option>
+    <option value="8">Módulo 8</option>
+    <option value="9">Módulo 9</option>
+    <option value="10">Módulo 10</option>
+    <option value="11">Módulo 11</option>
+    <option value="12">Módulo 12</option>
+  </select>
 
-        <label>Práctico 2:</label>
-        <select id="tp2">
-          <option value="">-- Seleccionar --</option>
-          <option value="true">Completo</option>
-          <option value="false">Incompleto</option>
-        </select>
+  <label>Nota del parcial:</label>
+  <select id="nota">
+    <option value="">-- Seleccionar --</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="40">40</option>
+    <option value="50">50</option>
+    <option value="60">60</option>
+    <option value="70">70</option>
+    <option value="80">80</option>
+    <option value="90">90</option>
+    <option value="100">100</option>
+  </select>
 
-        <button type="submit" data-action="guardar">Guardar Nota</button>
-        <button type="button" data-action="modificar">Modificar Nota</button>
-        <button type="button" data-action="borrar">Borrar Nota</button>
-      </form>
+  <label>Práctico 1:</label>
+  <select id="tp1">
+    <option value="">-- Seleccionar --</option>
+    <option value="true">Completo</option>
+    <option value="false">Incompleto</option>
+  </select>
 
-      <p id="estado-nota"></p>
+  <label>Práctico 2:</label>
+  <select id="tp2">
+    <option value="">-- Seleccionar --</option>
+    <option value="true">Completo</option>
+    <option value="false">Incompleto</option>
+  </select>
+
+  <button type="submit">Guardar Nota</button>
+</form>
+<div id="estado-nota"></div>
+
     </div>
 
     <!-- Asignar grupo -->
@@ -129,6 +150,7 @@
   <script src="admin.js"></script>
 </body>
 </html>
+
 
 
 
