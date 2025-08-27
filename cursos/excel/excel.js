@@ -17,6 +17,34 @@ function actualizarProgreso(habilitados, total = 12) {
 }
 
 // =============================
+// Cargar progreso desde backend
+// =============================
+async function cargarProgreso() {
+  try {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbyE3jT9eDL0OtmzNelkUtwoC2PqqSzogKq18s89yj5ayIPJIAlzZEU1a2v4YzxNiEeH8A/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        action: "contarProgreso",
+        curso: "excel",
+        grupo: usuario.grupo
+      })
+    });
+
+    const result = await resp.json();
+    if (result.success) {
+      actualizarProgreso(result.habilitados, 12);
+    } else {
+      console.warn("No se pudo cargar progreso:", result.msg);
+    }
+  } catch (err) {
+    console.error("Error cargando progreso:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", cargarProgreso);
+
+// =============================
 // Logout
 // =============================
 function logout() {
