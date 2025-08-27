@@ -80,8 +80,17 @@
       `;
     }
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    refreshUsuario().then(() => {
+      console.log("Usuario actualizado con datos de BD");
+      // acá ya podés seguir con renderModulos() o lo que quieras
+    });
+  });
+</script>
 </body>
 </html>
+
 
 
 
