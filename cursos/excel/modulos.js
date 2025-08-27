@@ -1,8 +1,8 @@
 // =============================
 // Verificar sesión
 // =============================
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-if (!usuario) {
+const usuarioModulos = JSON.parse(localStorage.getItem("usuario"));
+if (!usuarioModulos) {
   window.location.href = "../../auth/login.html";
 }
 
@@ -44,7 +44,7 @@ async function renderModulos() {
   const lista = document.getElementById("lista-modulos");
   lista.innerHTML = "⏳ Cargando módulos...";
 
-  const backendData = await obtenerModulos("excel", usuario.grupo);
+  const backendData = await obtenerModulos("excel", usuarioModulos.grupo);
   const modulosData = backendData.success ? backendData.progreso || [] : [];
 
   lista.innerHTML = "";
@@ -62,9 +62,6 @@ async function renderModulos() {
 
     const card = document.createElement("div");
     card.classList.add("modulo-card");
-
-    const urlModulo = `./modulos/modulo${i}.html`;
-    console.log("DEBUG → URL módulo:", urlModulo);
 
     card.innerHTML = `
       <h3>Módulo ${i}</h3>
