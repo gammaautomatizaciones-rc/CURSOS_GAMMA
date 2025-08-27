@@ -114,7 +114,16 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ action: "verAlumno", email: usuario.email, alumnoEmail, curso })
     });
-    const result = await resp.json();
+
+    const text = await resp.text();
+    let result;
+
+    try {
+      result = JSON.parse(text);
+    } catch {
+      resBox.innerHTML = "⚠️ Respuesta no válida del servidor:<br><pre>" + text + "</pre>";
+      return;
+    }
 
     if (result.success && result.alumno && result.alumno.datosBD && result.alumno.datosBD.email) {
       let html = `<h3>📌 Datos alumno</h3>`;
@@ -138,8 +147,8 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
     } else {
       resBox.innerHTML = result.msg || "⚠️ Alumno no encontrado o sin datos.";
     }
-  } catch {
-    resBox.innerHTML = "⚠️ Error de conexión.";
+  } catch (err) {
+    resBox.innerHTML = "⚠️ Error de red: " + err;
   }
 });
 
