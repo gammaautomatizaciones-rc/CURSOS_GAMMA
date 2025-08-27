@@ -59,12 +59,12 @@
   padding: 60px 20px;
   text-align: center;
   background: #111;   /* fondo oscuro */
-  color: #fff;        /* texto claro */
+  color: #fff !important;        /* texto claro */
 }
 .modulos h2 {
   font-size: 2rem;
   margin-bottom: 30px;
-  color: #fff;        /* asegura contraste */
+  color: #fff !important;        /* asegura contraste */
   text-transform: uppercase;
   letter-spacing: 1px;
 }
