@@ -1,6 +1,6 @@
 // =============================
 // Configuración
-// =============================
+// ============================
 const API_URL = "https://script.google.com/macros/s/AKfycbyiWY4uIWCe2FkEwGXMOdQSeXuiUnHIY9GXrgCTVPwOJPKIC9VzfwWm7TthS7zyLEIl/exec";
 
 // =============================
@@ -120,3 +120,4 @@ async function refreshUsuario() {
     console.error("Error refrescando usuario:", err);
   }
 }
+
