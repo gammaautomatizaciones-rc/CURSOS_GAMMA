@@ -12,7 +12,7 @@ const totalModulos = 12;
 // =============================
 // Configuración
 // =============================
-const API_PROGRESO = "https://script.google.com/macros/s/AKfycbxgdAQWh4tSi93ykTAKo_Rs3k8EpBr3L67npGgzBBO7JAjUrKRxn4yy0gWhzmMf-31O0A/exec"; 
+const API_PROGRESO = "URL_DEPLOY_DE_PROGRESO_GS"; // ⚠️ poné la URL del deploy de PROGRESO.gs
 
 // =============================
 // Helpers backend
@@ -27,12 +27,12 @@ async function postBackend(data) {
     return await resp.json();
   } catch (err) {
     console.error("Error conexión backend:", err);
-    return { success: false, modulos: [] };
+    return { success: false, progreso: [] };
   }
 }
 
-async function obtenerProgresoAlumno(curso, email) {
-  return await postBackend({ action: "verAlumno", curso, email });
+async function obtenerProgresoGrupo(curso, grupo) {
+  return await postBackend({ action: "getProgresoGrupo", curso, grupo });
 }
 
 // =============================
@@ -42,8 +42,8 @@ async function renderModulos() {
   const lista = document.getElementById("lista-modulos");
   lista.innerHTML = "⏳ Cargando módulos...";
 
-  const backendData = await obtenerProgresoAlumno("excel", usuario.email);
-  const modulosData = backendData.success ? backendData.modulos || [] : [];
+  const backendData = await obtenerProgresoGrupo("excel", usuario.grupo);
+  const modulosData = backendData.success ? backendData.progreso || [] : [];
 
   lista.innerHTML = "";
   completados = 0;
@@ -51,41 +51,35 @@ async function renderModulos() {
   for (let i = 1; i <= totalModulos; i++) {
     const estado = modulosData.find(m => m.modulo == i);
 
-    if (!estado || (estado.habilitado !== true && estado.habilitado !== "TRUE")) {
+    if (!estado || estado.habilitado !== true && estado.habilitado !== "TRUE") {
       continue; // no mostrar módulos bloqueados
     }
 
-    const completado = estado.completado === true || estado.completado === "TRUE";
-    const nota = estado.nota ?? "—";
-
     const div = document.createElement("div");
     div.classList.add("modulo-card");
-    if (completado) div.classList.add("done");
 
     div.innerHTML = `
       <h3>Módulo ${i}</h3>
-      <p class="status">${completado ? "✔ Completado" : "👉 Disponible"}</p>
-      <p class="nota">Nota: ${nota}</p>
+      <p class="status">👉 Disponible</p>
       <div class="acciones">
         <a href="modulos/modulo${i}.html" class="btn">Ir al módulo</a>
       </div>
     `;
 
-    if (completado) completados++;
     lista.appendChild(div);
   }
 
-  actualizarProgreso();
+  actualizarProgreso(modulosData.length);
 }
 
 // =============================
 // Barra de progreso
 // =============================
-function actualizarProgreso() {
-  const porcentaje = totalModulos > 0 ? Math.round((completados / totalModulos) * 100) : 0;
+function actualizarProgreso(habilitados) {
+  const porcentaje = totalModulos > 0 ? Math.round((habilitados / totalModulos) * 100) : 0;
   document.getElementById("barra-progreso").style.width = `${porcentaje}%`;
   document.getElementById("texto-progreso").innerText =
-    `${completados} de ${totalModulos} módulos completados`;
+    `${habilitados} de ${totalModulos} módulos habilitados`;
 }
 
 // =============================
