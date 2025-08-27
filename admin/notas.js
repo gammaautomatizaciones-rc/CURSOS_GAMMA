@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const WEBHOOK_NOTAS = "https://hook.us2.make.com/7tr94g3xzhze8euxz4pejt3j3bbioas6"; // <-- tu URL de Make
+const WEBHOOK_NOTAS = "https://hook.us2.make.com/7tr94g3xzhze8euxz4pejt3j3bbioas6"; 
 
 // =============================
 // Enviar nota / prácticos
@@ -11,8 +11,9 @@ document.getElementById("form-nota").addEventListener("submit", async (e) => {
 
   const estado = document.getElementById("estado-nota");
   estado.innerText = "⏳ Guardando...";
+  estado.style.color = "black";
 
-  // Capturamos los valores del form
+  // Capturamos valores
   const email = document.getElementById("email-nota").value.trim().toLowerCase();
   const curso = document.getElementById("curso-nota").value;
   const grupo = document.getElementById("grupo-nota").value;
@@ -32,7 +33,7 @@ document.getElementById("form-nota").addEventListener("submit", async (e) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        action: "guardarNota", // lo usamos en Make para rutear
+        action: "guardarNota",
         email,
         curso,
         grupo,
@@ -43,12 +44,22 @@ document.getElementById("form-nota").addEventListener("submit", async (e) => {
       })
     });
 
-    const result = await resp.json().catch(() => ({}));
-    estado.innerText = result.msg || "✅ Nota guardada correctamente";
-    estado.style.color = "green";
+    // esperamos JSON desde Make
+    if (!resp.ok) throw new Error("Respuesta HTTP no OK");
+
+    const result = await resp.json();
+
+    if (result.ok) {
+      estado.innerText = "✅ " + (result.msg || "Nota guardada correctamente");
+      estado.style.color = "green";
+    } else {
+      estado.innerText = "❌ " + (result.msg || "Error al guardar la nota");
+      estado.style.color = "red";
+    }
+
   } catch (err) {
     console.error("Error:", err);
-    estado.innerText = "❌ Error al conectar con el servidor";
+    estado.innerText = "❌ Error al conectar con Make";
     estado.style.color = "red";
   }
 });
