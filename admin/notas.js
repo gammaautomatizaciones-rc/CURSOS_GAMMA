@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const WEBHOOK_NOTAS = "https://hook.integromat.com/xxxxx"; // <-- tu URL de Make
+const WEBHOOK_NOTAS = "https://hook.us2.make.com/7tr94g3xzhze8euxz4pejt3j3bbioas6"; // <-- tu URL de Make
 
 // =============================
 // Enviar nota / prácticos
