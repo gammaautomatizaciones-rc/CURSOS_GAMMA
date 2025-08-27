@@ -1,8 +1,8 @@
 // =============================
 // Verificar sesión
 // =============================
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-if (!usuario) {
+let user = JSON.parse(localStorage.getItem("usuario"));
+if (!user) {
   window.location.href = "../../auth/login.html";
 }
 
@@ -17,12 +17,18 @@ const TOTAL_MODULOS = 12;
 // =============================
 async function postBackend(data) {
   try {
+    console.log("DEBUG → Enviando al backend:", data);
+
     const resp = await fetch(API_MODULOS, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(data)
     });
-    return await resp.json();
+
+    const json = await resp.json();
+    console.log("DEBUG → Respuesta cruda del backend:", json);
+    return json;
+
   } catch (err) {
     console.error("Error conexión backend:", err);
     return { success: false, progreso: [] };
@@ -44,18 +50,18 @@ async function renderModulos() {
   const lista = document.getElementById("lista-modulos");
   lista.innerHTML = "⏳ Cargando módulos...";
 
-  const backendData = await obtenerModulos("excel", usuario.grupo);
+  const backendData = await obtenerModulos("excel", user.grupo);
   const modulosData = backendData.success ? backendData.progreso || [] : [];
 
-  console.log("DEBUG modulosData:", modulosData); // 👈 para revisar qué devuelve el backend
+  console.log("DEBUG → modulosData filtrado:", modulosData);
 
   lista.innerHTML = "";
 
   for (let i = 1; i <= TOTAL_MODULOS; i++) {
     const estado = modulosData.find(m => String(m.modulo).trim() === String(i));
-
-    // 🔑 normalizamos habilitado
     const habilitado = String(estado?.habilitado).toLowerCase().trim();
+
+    console.log(`DEBUG → Módulo ${i}:`, estado);
 
     if (!estado || habilitado !== "true") {
       continue; // no mostrar módulos bloqueados
