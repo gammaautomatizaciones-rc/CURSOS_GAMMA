@@ -1,8 +1,8 @@
 // =============================
 // Verificar sesión
 // =============================
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-if (!usuario) {
+const usuarioExcel = JSON.parse(localStorage.getItem("usuario"));
+if (!usuarioExcel) {
   window.location.href = "../../auth/login.html";
 }
 
@@ -27,7 +27,7 @@ async function cargarProgreso() {
       body: new URLSearchParams({
         action: "contarProgreso",
         curso: "excel",
-        grupo: usuario.grupo
+        grupo: usuarioExcel.grupo
       })
     });
 
