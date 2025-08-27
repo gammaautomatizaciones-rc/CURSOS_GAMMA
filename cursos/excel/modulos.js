@@ -9,7 +9,7 @@ if (!user) {
 // =============================
 // Configuración
 // =============================
-const API_MODULOS = "https://script.google.com/macros/s/AKfycbzCnvLGi_sWhNBj7IT3FEPX5IE4AVujmF6e4JjHL8fl07dhz6fSgEdUYaU3fwbxaMe5/exec";
+const API_MODULOS = "https://script.google.com/macros/s/AKfycbyHqSKvW48iQhOaWKl-Q6F9cuC7FjriN9l1nDrFKFZ5EXbM_gSXB105OLqWkmHZ7bOV/exec";
 const TOTAL_MODULOS = 12;
 
 // =============================
