@@ -12,7 +12,7 @@ const totalModulos = 12;
 // =============================
 // Configuración
 // =============================
-const API_PROGRESO = "URL_DEPLOY_DE_PROGRESO_GS"; // ⚠️ poné la URL del deploy de PROGRESO.gs
+const API_PROGRESO = "https://script.google.com/macros/s/AKfycbxpyTj1xzLog9RUVH-q_wVb_3FzMy2W66LbPymt_06Y7DeeboOXqhLN2ageN69S9OPslA/exec"; // ⚠️ poné la URL del deploy de PROGRESO.gs
 
 // =============================
 // Helpers backend
