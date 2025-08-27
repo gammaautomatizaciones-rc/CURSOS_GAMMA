@@ -1,4 +1,5 @@
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbwVC0isHcCPG9T24pwpj87HmMVX-OtGPO6S2Q0DSODzZzsPTsJ8eLHthP_ClwsBjqObMA/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbwbdzjIUkF5O94G_ogOAzo-LVlpxMKmEZmEA-BMZUQj9W5E40BUqOq9X8YQhanMeg3wjA/exec";
+
 
 // 1. Habilitar módulo (por grupo)
 document.getElementById("form-habilitar").addEventListener("submit", async (e) => {
