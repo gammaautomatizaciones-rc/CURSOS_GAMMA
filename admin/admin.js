@@ -105,7 +105,7 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
   const resBox = document.getElementById("resultado-alumno");
   resBox.innerHTML = "⏳ Cargando...";
 
-  const emailAlumno = document.getElementById("email-ver").value.trim().toLowerCase();
+  const verAlumno = document.getElementById("email-ver").value.trim().toLowerCase();
   const curso = document.getElementById("curso-ver-alumno").value;
 
   try {
