@@ -107,3 +107,29 @@ input:focus {
   font-weight: bold;
   margin-top: 10px;
 }
+
+/* =============================
+   Tablas y datos alumno
+============================= */
+#resultado-alumno h3 {
+  margin-top: 15px;
+  color: var(--dorado);
+  font-size: 1rem;
+}
+
+#resultado-alumno p {
+  background: #f3f3f3;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+#resultado-alumno br {
+  margin-bottom: 5px;
+}
+
+#resultado-alumno {
+  font-size: 0.9rem;
+  color: var(--negro);
+}
