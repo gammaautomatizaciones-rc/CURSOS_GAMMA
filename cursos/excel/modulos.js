@@ -30,7 +30,11 @@ async function postBackend(data) {
 }
 
 async function obtenerModulos(curso, grupo) {
-  return await postBackend({ action: "getModulosGrupo", curso, grupo });
+  return await postBackend({ 
+    action: "getModulosGrupo", 
+    curso: String(curso).toLowerCase().trim(), 
+    grupo: String(grupo).trim() 
+  });
 }
 
 // =============================
@@ -43,14 +47,19 @@ async function renderModulos() {
   const backendData = await obtenerModulos("excel", usuario.grupo);
   const modulosData = backendData.success ? backendData.progreso || [] : [];
 
+  console.log("DEBUG modulosData:", modulosData); // 👈 para revisar qué devuelve el backend
+
   lista.innerHTML = "";
 
   for (let i = 1; i <= TOTAL_MODULOS; i++) {
-    const estado = modulosData.find(m => parseInt(m.modulo) === i);
+    const estado = modulosData.find(m => String(m.modulo).trim() === String(i));
 
-    if (!estado || String(estado.habilitado).toLowerCase() !== "true") {
-  continue;
-}
+    // 🔑 normalizamos habilitado
+    const habilitado = String(estado?.habilitado).toLowerCase().trim();
+
+    if (!estado || habilitado !== "true") {
+      continue; // no mostrar módulos bloqueados
+    }
 
     const card = document.createElement("div");
     card.classList.add("modulo-card");
