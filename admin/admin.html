@@ -25,45 +25,32 @@
   <section class="admin-panel">
     <h1>Panel de Administración</h1>
 
-    <!-- Habilitar / Modificar / Eliminar módulo -->
+    <!-- Módulos -->
     <div class="admin-section">
       <h2>🔑 Gestionar módulo</h2>
       <form id="form-habilitar">
-        <label>Acción:</label>
-        <select id="accion-habilitar" required>
-          <option value="habilitar">Habilitar</option>
-          <option value="modificar">Modificar</option>
-          <option value="eliminar">Eliminar</option>
-        </select>
-
         <label>Curso:</label>
         <select id="curso-habilitar" required>
           <option value="excel">Excel</option>
           <option value="make">Make</option>
         </select>
-
         <label>Grupo:</label>
         <input type="number" id="grupo-habilitar" min="1" required>
-
         <label>Módulo:</label>
         <input type="number" id="modulo-habilitar" min="1" max="12" required>
-
-        <button type="submit" class="btn">Procesar</button>
+        <div class="btn-group">
+          <button type="button" class="btn" data-action="habilitarModulo">Habilitar</button>
+          <button type="button" class="btn" data-action="modificarModulo">Modificar</button>
+          <button type="button" class="btn" data-action="eliminarModulo">Eliminar</button>
+        </div>
       </form>
       <p id="estado-habilitar"></p>
     </div>
 
-    <!-- Notas y prácticos -->
+    <!-- Notas -->
     <div class="admin-section">
       <h2>📝 Gestionar notas</h2>
       <form id="form-nota">
-        <label>Acción:</label>
-        <select id="accion-nota" required>
-          <option value="guardar">Guardar</option>
-          <option value="modificar">Modificar</option>
-          <option value="eliminar">Eliminar</option>
-        </select>
-
         <label>Email del alumno:</label>
         <input type="email" id="email-nota" required>
 
@@ -93,7 +80,7 @@
           <option value="12">Módulo 12</option>
         </select>
 
-        <label>Nota del parcial:</label>
+        <label>Nota:</label>
         <select id="nota">
           <option value="">-- Seleccionar --</option>
           <option value="10">10</option>
@@ -122,34 +109,32 @@
           <option value="false">Incompleto</option>
         </select>
 
-        <button type="submit" class="btn">Procesar</button>
+        <div class="btn-group">
+          <button type="button" class="btn" data-action="guardarNota">Guardar</button>
+          <button type="button" class="btn" data-action="modificarNota">Modificar</button>
+          <button type="button" class="btn" data-action="eliminarNota">Eliminar</button>
+        </div>
       </form>
-      <div id="estado-nota"></div>
+      <p id="estado-nota"></p>
     </div>
 
-    <!-- Asignar / Eliminar grupo -->
+    <!-- Grupo -->
     <div class="admin-section">
       <h2>👥 Gestionar grupo</h2>
       <form id="form-grupo">
-        <label>Acción:</label>
-        <select id="accion-grupo" required>
-          <option value="asignar">Asignar</option>
-          <option value="eliminar">Eliminar</option>
-        </select>
-
         <label>Email:</label>
         <input type="email" id="email-alumno" required>
-
         <label>Curso:</label>
         <select id="curso-alumno" required>
           <option value="excel">Excel</option>
           <option value="make">Make</option>
         </select>
-
         <label>Grupo:</label>
         <input type="number" id="grupo-alumno" min="1">
-
-        <button type="submit" class="btn">Procesar</button>
+        <div class="btn-group">
+          <button type="button" class="btn" data-action="asignarGrupo">Asignar</button>
+          <button type="button" class="btn" data-action="eliminarGrupo">Eliminar</button>
+        </div>
       </form>
       <p id="estado-grupo"></p>
     </div>
