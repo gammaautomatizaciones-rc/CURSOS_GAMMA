@@ -133,7 +133,7 @@ html, body {
 .curso-card p {
   font-size: 0.95rem;
   margin-bottom: 15px;
-  color: #444;
+  color: #fff;
 }
 .curso-card .btn {
   display: inline-block;
@@ -181,3 +181,4 @@ footer {
     color: #aaa;
   }
 }
+
