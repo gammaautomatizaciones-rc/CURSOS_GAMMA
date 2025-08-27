@@ -1,103 +1,78 @@
 // =============================
 // Configuración
 // =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbyl0zv5gjmODw5Z1ZPZ_vUdOaEnc7raSi0h19Jvcx6m-1AwVtPDODDHTXTmA2Ab6kyPtQ/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbwOuvp4ZacK4xlNJcwONE2Bk5vmEs3lCwckldEoTg7rlKG9AVz9jvTp_AZVrJFEFzUz9g/exec";
 
 // =============================
-// 1. Habilitar / Modificar / Eliminar módulo
+// Helper para enviar POST
 // =============================
-document.getElementById("form-habilitar").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const estado = document.getElementById("estado-habilitar");
-  estado.innerText = "⏳ Procesando...";
-
-  const curso = document.getElementById("curso-habilitar").value;
-  const grupo = document.getElementById("grupo-habilitar").value;
-  const modulo = document.getElementById("modulo-habilitar").value;
-  const accion = document.getElementById("accion-habilitar").value; // habilitar / modificar / eliminar
-
+async function enviarAccion(accion, params, estadoEl) {
+  estadoEl.innerText = "⏳ Procesando...";
   try {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: accion + "Modulo", curso, grupo, modulo })
+      body: new URLSearchParams({ action: accion, ...params })
     });
     const result = await resp.json();
-    estado.innerText = result.msg;
-    estado.style.color = result.success ? "green" : "red";
+    estadoEl.innerText = result.msg;
+    estadoEl.style.color = result.success ? "green" : "red";
   } catch {
-    estado.innerText = "⚠️ Error de conexión.";
-    estado.style.color = "red";
+    estadoEl.innerText = "⚠️ Error de conexión.";
+    estadoEl.style.color = "red";
   }
+}
+
+// =============================
+// 1. Módulos
+// =============================
+document.querySelectorAll("#form-habilitar button").forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const estado = document.getElementById("estado-habilitar");
+    const curso = document.getElementById("curso-habilitar").value;
+    const grupo = document.getElementById("grupo-habilitar").value;
+    const modulo = document.getElementById("modulo-habilitar").value;
+    const accion = btn.dataset.action; // habilitarModulo / modificarModulo / eliminarModulo
+
+    await enviarAccion(accion, { curso, grupo, modulo }, estado);
+  });
 });
 
 // =============================
-// 2. Guardar / Modificar / Eliminar Nota
+// 2. Notas
 // =============================
-document.getElementById("form-nota").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const estado = document.getElementById("estado-nota");
-  estado.innerText = "⏳ Guardando...";
+document.querySelectorAll("#form-nota button").forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const estado = document.getElementById("estado-nota");
+    const email = document.getElementById("email-nota").value.trim().toLowerCase();
+    const curso = document.getElementById("curso-nota").value;
+    const grupo = document.getElementById("grupo-nota").value;
+    const modulo = document.getElementById("modulo-nota").value;
+    const nota = document.getElementById("nota").value;
+    const tp1 = document.getElementById("tp1").value;
+    const tp2 = document.getElementById("tp2").value;
+    const accion = btn.dataset.action; // guardarNota / modificarNota / eliminarNota
 
-  const email = document.getElementById("email-nota").value.trim().toLowerCase();
-  const curso = document.getElementById("curso-nota").value;
-  const grupo = document.getElementById("grupo-nota").value;
-  const modulo = document.getElementById("modulo-nota").value;
-  const nota = document.getElementById("nota").value;
-  const tp1 = document.getElementById("tp1").value;
-  const tp2 = document.getElementById("tp2").value;
-  const accion = document.getElementById("accion-nota").value; // guardar / modificar / eliminar
-
-  try {
-    const resp = await fetch(API_ADMIN, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        action: accion + "Nota",
-        email,
-        curso,
-        grupo,
-        modulo,
-        nota,
-        tp1,
-        tp2
-      })
-    });
-    const result = await resp.json();
-    estado.innerText = result.msg;
-    estado.style.color = result.success ? "green" : "red";
-  } catch {
-    estado.innerText = "⚠️ Error de conexión.";
-    estado.style.color = "red";
-  }
+    await enviarAccion(accion, { email, curso, grupo, modulo, nota, tp1, tp2 }, estado);
+  });
 });
 
 // =============================
-// 3. Asignar / Eliminar grupo
+// 3. Grupo
 // =============================
-document.getElementById("form-grupo").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const estado = document.getElementById("estado-grupo");
-  estado.innerText = "⏳ Procesando...";
+document.querySelectorAll("#form-grupo button").forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const estado = document.getElementById("estado-grupo");
+    const email = document.getElementById("email-alumno").value.trim().toLowerCase();
+    const curso = document.getElementById("curso-alumno").value;
+    const grupo = document.getElementById("grupo-alumno").value;
+    const accion = btn.dataset.action; // asignarGrupo / eliminarGrupo
 
-  const email = document.getElementById("email-alumno").value.trim().toLowerCase();
-  const curso = document.getElementById("curso-alumno").value;
-  const grupo = document.getElementById("grupo-alumno").value;
-  const accion = document.getElementById("accion-grupo").value; // asignar / eliminar
-
-  try {
-    const resp = await fetch(API_ADMIN, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: accion + "Grupo", email, curso, grupo })
-    });
-    const result = await resp.json();
-    estado.innerText = result.msg;
-    estado.style.color = result.success ? "green" : "red";
-  } catch {
-    estado.innerText = "⚠️ Error de conexión.";
-    estado.style.color = "red";
-  }
+    await enviarAccion(accion, { email, curso, grupo }, estado);
+  });
 });
 
 // =============================
@@ -111,24 +86,7 @@ document.getElementById("form-ver").addEventListener("submit", async (e) => {
   const curso = document.getElementById("curso-ver").value;
   const grupo = document.getElementById("grupo-ver").value;
 
-  try {
-    const resp = await fetch(API_ADMIN, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "verGrupo", curso, grupo })
-    });
-    const result = await resp.json();
-
-    if (result.success) {
-      resBox.innerHTML = result.modulos.map(m => 
-        `Módulo ${m.modulo}: ${m.habilitado ? "✅ Habilitado" : "🔒 Bloqueado"} | Nota: ${m.nota ?? "—"}`
-      ).join("<br>");
-    } else {
-      resBox.innerHTML = result.msg;
-    }
-  } catch {
-    resBox.innerHTML = "⚠️ Error de conexión.";
-  }
+  await enviarAccion("verGrupo", { curso, grupo }, resBox);
 });
 
 // =============================
