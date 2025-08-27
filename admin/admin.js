@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbwZwivNBesKKTtklctBlpuNNx5jFTL_rbCTwYQbpyLuySlBLhi3EKyO8XUKG3POg5tduA/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbw-Vckx8oEXAZYtJ98NOTPDj1mfBO0ydsQ2kEG6DwI5UuGfAtO_MgzhzMVVJFZdxVTGZQ/exec";
 
 // =============================
 // Validar sesión y rol
@@ -54,7 +54,7 @@ document.querySelectorAll("#form-nota button").forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
     const estado = document.getElementById("estado-nota");
-    const email = document.getElementById("email-nota").value.trim().toLowerCase();
+    const emailAlumno = document.getElementById("email-nota").value.trim().toLowerCase();
     const curso = document.getElementById("curso-nota").value;
     const grupo = document.getElementById("grupo-nota").value;
     const modulo = document.getElementById("modulo-nota").value;
@@ -63,7 +63,7 @@ document.querySelectorAll("#form-nota button").forEach(btn => {
     const tp2 = document.getElementById("tp2").value;
     const accion = btn.dataset.action; // guardarNota / modificarNota / eliminarNota
 
-    await enviarAccion(accion, { email: usuario.email, alumnoEmail: email, curso, grupo, modulo, nota, tp1, tp2 }, estado);
+    await enviarAccion(accion, { email: usuario.email, alumnoEmail: emailAlumno, curso, grupo, modulo, nota, tp1, tp2 }, estado);
   });
 });
 
