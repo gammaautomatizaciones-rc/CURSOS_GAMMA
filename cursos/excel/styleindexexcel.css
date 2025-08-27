@@ -3,7 +3,7 @@
 ============================= */
 .hero-curso {
   height: 55vh;
-  background: linear-gradient(to right, rgba(17,17,17,0.8), rgba(0,0,0,0.6)),
+  background: linear-gradient(to right, rgba(17,17,17,0.9), rgba(0,0,0,0.7)),
               url('../../assets/excel-bg.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
@@ -15,15 +15,17 @@
 .hero-curso h1 {
   font-size: 2.8rem;
   font-weight: 700;
-  color: #fff; /* título principal */
+  color: #fff;
   margin-bottom: 12px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.8); /* brillo sutil */
 }
 .hero-curso p {
   font-size: 1.2rem;
-  color: #ddd; /* subtítulo */
+  color: #ddd;
   max-width: 600px;
   margin: 0 auto;
   opacity: 0.95;
+  text-shadow: 0 0 6px rgba(0,0,0,0.7); /* brillo en subtítulo */
 }
 
 /* =============================
@@ -36,13 +38,13 @@
 .progreso h2 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #fff; /* título progreso */
+  color: #fff;
   margin-bottom: 20px;
 }
 #texto-progreso {
   font-size: 1rem;
   font-weight: 500;
-  color: #ccc; /* texto pequeño */
+  color: #ccc;
   margin-top: 8px;
 }
 .barra-container {
@@ -75,7 +77,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 30px;
-  color: #fff; /* título plan de estudio */
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -87,7 +89,7 @@
   margin: 0 auto;
 }
 .modulo-card {
-  background: #1c1c1c; /* fondo oscuro */
+  background: #1c1c1c;
   border-radius: 18px;
   padding: 25px;
   text-align: center;
@@ -98,12 +100,12 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 10px;
-  color: #fff; /* título módulo */
+  color: #fff;
 }
 .modulo-card .status {
   font-size: 0.9rem;
   margin-bottom: 12px;
-  color: var(--dorado); /* estado */
+  color: var(--dorado);
 }
 .modulo-card .btn {
   display: inline-block;
