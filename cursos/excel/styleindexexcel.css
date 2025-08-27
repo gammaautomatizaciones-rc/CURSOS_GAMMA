@@ -48,7 +48,7 @@
 }
 #texto-progreso {
   font-weight: 500;
-  color: var(--gris-oscuro);
+  color: #fff !important;
   margin-top: 8px;
 }
 
