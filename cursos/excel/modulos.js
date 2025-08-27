@@ -63,6 +63,9 @@ async function renderModulos() {
     const card = document.createElement("div");
     card.classList.add("modulo-card");
 
+    const urlModulo = `./modulos/modulo${i}.html`;
+    console.log("DEBUG → URL módulo:", urlModulo);
+
     card.innerHTML = `
       <h3>Módulo ${i}</h3>
       <p class="status">👉 Disponible</p>
