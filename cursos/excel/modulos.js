@@ -48,9 +48,9 @@ async function renderModulos() {
   for (let i = 1; i <= TOTAL_MODULOS; i++) {
     const estado = modulosData.find(m => parseInt(m.modulo) === i);
 
-    if (!estado || (estado.habilitado !== true && estado.habilitado !== "TRUE")) {
-      continue; // no mostrar módulos bloqueados
-    }
+    if (!estado || String(estado.habilitado).toLowerCase() !== "true") {
+  continue;
+}
 
     const card = document.createElement("div");
     card.classList.add("modulo-card");
