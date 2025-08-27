@@ -34,8 +34,6 @@ async function cargarProgreso() {
     const result = await resp.json();
     if (result.success) {
       actualizarProgreso(result.habilitados, 12);
-    } else {
-      console.warn("No se pudo cargar progreso:", result.msg);
     }
   } catch (err) {
     console.error("Error cargando progreso:", err);
