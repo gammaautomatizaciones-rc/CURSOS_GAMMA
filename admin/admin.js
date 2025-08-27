@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbw-Vckx8oEXAZYtJ98NOTPDj1mfBO0ydsQ2kEG6DwI5UuGfAtO_MgzhzMVVJFZdxVTGZQ/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbwVUDiZ5em4GBqNN1GaNd5xM9pwLCmmUVXOaIF0-MfytYThIs6ZHWZh5UryOaKE2_kZfQ/exec";
 
 // =============================
 // Validar sesión y rol
