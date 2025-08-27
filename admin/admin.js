@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbxXbtMSQu6pD6aFhI-4wX6-zXsy3vQZxMr8dXRK3mygHkVSTDqIXnPTap4nMtLWB6DHXg/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbxnpinoiq6sKXs2p2EjV83OcTEBDIH9uMmIYR7qckvEbXS3DuPrBNH24jrovT-9iXMpug/exec";
 
 // =============================
 // Validar sesión y rol
@@ -105,14 +105,19 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
   const resBox = document.getElementById("resultado-alumno");
   resBox.innerHTML = "⏳ Cargando...";
 
-  const verAlumno = document.getElementById("email-ver").value.trim().toLowerCase();
+  const emailAlumno = document.getElementById("email-ver").value.trim().toLowerCase();
   const curso = document.getElementById("curso-ver-alumno").value;
 
   try {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "verAlumno", email: usuario.email, alumnoEmail, curso })
+      body: new URLSearchParams({ 
+        action: "verAlumno", 
+        email: usuario.email, 
+        alumnoEmail: emailAlumno, 
+        curso 
+      })
     });
 
     const text = await resp.text();
