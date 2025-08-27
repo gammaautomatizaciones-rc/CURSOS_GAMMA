@@ -64,7 +64,7 @@
 .modulos h2 {
   font-size: 2rem;
   margin-bottom: 30px;
-  color: #fff !important;        /* asegura contraste */
+  color: #111 !important;        /* asegura contraste */
   text-transform: uppercase;
   letter-spacing: 1px;
 }
