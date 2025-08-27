@@ -1,7 +1,7 @@
 // =============================
 // Configuración
 // =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbyn9cR3nk6_O0RV1cb6jOOmayhuEWyWtruT1p4YW0SoBPnBbfNpRtRoxHr5cuXGg5aAsA/exec";
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbyl0zv5gjmODw5Z1ZPZ_vUdOaEnc7raSi0h19Jvcx6m-1AwVtPDODDHTXTmA2Ab6kyPtQ/exec";
 
 // =============================
 // 1. Habilitar / Modificar / Eliminar módulo
