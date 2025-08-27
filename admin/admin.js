@@ -1,7 +1,11 @@
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbwbdzjIUkF5O94G_ogOAzo-LVlpxMKmEZmEA-BMZUQj9W5E40BUqOq9X8YQhanMeg3wjA/exec";
+// =============================
+// Configuración
+// =============================
+const API_ADMIN = "https://script.google.com/macros/s/AKfycbyn9cR3nk6_O0RV1cb6jOOmayhuEWyWtruT1p4YW0SoBPnBbfNpRtRoxHr5cuXGg5aAsA/exec";
 
-
-// 1. Habilitar módulo (por grupo)
+// =============================
+// 1. Habilitar / Modificar / Eliminar módulo
+// =============================
 document.getElementById("form-habilitar").addEventListener("submit", async (e) => {
   e.preventDefault();
   const estado = document.getElementById("estado-habilitar");
@@ -10,12 +14,13 @@ document.getElementById("form-habilitar").addEventListener("submit", async (e) =
   const curso = document.getElementById("curso-habilitar").value;
   const grupo = document.getElementById("grupo-habilitar").value;
   const modulo = document.getElementById("modulo-habilitar").value;
+  const accion = document.getElementById("accion-habilitar").value; // habilitar / modificar / eliminar
 
   try {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "habilitarModulo", curso, grupo, modulo })
+      body: new URLSearchParams({ action: accion + "Modulo", curso, grupo, modulo })
     });
     const result = await resp.json();
     estado.innerText = result.msg;
@@ -26,7 +31,9 @@ document.getElementById("form-habilitar").addEventListener("submit", async (e) =
   }
 });
 
-// 2. Poner nota al alumno (individual, PROGRESOEXCEL)
+// =============================
+// 2. Guardar / Modificar / Eliminar Nota
+// =============================
 document.getElementById("form-nota").addEventListener("submit", async (e) => {
   e.preventDefault();
   const estado = document.getElementById("estado-nota");
@@ -37,18 +44,23 @@ document.getElementById("form-nota").addEventListener("submit", async (e) => {
   const grupo = document.getElementById("grupo-nota").value;
   const modulo = document.getElementById("modulo-nota").value;
   const nota = document.getElementById("nota").value;
+  const tp1 = document.getElementById("tp1").value;
+  const tp2 = document.getElementById("tp2").value;
+  const accion = document.getElementById("accion-nota").value; // guardar / modificar / eliminar
 
   try {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        action: "ponerNota",
+        action: accion + "Nota",
         email,
         curso,
         grupo,
         modulo,
-        nota
+        nota,
+        tp1,
+        tp2
       })
     });
     const result = await resp.json();
@@ -60,7 +72,9 @@ document.getElementById("form-nota").addEventListener("submit", async (e) => {
   }
 });
 
-// 3. Asignar grupo
+// =============================
+// 3. Asignar / Eliminar grupo
+// =============================
 document.getElementById("form-grupo").addEventListener("submit", async (e) => {
   e.preventDefault();
   const estado = document.getElementById("estado-grupo");
@@ -69,12 +83,13 @@ document.getElementById("form-grupo").addEventListener("submit", async (e) => {
   const email = document.getElementById("email-alumno").value.trim().toLowerCase();
   const curso = document.getElementById("curso-alumno").value;
   const grupo = document.getElementById("grupo-alumno").value;
+  const accion = document.getElementById("accion-grupo").value; // asignar / eliminar
 
   try {
     const resp = await fetch(API_ADMIN, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "asignarGrupo", email, curso, grupo })
+      body: new URLSearchParams({ action: accion + "Grupo", email, curso, grupo })
     });
     const result = await resp.json();
     estado.innerText = result.msg;
@@ -85,7 +100,9 @@ document.getElementById("form-grupo").addEventListener("submit", async (e) => {
   }
 });
 
-// 4. Ver progreso (por grupo)
+// =============================
+// 4. Ver progreso por grupo
+// =============================
 document.getElementById("form-ver").addEventListener("submit", async (e) => {
   e.preventDefault();
   const resBox = document.getElementById("resultado-ver");
@@ -114,7 +131,55 @@ document.getElementById("form-ver").addEventListener("submit", async (e) => {
   }
 });
 
+// =============================
+// 5. Ver progreso individual
+// =============================
+document.getElementById("form-ver-alumno").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const resBox = document.getElementById("resultado-alumno");
+  resBox.innerHTML = "⏳ Cargando...";
+
+  const email = document.getElementById("email-ver").value.trim().toLowerCase();
+  const curso = document.getElementById("curso-ver-alumno").value;
+
+  try {
+    const resp = await fetch(API_ADMIN, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ action: "verAlumno", email, curso })
+    });
+    const result = await resp.json();
+
+    if (result.success) {
+      let html = `<h3>📌 Datos alumno</h3>`;
+      html += `<p><b>Email:</b> ${result.alumno.datosBD.email}<br>
+               <b>Nombre:</b> ${result.alumno.datosBD.nombre}<br>
+               <b>Curso:</b> ${result.alumno.datosBD.curso}<br>
+               <b>Grupo:</b> ${result.alumno.datosBD.grupo}<br>
+               <b>Rol:</b> ${result.alumno.datosBD.rol}</p>`;
+
+      html += `<h3>🔑 Módulos</h3>`;
+      html += result.alumno.modulos.map(m =>
+        `Módulo ${m.modulo}: ${m.habilitado ? "✅" : "🔒"} (${m.fecha})`
+      ).join("<br>");
+
+      html += `<h3>📝 Notas</h3>`;
+      html += result.alumno.notas.map(n =>
+        `Módulo ${n.modulo}: Nota ${n.nota} | TP1: ${n.tp1} | TP2: ${n.tp2}`
+      ).join("<br>");
+
+      resBox.innerHTML = html;
+    } else {
+      resBox.innerHTML = result.msg;
+    }
+  } catch {
+    resBox.innerHTML = "⚠️ Error de conexión.";
+  }
+});
+
+// =============================
 // Logout
+// =============================
 document.getElementById("btn-logout").addEventListener("click", () => {
   localStorage.removeItem("usuario");
   window.location.href = "../auth/login.html";
