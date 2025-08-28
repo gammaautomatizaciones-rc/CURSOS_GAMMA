@@ -1,3 +1,6 @@
+/* =============================
+   VARIABLES DE COLOR
+============================= */
 :root {
   --negro: #111;
   --blanco: #fff;
@@ -5,7 +8,9 @@
   --gris: #f5f5f5;
 }
 
-/* General */
+/* =============================
+   ESTILOS GENERALES
+============================= */
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
@@ -13,7 +18,25 @@ body {
   color: var(--negro);
 }
 
-/* Navbar */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--negro);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 15px;
+  color: var(--negro);
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+/* =============================
+   NAVBAR
+============================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -29,9 +52,26 @@ body {
   padding: 8px 15px;
   border-radius: 5px;
   font-weight: bold;
+  text-decoration: none;
 }
 
-/* Contenedor */
+.navbar a:hover {
+  background: var(--blanco);
+  color: var(--negro);
+  border: 1px solid var(--dorado);
+}
+
+/* =============================
+   ENCABEZADO
+============================= */
+.encabezado {
+  text-align: center;
+  padding: 30px;
+}
+
+/* =============================
+   LAYOUT PRINCIPAL
+============================= */
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -46,7 +86,33 @@ body {
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-/* Tarjetas */
+/* =============================
+   LINKS DE PRÁCTICOS Y PARCIAL
+============================= */
+.practicos a,
+.parcial a {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: var(--dorado);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.practicos a:hover,
+.parcial a:hover {
+  color: var(--negro);
+}
+
+.link-aclaracion {
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: var(--negro);
+}
+
+/* =============================
+   TARJETAS DE MANUALES
+============================= */
 .tarjeta {
   background: var(--gris);
   border-radius: 8px;
@@ -74,43 +140,11 @@ body {
   color: var(--blanco);
 }
 
-/* Footer */
+/* =============================
+   FOOTER
+============================= */
 .footer {
   text-align: center;
   margin: 40px 0;
+  font-style: italic;
 }
-
-.footer button {
-  background: var(--dorado);
-  color: var(--negro);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.footer button:hover {
-  background: var(--negro);
-  color: var(--blanco);
-}
-.practicos a, .parcial a {
-  display: block;
-  margin-bottom: 15px;
-  font-size: 1.1rem;
-  color: var(--dorado);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.practicos a:hover, .parcial a:hover {
-  color: var(--negro);
-}
-
-.link-aclaracion {
-  font-weight: normal;
-  font-size: 0.9rem;
-  color: var(--negro);
-}
-
