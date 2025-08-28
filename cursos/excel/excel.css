@@ -25,6 +25,7 @@ body {
   background: var(--gris-oscuro);
   color: var(--blanco);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* =============================
@@ -34,25 +35,25 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  padding: 12px 30px;
   background: var(--negro);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 .navbar .logo {
-  height: 45px;
+  height: 40px;
 }
 .navbar ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 18px;
 }
 .navbar a, .navbar button {
   color: var(--blanco);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -66,7 +67,7 @@ body {
    HERO
 ============================= */
 .hero-curso {
-  height: 55vh;
+  height: 35vh; /* más compacto */
   background: linear-gradient(to right, rgba(17,17,17,0.85), rgba(0,0,0,0.65)),
               url('../../assets/excel-bg.jpg') center/cover no-repeat;
   display: flex;
@@ -74,49 +75,48 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 20px;
+  padding: 0 15px;
 }
 .hero-curso h1 {
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: var(--blanco);
-  text-shadow: 0 0 15px rgba(0,0,0,0.8);
+  text-shadow: 0 0 12px rgba(0,0,0,0.8);
 }
 .hero-curso p {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #ddd;
-  max-width: 650px;
-  text-shadow: 0 0 6px rgba(0,0,0,0.6);
+  max-width: 600px;
 }
 
 /* =============================
    PROGRESO
 ============================= */
 .progreso {
-  padding: 50px 20px;
+  padding: 30px 15px;
   text-align: center;
   background: #1c1c1c;
   border-top: 2px solid var(--dorado);
   border-bottom: 2px solid var(--dorado);
 }
 .progreso h2 {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--dorado);
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 #texto-progreso {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #bbb;
 }
 .barra-container {
   background: #333;
   border-radius: 50px;
   overflow: hidden;
-  height: 22px;
-  max-width: 600px;
-  margin: 15px auto;
+  height: 18px;
+  max-width: 500px;
+  margin: 10px auto;
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
 }
 .barra {
@@ -124,72 +124,68 @@ body {
   height: 100%;
   width: 0%;
   border-radius: 50px;
-  transition: width 1s ease;
+  transition: width 0.8s ease;
 }
 
 /* =============================
-   DASHBOARD (Módulos + Historial lado a lado)
+   DASHBOARD
 ============================= */
 .dashboard {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* izquierda más ancha */
-  gap: 30px;
-  padding: 60px 20px;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .dashboard .col {
   background: #1a1a1a;
-  border-radius: 14px;
-  padding: 25px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  transition: transform 0.25s ease;
-}
-.dashboard .col:hover {
-  transform: translateY(-4px);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
 }
 
 .dashboard h2 {
-  font-size: 1.6rem;
-  margin-bottom: 20px;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
   color: var(--dorado);
   text-align: center;
   border-bottom: 1px solid #333;
-  padding-bottom: 10px;
+  padding-bottom: 6px;
 }
 
 /* =============================
    MÓDULOS (izquierda)
 ============================= */
-.dashboard .lista-modulos {
+.lista-modulos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
 }
 .modulo-card {
-  background: #1c1c1c;
-  border-radius: 12px;
-  padding: 25px;
+  background: #1f1f1f;
+  border-radius: 10px;
+  padding: 18px;
   text-align: center;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .modulo-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
+  font-size: 1rem;
+  margin-bottom: 6px;
   color: var(--blanco);
 }
 .modulo-card .status {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
   color: var(--dorado);
 }
 .modulo-card .btn {
   display: inline-block;
-  font-size: 0.9rem;
-  padding: 10px 16px;
-  border-radius: 8px;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  border-radius: 6px;
   background: var(--acento);
   color: var(--blanco);
   font-weight: 600;
@@ -201,17 +197,18 @@ body {
   transform: scale(1.05);
 }
 .modulo-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.3);
 }
 
 /* =============================
    HISTORIAL (derecha)
 ============================= */
 .derecha h3 {
-  font-size: 1.2rem;
-  margin: 15px 0 10px;
+  font-size: 1.1rem;
+  margin: 12px 0 8px;
   color: var(--acento);
+  text-align: left;
 }
 .derecha ul {
   list-style: none;
@@ -220,16 +217,16 @@ body {
 }
 .derecha li {
   background: #222;
-  margin-bottom: 10px;
-  padding: 12px 16px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
   border-radius: 8px;
   color: #eee;
-  font-size: 0.95rem;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  font-size: 0.85rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
   transition: transform 0.2s ease, background 0.2s ease;
 }
 .derecha li:hover {
-  transform: translateX(4px);
+  transform: translateX(3px);
   background: #2c2c2c;
 }
 
@@ -238,29 +235,27 @@ body {
 ============================= */
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 15px;
   background: var(--negro);
   color: #aaa;
-  font-size: 0.85rem;
-  margin-top: 50px;
+  font-size: 0.8rem;
+  margin-top: 40px;
 }
 
 /* =============================
    RESPONSIVE
 ============================= */
-@media (max-width: 1000px) {
+@media (max-width: 950px) {
   .dashboard {
     grid-template-columns: 1fr;
   }
-  .dashboard .lista-modulos {
+  .lista-modulos {
     grid-template-columns: 1fr;
   }
-}
-@media (max-width: 900px) {
-  .hero-curso h1 { font-size: 2.2rem; }
-  .hero-curso p { font-size: 1rem; }
+  .hero-curso { height: 30vh; }
 }
 @media (max-width: 600px) {
-  .navbar { padding: 15px 20px; }
-  .hero-curso { height: 40vh; }
+  .navbar { padding: 10px 20px; }
+  .hero-curso h1 { font-size: 1.8rem; }
+  .hero-curso p { font-size: 0.9rem; }
 }
