@@ -4,9 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Gamma Cursos</title>
-  <link rel="stylesheet" href="style.css">
   <style>
-    /* Ajustes extra solo para login */
+    :root {
+      --negro: #111;
+      --blanco: #fff;
+      --gris: #f6f6f6;
+      --gris-oscuro: #222;
+      --dorado: #c2a75a;
+      --sombra: 0 6px 18px rgba(0,0,0,0.15);
+      --fuente: 'Poppins', sans-serif;
+    }
+    body {
+      margin: 0;
+      font-family: var(--fuente);
+      background: var(--gris);
+      color: var(--negro);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: var(--negro);
+    }
+    .logo {
+      height: 50px;
+    }
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar a {
+      color: var(--blanco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    .navbar a:hover {
+      background: var(--dorado);
+      color: var(--negro);
+    }
     .auth-form {
       max-width: 400px;
       margin: 80px auto;
