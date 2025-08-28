@@ -5,28 +5,24 @@ const API_URL = "https://script.google.com/macros/s/AKfycbzEpRX-d2cQy3tgU2m6SrD-
 // o el webhook de Make
 
 // =============================
-// Verificar respuesta individual
+// Verificación automática al elegir
 // =============================
-function verificarRespuesta(nombre, correcta, idPregunta, explicacion) {
+function autoVerificar(nombre, correcta, idPregunta, explicacion) {
   const opciones = document.getElementsByName(nombre);
-  let seleccion = null;
-  opciones.forEach(op => { if (op.checked) seleccion = op.value; });
-  const feedbackDiv = document.querySelector(`#${idPregunta} .feedback`);
-
-  if (!seleccion) {
-    feedbackDiv.innerHTML = "⚠️ Seleccioná una opción.";
-    feedbackDiv.className = "feedback incorrecto";
-    return false;
-  }
-  if (seleccion === correcta) {
-    feedbackDiv.innerHTML = "✅ Correcto";
-    feedbackDiv.className = "feedback correcto";
-    return true;
-  } else {
-    feedbackDiv.innerHTML = "❌ Incorrecto. " + explicacion;
-    feedbackDiv.className = "feedback incorrecto";
-    return false;
-  }
+  opciones.forEach(op => {
+    op.addEventListener("change", () => {
+      const feedbackDiv = document.querySelector(`#${idPregunta} .feedback`);
+      if (op.checked) {
+        if (op.value === correcta) {
+          feedbackDiv.innerHTML = "✅ Correcto";
+          feedbackDiv.className = "feedback correcto";
+        } else {
+          feedbackDiv.innerHTML = "❌ Incorrecto. " + explicacion;
+          feedbackDiv.className = "feedback incorrecto";
+        }
+      }
+    });
+  });
 }
 
 // =============================
@@ -44,7 +40,7 @@ function validarYEnviar(config) {
   });
 
   if (!todoCorrecto) {
-    alert("⚠️ Tenés que responder todas las preguntas correctamente antes de enviar.");
+    alert("⚠️ Completá bien los campos incorrectos antes de enviar.");
     return;
   }
 
