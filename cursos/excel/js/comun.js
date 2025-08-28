@@ -44,8 +44,21 @@ function validarYEnviar(config) {
     return;
   }
 
+  // =============================
+  // Asegurarnos de tener email
+  // =============================
+  let email = localStorage.getItem("usuarioEmail");
+  if (!email || email === "sin_email") {
+    email = prompt("Ingresá tu email para registrar el práctico:");
+    if (email) {
+      localStorage.setItem("usuarioEmail", email.trim().toLowerCase());
+    } else {
+      alert("⚠️ Necesitamos un email para registrar tu progreso.");
+      return;
+    }
+  }
+
   // Si todo correcto → enviar datos
-  const email = localStorage.getItem("usuarioEmail") || "sin_email";
   const data = {
     action: config.action,     // "practico" o "parcial"
     practico: config.practico || "",
@@ -72,7 +85,13 @@ async function enviarAServer(data) {
       body: new URLSearchParams(data)
     });
     const result = await resp.text();
-    alert(result); // Mostrar respuesta de Apps Script
+
+    // Mensaje de confirmación
+    alert(result);
+
+    // ✅ Redirigir al módulo correspondiente
+    window.location.href = "../modulos/modulo" + data.modulo + ".html";
+
   } catch (err) {
     alert("❌ Error al enviar: " + err.message);
   }
