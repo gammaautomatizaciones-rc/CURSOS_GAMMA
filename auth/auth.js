@@ -1,9 +1,4 @@
 // =============================
-// Configuración
-// ============================
-const API_URL = "https://script.google.com/macros/s/AKfycbyiWY4uIWCe2FkEwGXMOdQSeXuiUnHIY9GXrgCTVPwOJPKIC9VzfwWm7TthS7zyLEIl/exec";
-
-// =============================
 // Helper para mostrar mensajes
 // =============================
 function setEstado(msg, ok = null) {
@@ -15,43 +10,20 @@ function setEstado(msg, ok = null) {
 }
 
 // =============================
-// Helper para enviar datos al servidor
-// =============================
-async function enviarDatos(data) {
-  try {
-    const resp = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(data)
-    });
-
-    if (!resp.ok) throw new Error("Error en la red");
-
-    const result = await resp.json();
-    return result;
-  } catch (err) {
-    console.error("Error conexión:", err);
-    return { success: false, msg: "⚠️ No se pudo conectar al servidor." };
-  }
-}
-
-// =============================
 // Registro
 // =============================
 document.getElementById("registro-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const form = new FormData(e.target);
-  const data = {
-    action: "registro",
-    nombre: form.get("nombre"),
-    email: form.get("email"),
-    pass: form.get("pass")
-  };
 
   setEstado("⏳ Procesando...");
 
-  const result = await enviarDatos(data);
+  const result = await apiCall("registro", {
+    nombre: form.get("nombre"),
+    email: form.get("email"),
+    pass: form.get("pass")
+  });
+
   setEstado(result.msg, result.success);
 
   if (result.success) {
@@ -64,17 +36,15 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
 // =============================
 document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const form = new FormData(e.target);
-  const data = {
-    action: "login",
-    email: form.get("email"),
-    pass: form.get("pass")
-  };
 
   setEstado("⏳ Verificando...");
 
-  const result = await enviarDatos(data);
+  const result = await apiCall("login", {
+    email: form.get("email"),
+    pass: form.get("pass")
+  });
+
   setEstado(result.msg, result.success);
 
   if (result.success && result.usuario) {
@@ -107,10 +77,7 @@ async function refreshUsuario() {
   if (!usuarioAuth || !usuarioAuth.email) return;
 
   try {
-    const result = await enviarDatos({
-      action: "getUsuario",
-      email: usuarioAuth.email
-    });
+    const result = await apiCall("getUsuario", { email: usuarioAuth.email });
 
     if (result.success && result.usuario) {
       localStorage.setItem("usuario", JSON.stringify(result.usuario));
@@ -120,4 +87,3 @@ async function refreshUsuario() {
     console.error("Error refrescando usuario:", err);
   }
 }
-
