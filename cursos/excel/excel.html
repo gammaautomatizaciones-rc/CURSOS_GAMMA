@@ -7,8 +7,7 @@
   <meta name="description" content="Curso intensivo de Excel de 12 módulos prácticos. Aprende desde cero hasta nivel avanzado con Gamma Automatizaciones.">
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="../../style.css">
-  <link rel="stylesheet" href="styleindexexcel.css">
+  <link rel="stylesheet" href="styleexcel.css">
 </head>
 <body>
   <!-- NAVBAR -->
@@ -31,13 +30,7 @@
       <p>12 módulos prácticos para dominar Excel desde cero hasta nivel avanzado.</p>
     </div>
   </section>
-  
-  <!-- HISTORIAL -->
-  <section class="historial" aria-labelledby="titulo-historial">
-    <h2 id="titulo-historial">Historial Personal</h2>
-    <div id="historial"></div>
-  </section>
-  
+
   <!-- PROGRESO -->
   <section class="progreso" aria-labelledby="titulo-progreso">
     <h2 id="titulo-progreso">Tu progreso</h2>
@@ -47,11 +40,17 @@
     <p id="texto-progreso">0 de 12 módulos habilitados</p>
   </section>
 
+  <!-- HISTORIAL -->
+  <section class="historial" aria-labelledby="titulo-historial">
+    <h2 id="titulo-historial">Historial Personal</h2>
+    <div id="historial"><p>Aquí verás tu historial próximamente</p></div>
+  </section>
+
   <!-- MÓDULOS -->
   <section class="modulos" aria-labelledby="titulo-modulos">
-    <h2 id="titulo-modulos">Plan de Estudio.</h2>
+    <h2 id="titulo-modulos">Plan de Estudio</h2>
     <div class="lista-modulos" id="lista-modulos">
-      <!-- Render dinámico con modulos.js -->
+      <!-- Render dinámico con excel.js -->
     </div>
   </section>
 
@@ -62,9 +61,6 @@
 
   <!-- JS -->
   <script src="../../auth/auth.js" defer></script>
-  <script src="modulos.js" defer></script>
   <script src="excel.js" defer></script>
 </body>
 </html>
-
-
