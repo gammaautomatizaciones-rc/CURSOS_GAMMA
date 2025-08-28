@@ -5,8 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Gamma Cursos</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Ajustes extra solo para login */
+    .auth-form {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 40px;
+      background: var(--blanco);
+      border-radius: 14px;
+      box-shadow: var(--sombra);
+      text-align: center;
+    }
+    .auth-form h1 {
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      color: var(--negro);
+    }
+    .auth-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-align: left;
+      color: var(--gris-oscuro);
+    }
+    .auth-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.3s ease;
+    }
+    .auth-form input:focus {
+      border-color: var(--dorado);
+      outline: none;
+    }
+    .auth-form .btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--dorado);
+      color: var(--negro);
+      transition: all 0.3s ease;
+    }
+    .auth-form .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .auth-form .btn:hover:not(:disabled) {
+      background: var(--negro);
+      color: var(--blanco);
+    }
+    #estado {
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+    .auth-form p {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    .auth-form a {
+      color: var(--dorado);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .auth-form a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
+  <!-- NAVBAR -->
   <header class="navbar">
     <img src="../assets/logo.png" alt="Logo Gamma" class="logo">
     <nav>
@@ -17,21 +91,23 @@
     </nav>
   </header>
 
+  <!-- LOGIN -->
   <section class="auth-form">
-    <h1>Login</h1>
+    <h1>Iniciar Sesión</h1>
     <form id="login-form">
-      <label>Email:</label>
-      <input type="email" name="email" required>
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" placeholder="tuemail@ejemplo.com" required>
 
-      <label>Contraseña:</label>
-      <input type="password" name="pass" required>
+      <label for="pass">Contraseña:</label>
+      <input type="password" name="pass" id="pass" placeholder="••••••••" required>
 
       <button type="submit" class="btn">Iniciar Sesión</button>
     </form>
     <p id="estado"></p>
-    <p>¿No tenés cuenta? <a href="registro.html">Registrate</a></p>
+    <p>¿No tenés cuenta? <a href="registro.html">Registrate acá</a></p>
   </section>
 
+  <script src="api.js"></script>
   <script src="auth.js"></script>
 </body>
 </html>
