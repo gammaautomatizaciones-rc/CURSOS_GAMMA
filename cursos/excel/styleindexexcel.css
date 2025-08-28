@@ -92,19 +92,16 @@
 .progreso {
   padding: 50px 20px;
   text-align: center;
+  background: #111; /* en lugar de blanco */
+  color: #fff;
 }
 .progreso h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 20px;
+  color: var(--dorado);
 }
 #texto-progreso {
-  font-size: 1rem;
-  font-weight: 500;
   color: #ccc;
-  margin-top: 8px;
 }
+
 .barra-container {
   background: var(--gris);
   border-radius: 50px;
