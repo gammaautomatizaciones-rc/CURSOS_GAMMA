@@ -121,7 +121,16 @@ async function cargarDatos() {
 
     if (result.success) {
       const historial = result.historial || {};
-
+        // 🔽 ORDENAR ARRAYS POR MÓDULO
+          if (historial.habilitados) {
+            historial.habilitados.sort((a, b) => Number(a.modulo) - Number(b.modulo));
+          }
+          if (historial.completados) {
+            historial.completados.sort((a, b) => Number(a.modulo) - Number(b.modulo));
+          }
+          if (historial.notas) {
+            historial.notas.sort((a, b) => Number(a.modulo) - Number(b.modulo));
+          }
       // Barra de progreso
       const habilitadosCount = historial.habilitados ? historial.habilitados.length : 0;
       actualizarProgreso(habilitadosCount);
