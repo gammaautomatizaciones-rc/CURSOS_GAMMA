@@ -3,85 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gamma Cursos</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Inicio - Gamma Cursos</title>
+  <style>
+    :root {
+      --negro: #111;
+      --blanco: #fff;
+      --gris: #f6f6f6;
+      --dorado: #c2a75a;
+      --sombra: 0 6px 18px rgba(0,0,0,0.15);
+      --fuente: 'Poppins', sans-serif;
+    }
+    body {
+      margin: 0;
+      font-family: var(--fuente);
+      background: var(--gris);
+      color: var(--negro);
+    }
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: var(--negro);
+    }
+    .logo {
+      height: 45px;
+    }
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar a, .navbar button {
+      color: var(--blanco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+    .navbar a:hover, .navbar button:hover {
+      background: var(--dorado);
+      color: var(--negro);
+    }
+    /* HERO */
+    .hero {
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(to right, #111, #333);
+      color: var(--blanco);
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    /* CURSOS */
+    .cursos {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .cursos h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    .curso-card {
+      background: var(--blanco);
+      border-radius: 14px;
+      box-shadow: var(--sombra);
+      padding: 25px;
+      max-width: 320px;
+      margin: 0 auto 25px;
+      transition: transform 0.2s ease;
+    }
+    .curso-card:hover {
+      transform: translateY(-5px);
+    }
+    .curso-card h3 {
+      margin-bottom: 10px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--dorado);
+      color: var(--negro);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: var(--negro);
+      color: var(--blanco);
+    }
+    /* FOOTER */
+    footer {
+      background: var(--negro);
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
   <header class="navbar">
     <img src="assets/logo.png" alt="Logo Gamma" class="logo">
     <nav>
-      <ul>
-        <li><a href="index.html">🏠 Inicio</a></li>
-        <li><button id="btn-logout" class="logout">Salir</button></li>
-      </ul>
+      <ul id="nav-links"></ul>
     </nav>
   </header>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-text">
-      <h1>Gamma Cursos</h1>
-      <p>Formación práctica en automatización y productividad</p>
-      <p id="bienvenida"></p>
+    <div>
+      <h1>Bienvenido a Gamma Cursos</h1>
+      <p>Accedé a tus módulos y materiales de estudio</p>
     </div>
   </section>
 
-  <!-- CURSOS HABILITADOS -->
+  <!-- CURSOS -->
   <section class="cursos">
-    <h2>Mis cursos habilitados</h2>
-    <div id="cursos-habilitados" class="cursos-grid"></div>
+    <h2>Mis Cursos</h2>
+    <div class="curso-card">
+      <h3>Curso de Excel</h3>
+      <p>Aprendé desde cero hasta nivel avanzado en 12 módulos.</p>
+      <a href="modulos/modulo1.html" class="btn">Ingresar</a>
+    </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 Gamma Automatizaciones - Todos los derechos reservados</p>
+    <p>© 2025 Gamma Automatizaciones</p>
   </footer>
 
-  <!-- SCRIPT -->
-  <script>
-    // =============================
-    // Manejo de sesión
-    // =============================
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    if (!usuario) {
-      window.location.href = "auth/login.html";
-    }
-
-    document.getElementById("bienvenida").innerText = `Bienvenido/a, ${usuario.nombre}`;
-
-    document.getElementById("btn-logout")?.addEventListener("click", () => {
-      localStorage.removeItem("usuario");
-      window.location.href = "auth/login.html";
-    });
-
-    // =============================
-    // Mostrar cursos habilitados
-    // =============================
-    const container = document.getElementById("cursos-habilitados");
-
-    if (usuario?.curso?.trim().toLowerCase() === "excel") {
-      container.innerHTML = `
-        <div class="curso-card">
-          <h3>Curso de Excel</h3>
-          <p>Accedé al curso intensivo de Excel con 12 módulos prácticos.</p>
-          <a href="cursos/excel/excel.html" class="btn">👉 Ir al curso</a>
-        </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <p>⚠️ Aún no tenés cursos habilitados. Contactá con el administrador.</p>
-      `;
-    }
-  </script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      refreshUsuario().then(() => {
-        console.log("Usuario actualizado con datos de BD");
-        // acá ya se podría renderizar módulos si hiciera falta
-      });
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="auth/api.js"></script>
+  <script src="auth/auth.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
