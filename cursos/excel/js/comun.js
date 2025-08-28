@@ -62,6 +62,30 @@ async function validarYEnviar(config) {
     return;
   }
 
+  // ✅ Tomar el email directamente del login guardado
+  const email = localStorage.getItem("usuarioEmail");
+  if (!email) {
+    alert("❌ No se encontró el email del usuario. Tenés que iniciar sesión.");
+    window.location.href = "../auth/login.html";
+    return;
+  }
+
+  const data = {
+    action: config.action,
+    practico: config.practico || "",
+    parcial: config.parcial || "",
+    curso: config.curso || "excel",
+    grupo: config.grupo || "1",
+    modulo: config.modulo,
+    email: email,
+    estado: "COMPLETADO",
+    nota: config.nota || ""
+  };
+
+  enviarAServer(data);
+}
+
+
   // =============================
   // Validar email con servidor
   // =============================
