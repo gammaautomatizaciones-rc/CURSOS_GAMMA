@@ -30,7 +30,7 @@
   <!-- CURSOS HABILITADOS -->
   <section class="cursos">
     <h2>Mis cursos habilitados</h2>
-    <div id="cursos-habilitados" class="cursos-grid" ></div>
+    <div id="cursos-habilitados" class="cursos-grid"></div>
   </section>
 
   <!-- FOOTER -->
@@ -56,12 +56,6 @@
     });
 
     // =============================
-    // DEBUG: ver qué curso devuelve
-    // =============================
-    console.log("DEBUG usuario:", usuario);
-    alert("Curso detectado: " + usuario?.curso);
-
-    // =============================
     // Mostrar cursos habilitados
     // =============================
     const container = document.getElementById("cursos-habilitados");
@@ -80,20 +74,14 @@
       `;
     }
   </script>
+
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    refreshUsuario().then(() => {
-      console.log("Usuario actualizado con datos de BD");
-      // acá ya podés seguir con renderModulos() o lo que quieras
+    document.addEventListener("DOMContentLoaded", () => {
+      refreshUsuario().then(() => {
+        console.log("Usuario actualizado con datos de BD");
+        // acá ya se podría renderizar módulos si hiciera falta
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
