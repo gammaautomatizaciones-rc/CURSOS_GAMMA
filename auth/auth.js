@@ -1,89 +1,78 @@
 // =============================
-// Helper para mostrar mensajes
+// auth.js
 // =============================
-function setEstado(msg, ok = null) {
-  const estado = document.getElementById("estado");
-  if (!estado) return;
 
-  estado.innerText = msg;
-  estado.style.color = ok === true ? "green" : ok === false ? "red" : "black";
-}
-
-// =============================
 // Registro
-// =============================
 document.getElementById("registro-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const form = new FormData(e.target);
+  const form = e.target;
+  const btn = form.querySelector("button[type=submit]");
+  const estado = document.getElementById("estado");
 
-  setEstado("⏳ Procesando...");
+  btn.disabled = true;
+  btn.innerText = "⏳ Registrando...";
+  estado.innerText = "";
 
-  const result = await apiCall("registro", {
-    nombre: form.get("nombre"),
-    email: form.get("email"),
-    pass: form.get("pass")
-  });
+  const formData = new FormData(form);
+  const nombre = formData.get("nombre").trim();
+  const email = formData.get("email").trim().toLowerCase();
+  const pass = formData.get("pass").trim();
 
-  setEstado(result.msg, result.success);
+  const result = await apiCall("register", { nombre, email, pass });
+
+  estado.innerText = result.msg;
+  estado.style.color = result.success ? "green" : "red";
+
+  btn.disabled = false;
+  btn.innerText = "Registrarme";
 
   if (result.success) {
-    setTimeout(() => window.location.href = "login.html", 1500);
+    // opcional → guardar usuario en localStorage
+    localStorage.setItem("usuario", JSON.stringify(result.user));
+    setTimeout(() => window.location.href = "../index.html", 1500);
   }
 });
 
-// =============================
 // Login
-// =============================
 document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const form = new FormData(e.target);
+  const form = e.target;
+  const btn = form.querySelector("button[type=submit]");
+  const estado = document.getElementById("estado");
 
-  setEstado("⏳ Verificando...");
+  btn.disabled = true;
+  btn.innerText = "⏳ Iniciando...";
+  estado.innerText = "";
 
-  const result = await apiCall("login", {
-    email: form.get("email"),
-    pass: form.get("pass")
-  });
+  const formData = new FormData(form);
+  const email = formData.get("email").trim().toLowerCase();
+  const pass = formData.get("pass").trim();
 
-  setEstado(result.msg, result.success);
+  const result = await apiCall("login", { email, pass });
 
-  if (result.success && result.usuario) {
-    localStorage.setItem("usuario", JSON.stringify(result.usuario));
-    setTimeout(() => window.location.href = "../index.html", 1000);
+  estado.innerText = result.msg;
+  estado.style.color = result.success ? "green" : "red";
+
+  btn.disabled = false;
+  btn.innerText = "Ingresar";
+
+  if (result.success) {
+    localStorage.setItem("usuario", JSON.stringify(result.user));
+    setTimeout(() => window.location.href = "../index.html", 1500);
   }
 });
 
-// =============================
-// Manejo de sesión
-// =============================
-function getUsuarioAuth() {
-  try {
-    return JSON.parse(localStorage.getItem("usuario"));
-  } catch {
-    return null;
+// Verificación de sesión (auth)
+async function verificarSesion() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
+  if (!usuario) {
+    window.location.href = "login.html";
+    return;
   }
-}
 
-function logout() {
-  localStorage.removeItem("usuario");
-  window.location.href = "login.html";
-}
-
-// =============================
-// Refrescar datos del usuario desde la BD
-// =============================
-async function refreshUsuario() {
-  const usuarioAuth = getUsuarioAuth();
-  if (!usuarioAuth || !usuarioAuth.email) return;
-
-  try {
-    const result = await apiCall("getUsuario", { email: usuarioAuth.email });
-
-    if (result.success && result.usuario) {
-      localStorage.setItem("usuario", JSON.stringify(result.usuario));
-      console.log("DEBUG → Usuario refrescado:", result.usuario);
-    }
-  } catch (err) {
-    console.error("Error refrescando usuario:", err);
+  const result = await apiCall("auth", { email: usuario.email, pass: usuario.pass });
+  if (!result.success) {
+    localStorage.removeItem("usuario");
+    window.location.href = "login.html";
   }
 }
