@@ -91,39 +91,6 @@ async function validarYEnviar(config) {
   enviarAServer(data);
 }
 
-
-
-  // =============================
-  // Validar email con servidor
-  // =============================
-  let email = prompt("Ingresá tu email para registrar el práctico:");
-  if (!email) {
-    alert("⚠️ Necesitamos un email para registrar tu progreso.");
-    return;
-  }
-
-  const usuario = await validarUsuario(email.trim().toLowerCase());
-  if (!usuario) {
-    alert("❌ Email no encontrado en la base de datos.");
-    return;
-  }
-
-  // Si todo correcto → enviar datos
-  const data = {
-    action: config.action,     // "practico" o "parcial"
-    practico: config.practico || "",
-    parcial: config.parcial || "",
-    curso: config.curso || "excel",
-    grupo: config.grupo || "1",
-    modulo: config.modulo,
-    email: usuario.email,      // ✅ tomado desde Apps Script
-    estado: "true",
-    nota: config.nota || ""
-  };
-
-  enviarAServer(data);
-}
-
 // =============================
 // Enviar a servidor
 // =============================
