@@ -1,7 +1,7 @@
 // =============================
 // CONFIG
 // =============================
-const API_URL = "https://script.google.com/macros/s/TU_DEPLOY_ID/exec"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbzEpRX-d2cQy3tgU2m6SrD-2g80gyjF9YSaoDXofRfcnnQ4r4tEsk7hkCJ_dr3gR5zpmg/exec"; 
 // o el webhook de Make
 
 // =============================
