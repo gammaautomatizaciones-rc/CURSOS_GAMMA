@@ -27,6 +27,64 @@
   opacity: 0.95;
   text-shadow: 0 0 6px rgba(0,0,0,0.7); /* brillo en subtítulo */
 }
+/* =============================
+   HISTORIAL PERSONAL
+============================= */
+.historial {
+  padding: 50px 20px;
+  text-align: center;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.historial h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--dorado);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.historial h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 12px;
+  color: var(--acento);
+}
+
+.historial ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 20px auto;
+  max-width: 600px;
+  text-align: left;
+}
+
+.historial li {
+  background: #222;
+  margin-bottom: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #eee;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.historial li:hover {
+  transform: translateX(4px);
+  background: #2c2c2c;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .historial li {
+    font-size: 0.85rem;
+    padding: 10px 14px;
+  }
+}
 
 /* =============================
    PROGRESO
