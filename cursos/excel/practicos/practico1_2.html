@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctico 2 – Primeras fórmulas</title>
+  <link rel="stylesheet" href="../css/comun.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div>📊 Práctico 2 – Primeras fórmulas</div>
+    <a href="../modulos/modulo1.html">Volver al Módulo 1</a>
+  </div>
+
+  <!-- CONTENEDOR -->
+  <div class="container">
+    <h1>Práctico 2 – Preguntas</h1>
+
+    <!-- Pregunta 1 -->
+    <div class="pregunta" id="p1">
+      <h3>1. ¿Cómo comienza siempre una fórmula en Excel?</h3>
+      <label><input type="radio" name="q1" value="a"> Con el signo +</label>
+      <label><input type="radio" name="q1" value="b"> Con el signo =</label>
+      <label><input type="radio" name="q1" value="c"> Con el signo $</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="pregunta" id="p2">
+      <h3>2. ¿Cuál es el operador para multiplicar?</h3>
+      <label><input type="radio" name="q2" value="a"> +</label>
+      <label><input type="radio" name="q2" value="b"> -</label>
+      <label><input type="radio" name="q2" value="c"> *</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="pregunta" id="p3">
+      <h3>3. Si en A1 tenés 10 y en B1 tenés 5, ¿qué resultado da =A1+B1?</h3>
+      <label><input type="radio" name="q3" value="a"> 15</label>
+      <label><input type="radio" name="q3" value="b"> 5</label>
+      <label><input type="radio" name="q3" value="c"> 50</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="pregunta" id="p4">
+      <h3>4. ¿Qué ventaja tiene usar referencias de celdas en fórmulas?</h3>
+      <label><input type="radio" name="q4" value="a"> Actualizan automáticamente el resultado al cambiar los valores.</label>
+      <label><input type="radio" name="q4" value="b"> Reducen el tamaño del archivo.</label>
+      <label><input type="radio" name="q4" value="c"> Evitan que se borren datos.</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="pregunta" id="p5">
+      <h3>5. ¿Qué error es común al escribir fórmulas?</h3>
+      <label><input type="radio" name="q5" value="a"> Olvidar el signo = al inicio.</label>
+      <label><input type="radio" name="q5" value="b"> Usar coma en lugar de punto para decimales (según configuración regional).</label>
+      <label><input type="radio" name="q5" value="c"> Ingresar números negativos.</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div class="pregunta" id="p6">
+      <h3>6. ¿Qué fórmula es correcta para restar B1 a A1?</h3>
+      <label><input type="radio" name="q6" value="a"> =B1-A1</label>
+      <label><input type="radio" name="q6" value="b"> =A1-B1</label>
+      <label><input type="radio" name="q6" value="c"> =A1+B1</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 7 -->
+    <div class="pregunta" id="p7">
+      <h3>7. Si en A1=20 y B1=4, ¿qué devuelve =A1/B1?</h3>
+      <label><input type="radio" name="q7" value="a"> 5</label>
+      <label><input type="radio" name="q7" value="b"> 16</label>
+      <label><input type="radio" name="q7" value="c"> 80</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 8 -->
+    <div class="pregunta" id="p8">
+      <h3>8. ¿Qué ocurre si hacés referencia a una celda vacía en una fórmula?</h3>
+      <label><input type="radio" name="q8" value="a"> Muestra siempre un error.</label>
+      <label><input type="radio" name="q8" value="b"> Puede dar 0 o un error.</label>
+      <label><input type="radio" name="q8" value="c"> Se llena automáticamente con un 1.</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 9 -->
+    <div class="pregunta" id="p9">
+      <h3>9. ¿Qué resultado devuelve =2*3+4?</h3>
+      <label><input type="radio" name="q9" value="a"> 10</label>
+      <label><input type="radio" name="q9" value="b"> 14</label>
+      <label><input type="radio" name="q9" value="c"> 20</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 10 -->
+    <div class="pregunta" id="p10">
+      <h3>10. ¿Qué operador se usa para la división en Excel?</h3>
+      <label><input type="radio" name="q10" value="a"> \</label>
+      <label><input type="radio" name="q10" value="b"> /</label>
+      <label><input type="radio" name="q10" value="c"> :</label>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- BOTÓN FINAL -->
+    <div style="text-align:center; margin:30px 0;">
+      <button id="btnEnviar">Enviar Práctico</button>
+    </div>
+  </div>
+
+  <!-- JS COMÚN Y JS ESPECÍFICO -->
+  <script src="../js/comun.js"></script>
+  <script src="../js/practico1_2.js"></script>
+</body>
+</html>
