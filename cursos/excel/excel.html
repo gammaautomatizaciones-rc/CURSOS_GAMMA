@@ -41,18 +41,23 @@
   </section>
 
   <!-- HISTORIAL -->
-  <section class="historial" aria-labelledby="titulo-historial">
-    <h2 id="titulo-historial">Historial Personal</h2>
-    <div id="historial"><p>Aquí verás tu historial próximamente</p></div>
-  </section>
-
-  <!-- MÓDULOS -->
-  <section class="modulos" aria-labelledby="titulo-modulos">
+  <!-- DASHBOARD -->
+<section class="dashboard">
+  <!-- IZQUIERDA: MÓDULOS -->
+  <div class="col izquierda">
     <h2 id="titulo-modulos">Plan de Estudio</h2>
     <div class="lista-modulos" id="lista-modulos">
       <!-- Render dinámico con excel.js -->
     </div>
-  </section>
+  </div>
+
+  <!-- DERECHA: HISTORIAL -->
+  <div class="col derecha">
+    <h2 id="titulo-historial">Historial Personal</h2>
+    <div id="historial"><p>Aquí verás tu historial próximamente</p></div>
+  </div>
+</section>
+
 
   <!-- FOOTER -->
   <footer>
@@ -64,4 +69,5 @@
   <script src="excel.js" defer></script>
 </body>
 </html>
+
 
