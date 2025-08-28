@@ -84,7 +84,7 @@ async function validarYEnviar(config) {
     grupo: config.grupo || "1",
     modulo: config.modulo,
     email: usuario.email,      // ✅ viene de auth
-    estado: "COMPLETADO",
+    estado: "true",
     nota: config.nota || ""
   };
 
