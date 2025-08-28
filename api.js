@@ -1,10 +1,12 @@
 // =============================
-// CONFIGURACIÓN GLOBAL
+// api.js
 // =============================
-const API_URL = "https://script.google.com/macros/s/AKfycbx.../exec"; // <--- tu Router.gs
+
+// URL del Router.gs publicado como app web
+const API_URL = "https://script.google.com/macros/s/AKfycbxssk6Z89sv820KnYDhtobTht2cFEx9btHBNZCbd9s4GS6i5IXxO2BDBixihhYT23io9w/exec";
 
 // =============================
-// Helper genérico para enviar POST
+// Helper genérico para llamar a la API
 // =============================
 async function apiCall(action, params = {}) {
   try {
@@ -21,12 +23,12 @@ async function apiCall(action, params = {}) {
       result = JSON.parse(text);
     } catch {
       console.error("Respuesta no JSON:", text);
-      return { success: false, msg: "⚠️ Respuesta no válida del servidor", raw: text };
+      return { success: false, msg: "⚠️ Respuesta inválida del servidor", raw: text };
     }
 
     return result;
   } catch (err) {
-    console.error("Error conexión:", err);
+    console.error("Error de conexión:", err);
     return { success: false, msg: "⚠️ Error de conexión: " + err.message };
   }
 }
