@@ -86,7 +86,7 @@ async function validarYEnviar(config) {
     grupo: config.grupo || "1",
     modulo: config.modulo,
     email: usuario.email,      // ✅ tomado desde Apps Script
-    estado: "COMPLETADO",
+    estado: "true",
     nota: config.nota || ""
   };
 
