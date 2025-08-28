@@ -67,7 +67,7 @@ function validarYEnviar(config) {
     grupo: config.grupo || "1",
     modulo: config.modulo,
     email: email,
-    estado: "COMPLETADO",
+    estado: "true",
     nota: config.nota || ""
   };
 
