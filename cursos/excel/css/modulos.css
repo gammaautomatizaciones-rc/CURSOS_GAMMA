@@ -95,3 +95,22 @@ body {
   background: var(--negro);
   color: var(--blanco);
 }
+.practicos a, .parcial a {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: var(--dorado);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.practicos a:hover, .parcial a:hover {
+  color: var(--negro);
+}
+
+.link-aclaracion {
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: var(--negro);
+}
+
