@@ -26,24 +26,6 @@ function autoVerificar(nombre, correcta, idPregunta, explicacion) {
 }
 
 // =============================
-// Consultar usuario al endpoint
-// =============================
-async function validarUsuario(email) {
-  try {
-    const resp = await fetch(API_WHOAMI, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: "whoami", email })
-    });
-    const result = await resp.json();
-    return result.success ? result.usuario : null;
-  } catch (err) {
-    console.error("Error en validarUsuario:", err);
-    return null;
-  }
-}
-
-// =============================
 // Validar todo el cuestionario
 // =============================
 async function validarYEnviar(config) {
@@ -76,6 +58,10 @@ async function validarYEnviar(config) {
     return;
   }
 
+  const btn = document.getElementById("btnEnviar");
+  btn.disabled = true;
+  btn.innerText = "⏳ Guardando...";
+
   const data = {
     action: config.action,     // "practico" o "parcial"
     practico: config.practico || "",
@@ -83,18 +69,18 @@ async function validarYEnviar(config) {
     curso: config.curso || "excel",
     grupo: config.grupo || "1",
     modulo: config.modulo,
-    email: usuario.email,      // ✅ viene de auth
-    estado: "COMPLETADO",
+    email: usuario.email,
+    estado: config.action === "practico" ? "true" : "COMPLETADO",
     nota: config.nota || ""
   };
 
-  enviarAServer(data);
+  enviarAServer(data, btn);
 }
 
 // =============================
 // Enviar a servidor
 // =============================
-async function enviarAServer(data) {
+async function enviarAServer(data, btn) {
   try {
     const resp = await fetch(API_URL, {
       method: "POST",
@@ -103,13 +89,15 @@ async function enviarAServer(data) {
     });
     const result = await resp.text();
 
-    // Mensaje de confirmación
     alert(result);
-
-    // ✅ Redirigir al módulo correspondiente
+    // Redirigir al módulo correspondiente
     window.location.href = "../modulos/modulo" + data.modulo + ".html";
 
   } catch (err) {
     alert("❌ Error al enviar: " + err.message);
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = "Enviar Práctico";
+    }
   }
 }
