@@ -51,17 +51,20 @@ function renderHistorial(historial) {
     html += "</ul>";
   }
 
-  // Notas
-  if (historial.notas && historial.notas.length > 0) {
-    html += "<h3>Notas y trabajos prácticos</h3><ul>";
-    historial.notas.forEach(n => {
-      html += `<li>Módulo ${n.modulo}: Nota ${n.nota || "-"}, TP1 ${n.tp1 || "-"}, TP2 ${n.tp2 || "-"}</li>`;
-    });
-    html += "</ul>";
-  }
+// Notas
+if (historial.notas && historial.notas.length > 0) {
+  html += "<h3>Notas y trabajos prácticos</h3><ul>";
+  historial.notas.forEach(n => {
+    const tp1 = String(n.tp1).toLowerCase() === "true" ? "COMPLETADO" :
+                String(n.tp1).toLowerCase() === "false" ? "INCOMPLETO" : "-";
+    const tp2 = String(n.tp2).toLowerCase() === "true" ? "COMPLETADO" :
+                String(n.tp2).toLowerCase() === "false" ? "INCOMPLETO" : "-";
 
-  contenedor.innerHTML = html;
+    html += `<li>Módulo ${n.modulo}: Nota ${n.nota || "-"}, Práctico 1: ${tp1}, Práctico 2: ${tp2}</li>`;
+  });
+  html += "</ul>";
 }
+
 
 // =============================
 // Cargar progreso e historial
