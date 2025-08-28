@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcial 1 – Introducción a Excel</title>
+  <link rel="stylesheet" href="../css/comun.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div>📊 Parcial 1 – Introducción a Excel</div>
+    <a href="../modulos/modulo1.html">Volver al Módulo 1</a>
+  </div>
+
+  <!-- CONTENEDOR -->
+  <div class="container">
+    <h1>Parcial 1 – 10 Preguntas Claves</h1>
+    <p><strong>Tiempo límite:</strong> <span id="timer">60:00</span></p>
+
+    <!-- Pregunta 1 -->
+    <div class="pregunta" id="p1">
+      <h3>1. Explicá con tus palabras qué es una celda en Excel y cómo se identifica.</h3>
+      <textarea name="q1" rows="3" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="pregunta" id="p2">
+      <h3>2. ¿Cuál es la diferencia entre una hoja y un libro en Excel?</h3>
+      <textarea name="q2" rows="3" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="pregunta" id="p3">
+      <h3>3. Escribí la fórmula que usarías para sumar los valores de las celdas A1 y B1.</h3>
+      <textarea name="q3" rows="2" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="pregunta" id="p4">
+      <h3>4. Si en A1=20 y en B1=5, ¿qué devuelve la fórmula =A1/B1?</h3>
+      <textarea name="q4" rows="2" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="pregunta" id="p5">
+      <h3>5. Explicá qué ventaja tiene usar referencias de celdas en lugar de números fijos en una fórmula.</h3>
+      <textarea name="q5" rows="3" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div class="pregunta" id="p6">
+      <h3>6. ¿Qué operador corresponde a la multiplicación y cuál a la división?</h3>
+      <textarea name="q6" rows="2" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 7 -->
+    <div class="pregunta" id="p7">
+      <h3>7. Si una celda muestra el error #¡DIV/0!, ¿qué significa y cómo lo solucionarías?</h3>
+      <textarea name="q7" rows="3" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 8 -->
+    <div class="pregunta" id="p8">
+      <h3>8. ¿Qué ocurre si olvidás escribir el signo "=" al inicio de una fórmula?</h3>
+      <textarea name="q8" rows="2" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 9 -->
+    <div class="pregunta" id="p9">
+      <h3>9. Escribí la fórmula que usarías para calcular el promedio de los valores en las celdas A1 hasta A10.</h3>
+      <textarea name="q9" rows="2" style="width:100%;"></textarea>
+    </div>
+
+    <!-- Pregunta 10 -->
+    <div class="pregunta" id="p10">
+      <h3>10. Si un archivo de Excel se guarda con la extensión .xlsx, ¿qué significa esa extensión?</h3>
+      <textarea name="q10" rows="2" style="width:100%;"></textarea>
+    </div>
+
+    <!-- BOTÓN FINAL -->
+    <div style="text-align:center; margin:30px 0;">
+      <button id="btnEnviar">Enviar Parcial</button>
+    </div>
+  </div>
+
+  <!-- JS COMÚN Y JS ESPECÍFICO -->
+  <script src="../js/comun.js"></script>
+  <script src="../js/parcial1_1.js"></script>
+</body>
+</html>
 
