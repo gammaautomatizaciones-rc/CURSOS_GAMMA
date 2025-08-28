@@ -2,7 +2,7 @@
 // CONFIG
 // =============================
 const API_URL = "https://script.google.com/macros/s/AKfycbzEpRX-d2cQy3tgU2m6SrD-2g80gyjF9YSaoDXofRfcnnQ4r4tEsk7hkCJ_dr3gR5zpmg/exec"; 
-// o el webhook de Make
+const API_WHOAMI = "https://script.google.com/macros/s/AKfycbzg2BcTThPg91l-FJDZZ4Ejmz9JOqE8-IomtX3RphlWJAraHelYAm4S1fh4pqIDFC7HOQ/exec";
 
 // =============================
 // Verificación automática al elegir
@@ -26,9 +26,27 @@ function autoVerificar(nombre, correcta, idPregunta, explicacion) {
 }
 
 // =============================
+// Consultar usuario al endpoint
+// =============================
+async function validarUsuario(email) {
+  try {
+    const resp = await fetch(API_WHOAMI, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ action: "whoami", email })
+    });
+    const result = await resp.json();
+    return result.success ? result.usuario : null;
+  } catch (err) {
+    console.error("Error en validarUsuario:", err);
+    return null;
+  }
+}
+
+// =============================
 // Validar todo el cuestionario
 // =============================
-function validarYEnviar(config) {
+async function validarYEnviar(config) {
   const preguntas = document.querySelectorAll(".pregunta");
   let todoCorrecto = true;
 
@@ -45,17 +63,18 @@ function validarYEnviar(config) {
   }
 
   // =============================
-  // Asegurarnos de tener email
+  // Validar email con servidor
   // =============================
-  let email = localStorage.getItem("usuarioEmail");
-  if (!email || email === "sin_email") {
-    email = prompt("Ingresá tu email para registrar el práctico:");
-    if (email) {
-      localStorage.setItem("usuarioEmail", email.trim().toLowerCase());
-    } else {
-      alert("⚠️ Necesitamos un email para registrar tu progreso.");
-      return;
-    }
+  let email = prompt("Ingresá tu email para registrar el práctico:");
+  if (!email) {
+    alert("⚠️ Necesitamos un email para registrar tu progreso.");
+    return;
+  }
+
+  const usuario = await validarUsuario(email.trim().toLowerCase());
+  if (!usuario) {
+    alert("❌ Email no encontrado en la base de datos.");
+    return;
   }
 
   // Si todo correcto → enviar datos
@@ -66,8 +85,8 @@ function validarYEnviar(config) {
     curso: config.curso || "excel",
     grupo: config.grupo || "1",
     modulo: config.modulo,
-    email: email,
-    estado: "true",
+    email: usuario.email,      // ✅ tomado desde Apps Script
+    estado: "COMPLETADO",
     nota: config.nota || ""
   };
 
