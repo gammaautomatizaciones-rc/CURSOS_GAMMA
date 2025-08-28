@@ -27,9 +27,8 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
   btn.innerText = "Registrarme";
 
   if (result.success) {
-    // opcional → guardar usuario en localStorage
     localStorage.setItem("usuario", JSON.stringify(result.user));
-    setTimeout(() => window.location.href = "../index.html", 1500);
+    setTimeout(() => window.location.href = "../index.html", 1200);
   }
 });
 
@@ -54,22 +53,21 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   estado.style.color = result.success ? "green" : "red";
 
   btn.disabled = false;
-  btn.innerText = "Ingresar";
+  btn.innerText = "Iniciar Sesión";
 
   if (result.success) {
     localStorage.setItem("usuario", JSON.stringify(result.user));
-    setTimeout(() => window.location.href = "../index.html", 1500);
+    setTimeout(() => window.location.href = "../index.html", 1200);
   }
 });
 
-// Verificación de sesión (auth)
+// Verificación de sesión en index
 async function verificarSesion() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
   if (!usuario) {
     window.location.href = "login.html";
     return;
   }
-
   const result = await apiCall("auth", { email: usuario.email, pass: usuario.pass });
   if (!result.success) {
     localStorage.removeItem("usuario");
