@@ -3,57 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Módulo 2 - Curso Excel</title>
-  <!-- Estilos globales -->
-  <link rel="stylesheet" href="../../../style.css">
-  <!-- Estilos del curso -->
-  <link rel="stylesheet" href="../styleindexexcel.css">
+  <title>Módulo 2 – Formato y manejo de datos</title>
+  <link rel="stylesheet" href="../css/modulos.css">
 </head>
 <body>
   <!-- NAVBAR -->
-  <header class="navbar">
-    <img src="../../../assets/logo.png" alt="Logo Gamma" class="logo">
-    <nav>
-      <ul>
-        <li><a href="../indexexcel.html">⬅ Volver al curso</a></li>
-        <li><button class="logout" onclick="logout()">Salir</button></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="navbar">
+    <div class="logo">📊 Excel Intensivo</div>
+    <a href="../excel.html">Volver al curso</a>
+  </div>
 
-  <!-- HERO -->
-  <section class="hero-curso">
-    <div class="hero-text">
-      <h1>Módulo 2 - Formato y manejo de datos</h1>
-      <p>Aprendé a darle estilo y estructura a tus planillas.</p>
-    </div>
+  <!-- ENCABEZADO -->
+  <section class="encabezado">
+    <h1>Módulo 2 – Formato y manejo de datos</h1>
+    <p>En este módulo aprenderás a aplicar formato a celdas, números, fechas, estilos de tabla y organizar datos con filtros.</p>
   </section>
 
-  <!-- CONTENIDO -->
-  <section class="contenido-modulo" style="padding:40px; max-width:900px; margin:auto;">
-    <h2>📘 Contenido</h2>
-    <p>En este módulo vas a aprender:</p>
-    <ul>
-      <li>Aplicar formato a celdas (negrita, cursiva, colores).</li>
-      <li>Dar formato a números, fechas y porcentajes.</li>
-      <li>Usar bordes, rellenos y estilos de tabla.</li>
-      <li>Ordenar y filtrar datos.</li>
-    </ul>
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="container">
+    <!-- Columna Izquierda -->
+    <div class="col">
+      <h2>Prácticos y Parcial</h2>
+      <div class="practicos">
+        <a id="linkPractico1" href="../practicos/practico2_1.html">
+          Práctico 1 – Formato de celdas <span class="link-aclaracion"></span>
+        </a>
+        <span id="estadoPractico1"></span>
 
-    <h2>📝 Actividad</h2>
-    <p>Creá una planilla con una tabla de gastos mensuales, aplicando formatos de moneda, colores y filtros para organizar mejor la información.</p>
+        <a id="linkPractico2" href="../practicos/practico2_2.html">
+          Práctico 2 – Ordenar y filtrar datos <span class="link-aclaracion"></span>
+        </a>
+        <span id="estadoPractico2"></span>
+      </div>
 
-    <div style="margin-top:20px;">
-      <a href="../indexexcel.html" class="btn">⬅ Volver al curso</a>
+      <div class="parcial">
+        <a id="linkParcial1" href="../parciales/parcial2_1.html">
+          Parcial 2 <span class="link-aclaracion"></span>
+        </a>
+        <span id="estadoParcial1"></span>
+        <p class="detalle">
+          Tiempo límite: 60 minutos.<br>
+          Dos intentos disponibles.<br>
+          Si desaprobás, el sistema te habilitará un recuperatorio desde mañana.
+        </p>
+      </div>
     </div>
-  </section>
+
+    <!-- Columna Derecha -->
+    <div class="col">
+      <h2>Manuales descargables</h2>
+      <div class="tarjeta">
+        <h3>Manual 1: Formato de celdas</h3>
+        <a href="../manuales/modulo2_manual1.pdf" target="_blank" download>
+          <button>Descargar PDF</button>
+        </a>
+      </div>
+      <div class="tarjeta">
+        <h3>Manual 2: Ordenar y filtrar datos</h3>
+        <a href="../manuales/modulo2_manual2.pdf" target="_blank" download>
+          <button>Descargar PDF</button>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
-  <footer>
-    <p>© 2025 Gamma Automatizaciones</p>
-  </footer>
+  <div class="footer">
+    <p>¡Muy bien! Con este módulo ya dominás el formato y la organización de tus planillas.</p>
+  </div>
 
   <!-- JS -->
-  <script src="../../../auth/auth.js"></script>
+  <script src="../js/comun.js"></script>
+  <script src="../js/modulo2.js"></script>
 </body>
 </html>
