@@ -1,9 +1,4 @@
 // =============================
-// Configuración
-// =============================
-const API_ADMIN = "https://script.google.com/macros/s/AKfycbxnpinoiq6sKXs2p2EjV83OcTEBDIH9uMmIYR7qckvEbXS3DuPrBNH24jrovT-9iXMpug/exec";
-
-// =============================
 // Validar sesión y rol
 // =============================
 const usuario = JSON.parse(localStorage.getItem("usuario"));
@@ -12,23 +7,11 @@ if (!usuario) {
 }
 
 // =============================
-// Helper para enviar POST
+// Helper para mostrar estado
 // =============================
-async function enviarAccion(accion, params, estadoEl) {
-  estadoEl.innerText = "⏳ Procesando...";
-  try {
-    const resp = await fetch(API_ADMIN, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ action: accion, ...params })
-    });
-    const result = await resp.json();
-    estadoEl.innerText = result.msg;
-    estadoEl.style.color = result.success ? "green" : "red";
-  } catch {
-    estadoEl.innerText = "⚠️ Error de conexión.";
-    estadoEl.style.color = "red";
-  }
+function setEstado(el, msg, ok = null) {
+  el.innerText = msg;
+  el.style.color = ok === true ? "green" : ok === false ? "red" : "black";
 }
 
 // =============================
@@ -43,7 +26,9 @@ document.querySelectorAll("#form-habilitar button").forEach(btn => {
     const modulo = document.getElementById("modulo-habilitar").value;
     const accion = btn.dataset.action; // habilitarModulo / modificarModulo / eliminarModulo
 
-    await enviarAccion(accion, { email: usuario.email, curso, grupo, modulo }, estado);
+    setEstado(estado, "⏳ Procesando...");
+    const result = await apiCall(accion, { email: usuario.email, curso, grupo, modulo });
+    setEstado(estado, result.msg, result.success);
   });
 });
 
@@ -63,7 +48,13 @@ document.querySelectorAll("#form-nota button").forEach(btn => {
     const tp2 = document.getElementById("tp2").value;
     const accion = btn.dataset.action; // guardarNota / modificarNota / eliminarNota
 
-    await enviarAccion(accion, { email: usuario.email, alumnoEmail: emailAlumno, curso, grupo, modulo, nota, tp1, tp2 }, estado);
+    setEstado(estado, "⏳ Procesando...");
+    const result = await apiCall(accion, {
+      email: usuario.email,
+      alumnoEmail: emailAlumno,
+      curso, grupo, modulo, nota, tp1, tp2
+    });
+    setEstado(estado, result.msg, result.success);
   });
 });
 
@@ -79,7 +70,9 @@ document.querySelectorAll("#form-grupo button").forEach(btn => {
     const grupo = document.getElementById("grupo-alumno").value;
     const accion = btn.dataset.action; // asignarGrupo / eliminarGrupo
 
-    await enviarAccion(accion, { email: usuario.email, alumnoEmail: emailAlumno, curso, grupo }, estado);
+    setEstado(estado, "⏳ Procesando...");
+    const result = await apiCall(accion, { email: usuario.email, alumnoEmail: emailAlumno, curso, grupo });
+    setEstado(estado, result.msg, result.success);
   });
 });
 
@@ -94,7 +87,15 @@ document.getElementById("form-ver")?.addEventListener("submit", async (e) => {
   const curso = document.getElementById("curso-ver").value;
   const grupo = document.getElementById("grupo-ver").value;
 
-  await enviarAccion("verGrupo", { email: usuario.email, curso, grupo }, resBox);
+  const result = await apiCall("verGrupo", { email: usuario.email, curso, grupo });
+
+  if (result.success && result.modulos) {
+    resBox.innerHTML = result.modulos.map(m =>
+      `Módulo ${m.modulo}: ${m.habilitado ? "✅" : "🔒"} (${m.fecha})`
+    ).join("<br>");
+  } else {
+    resBox.innerHTML = result.msg || "⚠️ Error al consultar grupo.";
+  }
 });
 
 // =============================
@@ -108,52 +109,33 @@ document.getElementById("form-ver-alumno").addEventListener("submit", async (e) 
   const emailAlumno = document.getElementById("email-ver").value.trim().toLowerCase();
   const curso = document.getElementById("curso-ver-alumno").value;
 
-  try {
-    const resp = await fetch(API_ADMIN, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ 
-        action: "verAlumno", 
-        email: usuario.email, 
-        alumnoEmail: emailAlumno, 
-        curso 
-      })
-    });
+  const result = await apiCall("verAlumno", {
+    email: usuario.email,
+    alumnoEmail: emailAlumno,
+    curso
+  });
 
-    const text = await resp.text();
-    let result;
+  if (result.success && result.alumno && result.alumno.datosBD && result.alumno.datosBD.email) {
+    let html = `<h3>📌 Datos alumno</h3>`;
+    html += `<p><b>Email:</b> ${result.alumno.datosBD.email}<br>
+             <b>Nombre:</b> ${result.alumno.datosBD.nombre}<br>
+             <b>Curso:</b> ${result.alumno.datosBD.curso}<br>
+             <b>Grupo:</b> ${result.alumno.datosBD.grupo}<br>
+             <b>Rol:</b> ${result.alumno.datosBD.rol}</p>`;
 
-    try {
-      result = JSON.parse(text);
-    } catch {
-      resBox.innerHTML = "⚠️ Respuesta no válida del servidor:<br><pre>" + text + "</pre>";
-      return;
-    }
+    html += `<h3>🔑 Módulos</h3>`;
+    html += (result.alumno.modulos || []).map(m =>
+      `Módulo ${m.modulo}: ${m.habilitado ? "✅" : "🔒"} (${m.fecha})`
+    ).join("<br>");
 
-    if (result.success && result.alumno && result.alumno.datosBD && result.alumno.datosBD.email) {
-      let html = `<h3>📌 Datos alumno</h3>`;
-      html += `<p><b>Email:</b> ${result.alumno.datosBD.email}<br>
-               <b>Nombre:</b> ${result.alumno.datosBD.nombre}<br>
-               <b>Curso:</b> ${result.alumno.datosBD.curso}<br>
-               <b>Grupo:</b> ${result.alumno.datosBD.grupo}<br>
-               <b>Rol:</b> ${result.alumno.datosBD.rol}</p>`;
+    html += `<h3>📝 Notas</h3>`;
+    html += (result.alumno.notas || []).map(n =>
+      `Módulo ${n.modulo}: Nota ${n.nota || "-"} | TP1: ${n.tp1 || "-"} | TP2: ${n.tp2 || "-"}`
+    ).join("<br>");
 
-      html += `<h3>🔑 Módulos</h3>`;
-      html += (result.alumno.modulos || []).map(m =>
-        `Módulo ${m.modulo}: ${m.habilitado ? "✅" : "🔒"} (${m.fecha})`
-      ).join("<br>");
-
-      html += `<h3>📝 Notas</h3>`;
-      html += (result.alumno.notas || []).map(n =>
-        `Módulo ${n.modulo}: Nota ${n.nota} | TP1: ${n.tp1} | TP2: ${n.tp2}`
-      ).join("<br>");
-
-      resBox.innerHTML = html;
-    } else {
-      resBox.innerHTML = result.msg || "⚠️ Alumno no encontrado o sin datos.";
-    }
-  } catch (err) {
-    resBox.innerHTML = "⚠️ Error de red: " + err;
+    resBox.innerHTML = html;
+  } else {
+    resBox.innerHTML = result.msg || "⚠️ Alumno no encontrado o sin datos.";
   }
 });
 
