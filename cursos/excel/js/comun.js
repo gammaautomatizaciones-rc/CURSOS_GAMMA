@@ -62,28 +62,35 @@ async function validarYEnviar(config) {
     return;
   }
 
-  // ✅ Tomar el email directamente del login guardado
-  const email = localStorage.getItem("usuarioEmail");
-  if (!email) {
-    alert("❌ No se encontró el email del usuario. Tenés que iniciar sesión.");
+  // ✅ Tomar email del login
+  let usuario = null;
+  try {
+    usuario = JSON.parse(localStorage.getItem("usuario"));
+  } catch (err) {
+    usuario = null;
+  }
+
+  if (!usuario || !usuario.email) {
+    alert("❌ No se encontró un usuario logueado. Volvé a iniciar sesión.");
     window.location.href = "../auth/login.html";
     return;
   }
 
   const data = {
-    action: config.action,
+    action: config.action,     // "practico" o "parcial"
     practico: config.practico || "",
     parcial: config.parcial || "",
     curso: config.curso || "excel",
     grupo: config.grupo || "1",
     modulo: config.modulo,
-    email: email,
+    email: usuario.email,      // ✅ viene de auth
     estado: "COMPLETADO",
     nota: config.nota || ""
   };
 
   enviarAServer(data);
 }
+
 
 
   // =============================
