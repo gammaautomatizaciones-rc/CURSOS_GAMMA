@@ -7,9 +7,15 @@ if (!usuarioExcel) {
 }
 
 // =============================
+// Configuración
+// =============================
+const API_EXCEL = "https://script.google.com/macros/s/AKfycbw2B8VSRqmy3Y48hL9D_8eVCejQSAo9bjV2cMvUCI3VaGY_gkfHpF3jID2qmM9CcoMxkg/exec";
+const TOTAL_MODULOS = 12;
+
+// =============================
 // Barra de progreso
 // =============================
-function actualizarProgreso(habilitados, total = 12) {
+function actualizarProgreso(habilitados, total = TOTAL_MODULOS) {
   const porcentaje = total > 0 ? Math.round((habilitados / total) * 100) : 0;
   document.getElementById("barra-progreso").style.width = `${porcentaje}%`;
   document.getElementById("texto-progreso").innerText =
@@ -34,7 +40,7 @@ function renderHistorial(historial) {
   let html = "";
 
   // Habilitados
-  if (historial.habilitados && historial.habilitados.length > 0) {
+  if (historial.habilitados?.length > 0) {
     html += "<h3>Módulos habilitados</h3><ul>";
     historial.habilitados.forEach(h => {
       html += `<li>Módulo ${h.modulo} — habilitado el ${new Date(h.fecha).toLocaleDateString()}</li>`;
@@ -43,7 +49,7 @@ function renderHistorial(historial) {
   }
 
   // Completados
-  if (historial.completados && historial.completados.length > 0) {
+  if (historial.completados?.length > 0) {
     html += "<h3>Módulos completados</h3><ul>";
     historial.completados.forEach(c => {
       html += `<li>Módulo ${c.modulo} — completado el ${new Date(c.fecha).toLocaleDateString()}</li>`;
@@ -51,27 +57,55 @@ function renderHistorial(historial) {
     html += "</ul>";
   }
 
-// Notas
-if (historial.notas && historial.notas.length > 0) {
-  html += "<h3>Notas y trabajos prácticos</h3><ul>";
-  historial.notas.forEach(n => {
-    const tp1 = String(n.tp1).toLowerCase() === "true" ? "COMPLETADO" :
-                String(n.tp1).toLowerCase() === "false" ? "INCOMPLETO" : "-";
-    const tp2 = String(n.tp2).toLowerCase() === "true" ? "COMPLETADO" :
-                String(n.tp2).toLowerCase() === "false" ? "INCOMPLETO" : "-";
+  // Notas
+  if (historial.notas?.length > 0) {
+    html += "<h3>Parciales y prácticos</h3><ul>";
+    historial.notas.forEach(n => {
+      const tp1 = String(n.tp1).toLowerCase() === "true" ? "COMPLETADO" :
+                  String(n.tp1).toLowerCase() === "false" ? "INCOMPLETO" : "-";
+      const tp2 = String(n.tp2).toLowerCase() === "true" ? "COMPLETADO" :
+                  String(n.tp2).toLowerCase() === "false" ? "INCOMPLETO" : "-";
 
-    html += `<li>Módulo ${n.modulo}: Nota ${n.nota || "-"}, Práctico 1: ${tp1}, Práctico 2: ${tp2}</li>`;
-  });
-  html += "</ul>";
+      html += `<li>Módulo ${n.modulo}: Parcial ${n.nota || "-"}, Práctico 1: ${tp1}, Práctico 2: ${tp2}</li>`;
+    });
+    html += "</ul>";
+  }
+
+  contenedor.innerHTML = html;
 }
 
+// =============================
+// Render módulos habilitados
+// =============================
+function renderModulos(habilitados) {
+  const lista = document.getElementById("lista-modulos");
+  lista.innerHTML = "";
+
+  if (!habilitados || habilitados.length === 0) {
+    lista.innerHTML = "<p>⚠️ No hay módulos habilitados para tu grupo.</p>";
+    return;
+  }
+
+  habilitados.forEach(m => {
+    const card = document.createElement("div");
+    card.classList.add("modulo-card");
+
+    card.innerHTML = `
+      <h3>Módulo ${m.modulo}</h3>
+      <p class="status">👉 Disponible</p>
+      <a href="modulos/modulo${m.modulo}.html" class="btn">Ir</a>
+    `;
+
+    lista.appendChild(card);
+  });
+}
 
 // =============================
-// Cargar progreso e historial
+// Cargar datos desde backend
 // =============================
-async function cargarProgreso() {
+async function cargarDatos() {
   try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbyy0_UUzAEENL44GSYlzHubr-tvNOtQJsWQ7X6B6lfPnKSkK18VUNs1H5NHbkaohdJLrw/exec", {
+    const resp = await fetch(API_EXCEL, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
@@ -83,22 +117,29 @@ async function cargarProgreso() {
     });
 
     const result = await resp.json();
+    console.log("Historial recibido:", result);
+
     if (result.success) {
-      // Actualizar barra de progreso
-      const habilitados = result.historial.habilitados ? result.historial.habilitados.length : 0;
-      actualizarProgreso(habilitados, 12);
+      const historial = result.historial || {};
+
+      // Barra de progreso
+      const habilitadosCount = historial.habilitados ? historial.habilitados.length : 0;
+      actualizarProgreso(habilitadosCount);
 
       // Render historial
-      renderHistorial(result.historial);
+      renderHistorial(historial);
+
+      // Render módulos habilitados
+      renderModulos(historial.habilitados);
     } else {
       console.warn("Respuesta no exitosa:", result.msg);
     }
   } catch (err) {
-    console.error("Error cargando progreso:", err);
+    console.error("Error cargando datos:", err);
   }
 }
 
-document.addEventListener("DOMContentLoaded", cargarProgreso);
+document.addEventListener("DOMContentLoaded", cargarDatos);
 
 // =============================
 // Logout
