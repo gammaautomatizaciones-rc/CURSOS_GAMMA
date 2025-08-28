@@ -3,7 +3,7 @@
 // =============================
 
 // URL del Router.gs publicado como app web
-const API_URL = "https://script.google.com/macros/s/AKfycbxssk6Z89sv820KnYDhtobTht2cFEx9btHBNZCbd9s4GS6i5IXxO2BDBixihhYT23io9w/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwYCMuZfDaFSoqdJjkN0uQviY1bFHtZJaP4sjXkfErB1UUTARklIo6E69N955fpMTsmOw/exec";
 
 // =============================
 // Helper genérico para llamar a la API
