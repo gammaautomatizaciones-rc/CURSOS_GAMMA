@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctico 1 – Navegación y escritura</title>
+  <style>
+    :root {
+      --negro: #111;
+      --blanco: #fff;
+      --dorado: #d4af37;
+      --gris: #e5e5e5;
+      --verde: #28a745;
+      --rojo: #c0392b;
+      --acento: #3ab4f2;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: var(--gris);
+      color: var(--negro);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: var(--negro);
+      color: var(--blanco);
+    }
+
+    .navbar a {
+      color: var(--blanco);
+      background: var(--acento);
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: var(--blanco);
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .pregunta {
+      margin-bottom: 25px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .pregunta h3 {
+      margin-bottom: 10px;
+    }
+
+    .pregunta label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    button {
+      margin-top: 10px;
+      background: var(--acento);
+      color: var(--blanco);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: var(--verde);
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .correcto {
+      color: var(--verde);
+    }
+
+    .incorrecto {
+      color: var(--rojo);
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div>📊 Práctico 1 – Navegación y escritura</div>
+    <a href="../modulos/modulo1.html">Volver al Módulo 1</a>
+  </div>
+
+  <!-- CONTENEDOR -->
+  <div class="container">
+    <h1>Práctico 1 – Preguntas</h1>
+
+    <!-- Pregunta 1 -->
+    <div class="pregunta" id="p1">
+      <h3>1. ¿Qué es una celda en Excel?</h3>
+      <label><input type="radio" name="q1" value="a"> Una fila completa.</label>
+      <label><input type="radio" name="q1" value="b"> Una columna completa.</label>
+      <label><input type="radio" name="q1" value="c"> La intersección de una fila y una columna.</label>
+      <button onclick="verificar('q1','c','p1','Una celda es la intersección entre una fila y una columna, por ejemplo A1.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="pregunta" id="p2">
+      <h3>2. ¿Cómo se identifica una celda en Excel?</h3>
+      <label><input type="radio" name="q2" value="a"> Por un número único.</label>
+      <label><input type="radio" name="q2" value="b"> Por la combinación de letra de columna y número de fila.</label>
+      <label><input type="radio" name="q2" value="c"> Por el color que tiene.</label>
+      <button onclick="verificar('q2','b','p2','Cada celda se identifica por su columna (letra) y fila (número), ej: B2.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="pregunta" id="p3">
+      <h3>3. ¿Qué tecla se usa para mover al final de una fila de datos?</h3>
+      <label><input type="radio" name="q3" value="a"> Ctrl + Flecha derecha</label>
+      <label><input type="radio" name="q3" value="b"> Alt + Enter</label>
+      <label><input type="radio" name="q3" value="c"> Shift + Tab</label>
+      <button onclick="verificar('q3','a','p3','Ctrl + Flecha te mueve al final o inicio de los datos en una fila o columna.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="pregunta" id="p4">
+      <h3>4. ¿Cuál es la diferencia entre una hoja y un libro en Excel?</h3>
+      <label><input type="radio" name="q4" value="a"> El libro es un archivo y la hoja es una pestaña dentro de él.</label>
+      <label><input type="radio" name="q4" value="b"> La hoja es el archivo completo y el libro es solo una parte.</label>
+      <label><input type="radio" name="q4" value="c"> Son exactamente lo mismo.</label>
+      <button onclick="verificar('q4','a','p4','El libro es el archivo de Excel (.xlsx) y dentro contiene hojas (pestañas).')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="pregunta" id="p5">
+      <h3>5. ¿Qué ocurre si escribimos texto en una celda y la celda de al lado está vacía?</h3>
+      <label><input type="radio" name="q5" value="a"> El texto desaparece.</label>
+      <label><input type="radio" name="q5" value="b"> El texto se expande hacia la celda vacía.</label>
+      <label><input type="radio" name="q5" value="c"> El texto se corta automáticamente.</label>
+      <button onclick="verificar('q5','b','p5','Si la celda de al lado está libre, Excel muestra el texto expandido.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div class="pregunta" id="p6">
+      <h3>6. ¿Cuál es el atajo para guardar un archivo en Excel?</h3>
+      <label><input type="radio" name="q6" value="a"> Ctrl + C</label>
+      <label><input type="radio" name="q6" value="b"> Ctrl + S</label>
+      <label><input type="radio" name="q6" value="c"> Ctrl + G</label>
+      <button onclick="verificar('q6','b','p6','El atajo estándar para guardar es Ctrl + S.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 7 -->
+    <div class="pregunta" id="p7">
+      <h3>7. ¿Cómo se selecciona una fila completa?</h3>
+      <label><input type="radio" name="q7" value="a"> Haciendo clic en el número de fila a la izquierda.</label>
+      <label><input type="radio" name="q7" value="b"> Haciendo doble clic en cualquier celda de la fila.</label>
+      <label><input type="radio" name="q7" value="c"> Escribiendo el número de fila en la barra de fórmulas.</label>
+      <button onclick="verificar('q7','a','p7','Una fila se selecciona desde el número al inicio de esa fila.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 8 -->
+    <div class="pregunta" id="p8">
+      <h3>8. ¿Qué hace la combinación Ctrl + Z en Excel?</h3>
+      <label><input type="radio" name="q8" value="a"> Rehacer la última acción.</label>
+      <label><input type="radio" name="q8" value="b"> Guardar el archivo.</label>
+      <label><input type="radio" name="q8" value="c"> Deshacer la última acción.</label>
+      <button onclick="verificar('q8','c','p8','Ctrl + Z sirve para deshacer la última acción.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 9 -->
+    <div class="pregunta" id="p9">
+      <h3>9. ¿Qué función cumple la barra de fórmulas?</h3>
+      <label><input type="radio" name="q9" value="a"> Muestra y permite editar el contenido de la celda seleccionada.</label>
+      <label><input type="radio" name="q9" value="b"> Solo muestra gráficos.</label>
+      <label><input type="radio" name="q9" value="c"> Solo sirve para cambiar colores.</label>
+      <button onclick="verificar('q9','a','p9','La barra de fórmulas muestra y permite editar el contenido de la celda.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 10 -->
+    <div class="pregunta" id="p10">
+      <h3>10. ¿Qué extensión tienen los archivos de Excel por defecto desde 2007?</h3>
+      <label><input type="radio" name="q10" value="a"> .xls</label>
+      <label><input type="radio" name="q10" value="b"> .xlsx</label>
+      <label><input type="radio" name="q10" value="c"> .docx</label>
+      <button onclick="verificar('q10','b','p10','Desde Excel 2007 la extensión por defecto es .xlsx.')">Enviar</button>
+      <div class="feedback"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function verificar(nombre, respuestaCorrecta, idPregunta, explicacion) {
+      const opciones = document.getElementsByName(nombre);
+      let seleccion = null;
+      opciones.forEach(op => { if(op.checked) seleccion = op.value; });
+      const feedbackDiv = document.querySelector(`#${idPregunta} .feedback`);
+      if (!seleccion) {
+        feedbackDiv.innerHTML = "⚠️ Seleccioná una opción.";
+        feedbackDiv.className = "feedback incorrecto";
+        return;
+      }
+      if (seleccion === respuestaCorrecta) {
+        feedbackDiv.innerHTML = "✅ Correcto";
+        feedbackDiv.className = "feedback correcto";
+      } else {
+        feedbackDiv.innerHTML = "❌ Incorrecto. " + explicacion;
+        feedbackDiv.className = "feedback incorrecto";
+      }
+    }
+  </script>
+</body>
+</html>
