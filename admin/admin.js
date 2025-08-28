@@ -77,29 +77,7 @@ document.querySelectorAll("#form-grupo button").forEach(btn => {
 });
 
 // =============================
-// 4. Ver progreso por grupo
-// =============================
-document.getElementById("form-ver")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const resBox = document.getElementById("resultado-ver");
-  resBox.innerHTML = "⏳ Cargando...";
-
-  const curso = document.getElementById("curso-ver").value;
-  const grupo = document.getElementById("grupo-ver").value;
-
-  const result = await apiCall("verGrupo", { email: usuario.email, curso, grupo });
-
-  if (result.success && result.modulos) {
-    resBox.innerHTML = result.modulos.map(m =>
-      `Módulo ${m.modulo}: ${m.habilitado ? "✅" : "🔒"} (${m.fecha})`
-    ).join("<br>");
-  } else {
-    resBox.innerHTML = result.msg || "⚠️ Error al consultar grupo.";
-  }
-});
-
-// =============================
-// 5. Ver progreso individual
+// 4. Ver progreso individual
 // =============================
 document.getElementById("form-ver-alumno").addEventListener("submit", async (e) => {
   e.preventDefault();
