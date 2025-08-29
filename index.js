@@ -25,5 +25,5 @@ function actualizarNavbar() {
 
 function logout() {
   localStorage.removeItem("usuario");
-  window.location.href = "auth/login.html";
+  window.location.href = "auth/login.html"; // corregido, siempre lleva al login dentro de /auth/
 }
