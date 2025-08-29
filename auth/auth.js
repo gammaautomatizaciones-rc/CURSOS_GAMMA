@@ -28,7 +28,7 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
 
   if (result.success) {
     estado.innerText = "✅ Registro exitoso, redirigiendo...";
-    setTimeout(() => window.location.href = "login.html", 1500);
+    setTimeout(() => window.location.href = "login.html", 1500); // mismo nivel en /auth/
   }
 });
 
@@ -56,12 +56,11 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   btn.innerText = "Iniciar Sesión";
 
   if (result.success) {
-    // 👇 Ahora guardamos también la contraseña
     localStorage.setItem("usuario", JSON.stringify({
       ...result.user,
       pass
     }));
-    setTimeout(() => window.location.href = "index.html", 1500);
+    setTimeout(() => window.location.href = "../index.html", 1500); // volver al index raíz
   }
 });
 
@@ -69,13 +68,12 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
 async function verificarSesion() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
   if (!usuario) {
-    window.location.href = "login.html";
+    window.location.href = "auth/login.html"; // corregido
     return;
   }
   const result = await apiCall("auth", { email: usuario.email, pass: usuario.pass });
   if (!result.success) {
     localStorage.removeItem("usuario");
-    window.location.href = "login.html";
+    window.location.href = "auth/login.html"; // corregido
   }
 }
-
