@@ -1,5 +1,5 @@
 // =============================
-// auth.js
+// auth.js (con debug console.log)
 // =============================
 
 // Registro
@@ -19,6 +19,7 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
   const pass = formData.get("pass").trim();
 
   const result = await apiCall("register", { nombre, email, pass });
+  console.log("🔎 Respuesta backend (register):", result);
 
   estado.innerText = result.msg;
   estado.style.color = result.success ? "green" : "red";
@@ -28,7 +29,7 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
 
   if (result.success) {
     estado.innerText = "✅ Registro exitoso, redirigiendo...";
-    setTimeout(() => window.location.href = "login.html", 1500); // mismo nivel en /auth/
+    setTimeout(() => window.location.href = "login.html", 1200);
   }
 });
 
@@ -48,6 +49,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   const pass = formData.get("pass").trim();
 
   const result = await apiCall("login", { email, pass });
+  console.log("🔎 Respuesta backend (login):", result);
 
   estado.innerText = result.msg;
   estado.style.color = result.success ? "green" : "red";
@@ -56,11 +58,8 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   btn.innerText = "Iniciar Sesión";
 
   if (result.success) {
-    localStorage.setItem("usuario", JSON.stringify({
-      ...result.user,
-      pass
-    }));
-    setTimeout(() => window.location.href = "../index.html", 1500); // volver al index raíz
+    localStorage.setItem("usuario", JSON.stringify(result.user));
+    setTimeout(() => window.location.href = "../index.html", 1200);
   }
 });
 
@@ -68,12 +67,14 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
 async function verificarSesion() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
   if (!usuario) {
-    window.location.href = "auth/login.html"; // corregido
+    window.location.href = "login.html";
     return;
   }
   const result = await apiCall("auth", { email: usuario.email, pass: usuario.pass });
+  console.log("🔎 Respuesta backend (auth):", result);
+
   if (!result.success) {
     localStorage.removeItem("usuario");
-    window.location.href = "auth/login.html"; // corregido
+    window.location.href = "login.html";
   }
 }
