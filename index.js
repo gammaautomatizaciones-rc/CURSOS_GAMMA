@@ -6,13 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
   actualizarNavbar();
 });
 
+// =============================
+// Navbar dinámico
+// =============================
 function actualizarNavbar() {
   const nav = document.getElementById("nav-links");
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
 
   if (usuario) {
     nav.innerHTML = `
-      <li><span style="color:#fff;">👤 ${usuario.nombre} (${usuario.rol})</span></li>
+      <li><span style="color:#fff;">👤 ${usuario.nombre}</span></li>
       <li><button onclick="logout()">Salir</button></li>
     `;
   } else {
@@ -23,7 +26,10 @@ function actualizarNavbar() {
   }
 }
 
+// =============================
+// Logout
+// =============================
 function logout() {
   localStorage.removeItem("usuario");
-  window.location.href = "auth/login.html"; // corregido, siempre lleva al login dentro de /auth/
+  window.location.href = "auth/login.html";
 }
