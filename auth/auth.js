@@ -27,8 +27,8 @@ document.getElementById("registro-form")?.addEventListener("submit", async (e) =
   btn.innerText = "Registrarme";
 
   if (result.success) {
-    localStorage.setItem("usuario", JSON.stringify(result.user));
-    setTimeout(() => window.location.href = "../index.html", 1200);
+    estado.innerText = "✅ Registro exitoso, redirigiendo...";
+    setTimeout(() => window.location.href = "login.html", 1500);
   }
 });
 
@@ -56,8 +56,12 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   btn.innerText = "Iniciar Sesión";
 
   if (result.success) {
-    localStorage.setItem("usuario", JSON.stringify(result.user));
-    setTimeout(() => window.location.href = "../index.html", 1200);
+    // 👇 Ahora guardamos también la contraseña
+    localStorage.setItem("usuario", JSON.stringify({
+      ...result.user,
+      pass
+    }));
+    setTimeout(() => window.location.href = "../index.html", 1500);
   }
 });
 
