@@ -61,7 +61,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (e) => {
       ...result.user,
       pass
     }));
-    setTimeout(() => window.location.href = "../index.html", 1500);
+    setTimeout(() => window.location.href = "index.html", 1500);
   }
 });
 
@@ -78,3 +78,4 @@ async function verificarSesion() {
     window.location.href = "login.html";
   }
 }
+
