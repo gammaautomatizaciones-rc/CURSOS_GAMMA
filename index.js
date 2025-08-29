@@ -14,8 +14,13 @@ function actualizarNavbar() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
 
   if (usuario) {
+    // 👇 Si no hay nombre, mostramos el email
+    const nombreMostrar = usuario.nombre && usuario.nombre.trim() !== "" 
+      ? usuario.nombre 
+      : usuario.email;
+
     nav.innerHTML = `
-      <li><span style="color:#fff;">👤 ${usuario.nombre}</span></li>
+      <li><span style="color:#fff;">👤 ${nombreMostrar}</span></li>
       <li><button onclick="logout()">Salir</button></li>
     `;
   } else {
